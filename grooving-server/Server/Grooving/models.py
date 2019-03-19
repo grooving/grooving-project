@@ -4,19 +4,20 @@ from django.contrib.auth.models import User
 from decimal import Decimal
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MinValueValidator,MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.postgres.fields import ArrayField
 from enum import Enum
 
 
 # Create your models here.
 
-class Actor(AbstractUser):
 
+class Actor(AbstractUser):
     email = models.EmailField(blank=False, null=False, unique=True)
 
     class Meta:
-        abstract=True
+        abstract = True
+
 
 class User(Actor):
     photo = models.CharField(blank=True, null=True)
@@ -34,6 +35,7 @@ class Artist(models.Model):
     def __str__(self):
         return self.username
 
+
 class CreditCardField():
     holder = models.CharField(blank=False, null=False)
     expirationDate = models.DateField(blank=False, null=False, allow_future=True)
@@ -43,12 +45,13 @@ class CreditCardField():
     def __init__(self, holder, expirationDate, number, cvv):
         self.holder = str(holder)
         self.expirationDate = expirationDate
-        number = number
-        cvv = cvv
+        self.number = number
+        self.cvv = cvv
+
 
 class Customer(models.Model):
     user = User(blank=False, null=False, on_delete=models.CASCADE)
-    creditCard =
+    creditCard = CreditCardField(blank=True, null=True)
 
     def __str__(self):
         return self.username
@@ -78,16 +81,28 @@ class Zone(models.Model):
         return self.name
 
 
+class PaymentPackage(models.Model):
+    description = models.TextField(blank=True, null=True)
+    appliedVAT = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
+
+    def __str__(self):
+        return self.description + ' - ' + self.appliedVAT
+
+    class Meta:
+        abstract = True
+
+
 class Portfolio(models.Model):
     artisticName = models.CharField(blank=True, null=True, max_length=140)
     calendar = models.OneToManyField(Calendar, blank=True, null=True, on_delete=models.CASCADE)
     artisticGender = models.ManyToManyField(ArtisticGender, blank=True, null=True, on_delete=models.CASCADE)
-    portfolioModule = models.ManyToManyField(PortfolioModule, blank=True, null=True, on_delete=models.CASCADE)
+    portfolioModule = models.ManyToManyField('PortfolioModule', blank=True, null=True, on_delete=models.CASCADE)
     zone = models.ManyToManyField(Zone, blank=True, null=True, on_delete=models.CASCADE)
     hiring = models.OneToManyField(PaymentPackage, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.artisticName
+
 
 class ModuleTypeField(Enum):
     PHOTO = 'PHOTO'
@@ -96,6 +111,7 @@ class ModuleTypeField(Enum):
     AUDIO = 'AUDIO'
     SOCIAL = 'SOCIAL'
     MEMBER = 'MEMBER'
+
 
 class PortfolioModule(models.Model):
     type = models.CharField(choices=[(tag, tag.value) for tag in ModuleTypeField])
@@ -106,18 +122,8 @@ class PortfolioModule(models.Model):
     def __str__(self):
         return self.type + ' - ' + self.description
 
-class PaymentPackage(models.Model):
-   description = models.TextField(blank=True, null=True)
-   appliedVAT = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
-
-   def __str__(self):
-       return self.description + ' - ' + self.appliedVAT
-
-   class Meta:
-       abstract=True
 
 class MoneyField:
-
     amount = models.DecimalField(blank=False, null=False, validators=[MinValueValidator(Decimal('0.0'))])
     currency = models.CharField(blank=False, null=False, default='EUR', max_length=3)
 
@@ -125,16 +131,20 @@ class MoneyField:
         self.amount = amount
         self.currency = currency
 
+
 class Performance(PaymentPackage):
     info = models.TextField(blank=False, null=False)
     hours = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.5'))])
     price = MoneyField(black=False, null=False)
 
+
 class Fare(PaymentPackage):
     priceHour = MoneyField(black=False, null=False)
 
+
 class Custom(PaymentPackage):
     minimumPrice = MoneyField(black=False, null=False)
+
 
 class SystemConfiguration(models.Model):
     minimumPrice = MoneyField(black=False, null=False)
@@ -149,6 +159,7 @@ class SystemConfiguration(models.Model):
     slogan = models.CharField(blank=True, null=True)
     termsText = models.TextField(blank=False, null=True)
     privacyText = models.TextField(blank=False, null=True)
+
 
 class EventLocation(models.Model):
     name = models.CharField(blank=False, null=False)
