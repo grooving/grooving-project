@@ -18,7 +18,7 @@
         <ul class="navbar-nav row-alignment">
           <li class="nav-item active mx-2 right-float">
             <div class="d-md-none">
-            <a class="nav-link" href="#" @click="alerta()"><i class="material-icons align-middle">search</i></a>
+            <a class="nav-link" href="#" @click="toggleSearchPanel()"><i class="material-icons align-middle">search</i></a>
             </div>
             <div class="d-none d-md-inline nav-item">
               <form class="form-inline my-2 my-lg-0">
@@ -33,10 +33,13 @@
         </ul>
       </div>
     </nav>
+    <Search v-if="showSearchMenu" @closeSearch="toggleSearchPanel()" />
     </div>
 </template>
 
 <script>
+import Search from "./Search.vue";
+
 export default {
     name: 'Header',
     data: function(){
@@ -45,13 +48,33 @@ export default {
             {text:"Top Artists", link:"#", selected: true},
             {text:"My Offers", link:"#", selected: false},
             {text:"FAQ", link:"#", selected: false}
-          ]
+          ],
+          showSearchMenu: false,
       }
-    }
+    },
+    components:{
+      Search
+    },
+    methods: {
+        toggleSearchPanel: function() {
+          this.showSearchMenu = !this.showSearchMenu;
+
+          if(this.showSearchMenu){
+            $(document.body).css("overflow", "hidden")
+          }else{
+            $(document.body).css("overflow", "")
+          }
+
+        }
+      }
 }
 </script>
 
 <style scoped>
+
+  nav{
+    height:75px;
+  }
 
   .no-border{
     border:none;
