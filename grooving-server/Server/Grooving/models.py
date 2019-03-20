@@ -99,17 +99,17 @@ class Portfolio(models.Model):
         return self.artisticName
 
 
-class ModuleTypeField(Enum):
-    PHOTO = 'PHOTO'
-    DESCRIPTION = 'DESCRIPTION'
-    VIDEO = 'VIDEO'
-    AUDIO = 'AUDIO'
-    SOCIAL = 'SOCIAL'
-    MEMBER = 'MEMBER'
+ModuleTypeField = (
+    ('PHOTO', 'PHOTO'),
+    ('DESCRIPTION', 'DESCRIPTION'),
+    ('VIDEO', 'VIDEO'),
+    ('AUDIO', 'AUDIO'),
+    ('SOCIAL', 'SOCIAL'),
+    ('MEMBER', 'MEMBER'))
 
 
 class PortfolioModule(models.Model):
-    type = models.CharField(max_length=255, choices=[(tag, tag.value) for tag in ModuleTypeField])
+    type = models.CharField(max_length=255, choices=ModuleTypeField)
     link = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     portfolio = Portfolio
@@ -168,19 +168,19 @@ class EventLocation(models.Model):
         return self.name
 
 
-class OfferStatusField(Enum):
-    PENDING = "PENDING"
-    NEGOTIATION = "NEGOTIATION"
-    CONTRACT_MADE = "CONTRACT_MADE"
-    WITHDRAWN = "WITHDRAWN"
-    REJECTED = "REJECTED"
-    CANCELED = "CANCELED"
-    PAYMENT_MADE = "PAYMENT_MADE"
+OfferStatusField =(
+    ('PENDING', "PENDING"),
+    ('NEGOTIATION', "NEGOTIATION"),
+    ('CONTRACT_MADE', "CONTRACT_MADE"),
+    ('WITHDRAWN', "WITHDRAWN"),
+    ('REJECTED', "REJECTED"),
+    ('CANCELED', "CANCELED"),
+    ('PAYMENT_MADE', "PAYMENT_MADE"))
 
 
 class Offer(models.Model):
     description = models.TextField(blank=False, null=False)
-    status = models.CharField(max_length=20, choices=[(tag, tag.value) for tag in ModuleTypeField])
+    status = models.CharField(max_length=20, choices=OfferStatusField)
     date = models.DateTimeField(null=False, blank=False)
     hours = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.5'))])
     price = MoneyField
