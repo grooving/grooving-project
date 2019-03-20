@@ -41,8 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_swagger',
-
+    'rest_framework_swagger'
 ]
 
 REST_FRAMEWORK = {
@@ -91,12 +90,11 @@ WSGI_APPLICATION = 'Server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
+        'NAME': 'grooving',
         'HOST': '127.0.0.1',
         'PORT': '5432',
-        'USER': 'grooving',
-        'PASSWORD': 'e35bdc42',
+        'USER': 'root',
+        'PASSWORD': 'root',
     }
 }
 

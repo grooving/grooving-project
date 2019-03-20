@@ -1,9 +1,8 @@
 from collections import defaultdict
 
-from django.contrib.auth.models import User
 from decimal import Decimal
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.postgres.fields import ArrayField
 from enum import Enum
@@ -12,33 +11,33 @@ from enum import Enum
 # Create your models here.
 
 
-class Actor(AbstractUser):
-    email = models.EmailField(blank=False, null=False, unique=True)
+class Actor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.username
 
     class Meta:
         abstract = True
 
 
-class User(Actor):
-    photo = models.CharField(blank=True, null=True)
-    phone = models.CharField(blank=True, null=True)
-    iban = models.CharField(blank=True, null=True)
-    paypalAccount = models.CharField(blank=True, null=True)
+class UserAbstract(Actor):
+    photo = models.CharField(max_length=255, blank=True, null=True)
+    phone = models.CharField(max_length=255, blank=True, null=True)
+    iban = models.CharField(max_length=255, blank=True, null=True)
+    paypalAccount = models.CharField(max_length=255, blank=True, null=True)
 
-    def __str__(self):
-        return self.username
-
-
-class Artist(models.Model):
-    user = User(blank=False, null=False, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.username
+    class Meta:
+        abstract = True
 
 
-class CreditCardField():
-    holder = models.CharField(blank=False, null=False)
-    expirationDate = models.DateField(blank=False, null=False, allow_future=True)
+class Artist(UserAbstract):
+    pass
+
+
+class CreditCardField:
+    holder = models.CharField(max_length=255, blank=False, null=False)
+    expirationDate = models.DateField(blank=False, null=False)
     number = models.CharField(blank=False, null=False, max_length=16)
     cvv = models.CharField(blank=False, null=False, max_length=3)
 
@@ -49,9 +48,8 @@ class CreditCardField():
         self.cvv = cvv
 
 
-class Customer(models.Model):
-    user = User(blank=False, null=False, on_delete=models.CASCADE)
-    creditCard = CreditCardField(blank=True, null=True)
+class Customer(UserAbstract):
+    creditCard = CreditCardField
 
     def __str__(self):
         return self.username
@@ -67,7 +65,7 @@ class Calendar(models.Model):
 
 class ArtisticGender(models.Model):
     name = models.CharField(blank=False, null=False, max_length=140)
-    parentGender = models.ManyToOneField('self', blank=True, null=True)
+    parentGender = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -75,7 +73,7 @@ class ArtisticGender(models.Model):
 
 class Zone(models.Model):
     name = models.CharField(blank=False, null=False, max_length=140)
-    parentZone = models.ManyToOneField('self', blank=True, null=True)
+    parentZone = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -88,17 +86,14 @@ class PaymentPackage(models.Model):
     def __str__(self):
         return self.description + ' - ' + self.appliedVAT
 
-    class Meta:
-        abstract = True
-
 
 class Portfolio(models.Model):
     artisticName = models.CharField(blank=True, null=True, max_length=140)
-    calendar = models.OneToManyField(Calendar, blank=True, null=True, on_delete=models.CASCADE)
-    artisticGender = models.ManyToManyField(ArtisticGender, blank=True, null=True, on_delete=models.CASCADE)
-    portfolioModule = models.ManyToManyField('PortfolioModule', blank=True, null=True, on_delete=models.CASCADE)
-    zone = models.ManyToManyField(Zone, blank=True, null=True, on_delete=models.CASCADE)
-    hiring = models.OneToManyField(PaymentPackage, blank=True, null=True, on_delete=models.CASCADE)
+    calendar = models.ForeignKey(Calendar, blank=True, null=True, on_delete=models.CASCADE)
+    artisticGender = models.ManyToManyField(ArtisticGender, blank=True, null=True)
+    portfolioModule = models.ManyToManyField('PortfolioModule', blank=True, null=True)
+    zone = models.ManyToManyField(Zone, blank=True, null=True)
+    hiring = models.ForeignKey(PaymentPackage, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.artisticName
@@ -114,10 +109,10 @@ class ModuleTypeField(Enum):
 
 
 class PortfolioModule(models.Model):
-    type = models.CharField(choices=[(tag, tag.value) for tag in ModuleTypeField])
+    type = models.CharField(max_length=255, choices=[(tag, tag.value) for tag in ModuleTypeField])
     link = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    portfolio = Portfolio(blank=False, null=False)
+    portfolio = Portfolio
 
     def __str__(self):
         return self.type + ' - ' + self.description
@@ -135,39 +130,39 @@ class MoneyField:
 class Performance(PaymentPackage):
     info = models.TextField(blank=False, null=False)
     hours = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.5'))])
-    price = MoneyField(black=False, null=False)
+    price = MoneyField
 
 
 class Fare(PaymentPackage):
-    priceHour = MoneyField(black=False, null=False)
+    priceHour = MoneyField
 
 
 class Custom(PaymentPackage):
-    minimumPrice = MoneyField(black=False, null=False)
+    minimumPrice = MoneyField
 
 
 class SystemConfiguration(models.Model):
-    minimumPrice = MoneyField(black=False, null=False)
+    minimumPrice = MoneyField
     paypalTax = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
     creditCardTax = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
     vat = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
     profit = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
-    corporateEmail = models.EmailField(blank=False, null=False)
-    reportEmail = models.EmailField(blank=False, null=False)
-    logo = models.CharField(blank=False, null=False)
-    appName = models.CharField(blank=False, null=False)
-    slogan = models.CharField(blank=True, null=True)
+    corporateEmail = models.EmailField
+    reportEmail = models.EmailField
+    logo = models.CharField(max_length=255, blank=False, null=False)
+    appName = models.CharField(max_length=255, blank=False, null=False)
+    slogan = models.CharField(max_length=255, blank=True, null=True)
     termsText = models.TextField(blank=False, null=True)
     privacyText = models.TextField(blank=False, null=True)
 
 
 class EventLocation(models.Model):
-    name = models.CharField(blank=False, null=False)
-    address = models.CharField(blank=False, null=False)
+    name = models.CharField(max_length=255, blank=False, null=False)
+    address = models.CharField(max_length=255, blank=False, null=False)
     equipment = models.TextField(blank=False, null=False)
     description = models.TextField(blank=True, null=True)
-    zone = models.ManyToOneField(Zone, blank=False, null=False)
-    customer = models.ManyToOneField(Customer, blank=True, null=True)
+    zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -185,16 +180,13 @@ class OfferStatusField(Enum):
 
 class Offer(models.Model):
     description = models.TextField(blank=False, null=False)
-    status = models.CharField(language=models.CharField(
-        max_length=15,
-        choices=[(tag, tag.value) for tag in OfferStatusField]
-    ))
+    status = models.CharField(max_length=20, choices=[(tag, tag.value) for tag in ModuleTypeField])
     date = models.DateTimeField(null=False, blank=False)
-    hours = models.FloatField(blank=False, null=False)
-    price = models.FloatField(blank=False, null=False)
+    hours = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.5'))])
+    price = MoneyField
     paymentCode = models.CharField(max_length=140)
-    paymentPackage = models.OneToOneField(PaymentPackage, blank=False, null=False)
-    eventLocation = models.OneToManyField(EventLocation, blank=False, null=False)
+    paymentPackage = models.OneToOneField(PaymentPackage, on_delete=models.CASCADE)
+    eventLocation = models.ForeignKey(EventLocation, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
