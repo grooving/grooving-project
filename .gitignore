@@ -6,3 +6,4 @@ grooving-server/Server/venv/
 **/__pycache__
 
 grooving-server/Server/Grooving/migrations/
+venv/
