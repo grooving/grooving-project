@@ -6,7 +6,10 @@
     
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/acceptnotif">AcceptNotif</router-link> |
+      <router-link to="/sentnotif">SentNotif</router-link> |
+      <router-link to="/tarjeta">Tarjeta</router-link>
     </div>
     <router-view/>
     </div>
@@ -64,5 +67,22 @@ footer {
   height: 100%;
   width: 100%;
 
+}
+
+@media (max-width: 768px) {
+
+  body::after {
+    content: '';
+    display: block;
+    height: 10px; /* Set same as footer's height */
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0px;
+    display: none;
+  }
 }
 </style>
