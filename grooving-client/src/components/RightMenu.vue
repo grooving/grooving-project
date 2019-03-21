@@ -84,6 +84,7 @@ $(window).bind('scroll', function () {
     width: auto;
     position: relative;
     right: 0;
+    box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .3);
 }
 
 .divider {
