@@ -1,6 +1,6 @@
 <template>
     <div>
-        <footer>
+        <footer class="bg-light">
             <div class="info">
                 <a v-bind:href="aboutUsURI" class="link">About Us</a> | 
                 <a v-bind:href="FAQsURI" class="link">FAQs</a> | 
@@ -47,9 +47,9 @@ export default {
         font-family: "Archivo"
     }
 
+
     footer {
-        background-color: #f5f5f5;
-        padding: 30px;
+        padding: 15px;  
     }
 
     .info {
@@ -63,6 +63,12 @@ export default {
 
     span {         
         font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+        footer {
+            padding-top: 5px;  
+        }
     }
 
 </style>
