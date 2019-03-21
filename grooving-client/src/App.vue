@@ -3,6 +3,7 @@
     <div class="content">
     <div class="Header"><Header/></div>
     <div class="RightMenu"><RightMenu/></div>
+    <div class="LeftMenu"><LeftMenu/></div>
     
     <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -17,10 +18,11 @@
 <script>
 import Header from "./components/menus/Header.vue"
 import RightMenu from "./components/RightMenu.vue"
+import LeftMenu from "./components/LeftMenu.vue"
 import Footer from "./components/Footer.vue"
 export default{
 components:{
-  Header, RightMenu, Footer
+  Header, RightMenu, LeftMenu, Footer
 }
 }
 
