@@ -10,7 +10,7 @@
       <div class="d-none d-md-block mr-auto">
         <ul class="navbar-nav row-alignment right-float">
           <li v-for="item in menu_links" class="nav-item mx-2" v-bind:class="{active: item.selected}">
-            <router-link class="nav-link" :to="item.link">{{item.text}}</router-link> 
+            <router-link class="nav-link font" :to="item.link">{{item.text}}</router-link> 
           </li>
         </ul>
       </div>
@@ -18,25 +18,29 @@
         <ul class="navbar-nav row-alignment">
           <li class="nav-item active mx-2 right-float">
             <div class="d-md-none">
-            <a class="nav-link" href="#" @click="alerta()"><i class="material-icons align-middle">search</i></a>
+            <a class="nav-link" href="#" @click="toggleSearchPanel()"><i class="material-icons align-middle">search</i></a>
             </div>
             <div class="d-none d-md-inline nav-item">
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" style="border-radius:100px;" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn" type="submit"><i class="material-icons align-middle">search</i></button>
+                <button class="btn" type="submit"><i class="material-icons align-middle ">search</i></button>
               </form>
             </div>
           </li>
           <li class="nav-item mx-2 right-float vertical-center">
-            <a class="nav-link vertical-center" href="#"><i class="material-icons align-middle">account_circle</i></a>
+            <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" 
+        v-on:click=" collapsed = !collapsed"><a class="nav-link vertical-center" href="#"><i class="material-icons align-middle">account_circle</i></a></button>
           </li>
         </ul>
       </div>
     </nav>
+    <Search v-if="showSearchMenu" @closeSearch="toggleSearchPanel()" />
     </div>
 </template>
 
 <script>
+import Search from "./Search.vue";
+
 export default {
     name: 'Header',
     data: function(){
@@ -45,13 +49,43 @@ export default {
             {text:"Top Artists", link:"#", selected: true},
             {text:"My Offers", link:"#", selected: false},
             {text:"FAQ", link:"#", selected: false}
-          ]
+          ],
+          showSearchMenu: false,
       }
-    }
+    },
+    components:{
+      Search
+    },
+    methods: {
+        toggleSearchPanel: function() {
+          this.showSearchMenu = !this.showSearchMenu;
+
+          if(this.showSearchMenu){
+            $(document.body).css("overflow", "hidden")
+          }else{
+            $(document.body).css("overflow", "")
+          }
+
+        }
+      }
 }
 </script>
 
 <style scoped>
+
+.font {
+  font-family: "Archivo"
+}
+
+.collaps {
+  border: 0ch;
+  background: transparent;
+  
+}
+
+  nav{
+    height:75px;
+  }
 
   .no-border{
     border:none;
@@ -75,6 +109,7 @@ export default {
   input:focus{
     box-shadow: 2px 2px 8px 0px rgba(0,0,0,.2)
   }
+  
 
   .vertical-center{
     display: flex; 
