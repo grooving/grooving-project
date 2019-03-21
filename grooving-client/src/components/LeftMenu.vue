@@ -25,6 +25,9 @@
   </div>
 </template>
 
+
+<!-- Script -->
+ 
 <script>
 export default {
   name: 'LeftMenu',
