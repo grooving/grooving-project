@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Grooving.apps.GroovingConfig',
+    'Offer.apps.OfferConfig',
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
@@ -48,8 +49,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    )
-}
+    ),
+    'DEFAULT_FILTER_BACKEND': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,8 +97,8 @@ DATABASES = {
         'NAME': 'grooving',
         'HOST': '127.0.0.1',
         'PORT': '5432',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'USER': 'grooving',
+        'PASSWORD': 'e35bdc42',
     }
 }
 

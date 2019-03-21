@@ -31,10 +31,6 @@ class UserAbstract(Actor):
         abstract = True
 
 
-class Artist(UserAbstract):
-    pass
-
-
 class CreditCardField:
     holder = models.CharField(max_length=255, blank=False, null=False)
     expirationDate = models.DateField(blank=False, null=False)
@@ -60,7 +56,7 @@ class Calendar(models.Model):
     days = ArrayField(models.BooleanField(default=False), size=366)
 
     def __str__(self):
-        return self.year
+        return str(self.year)
 
 
 class ArtisticGender(models.Model):
@@ -84,7 +80,7 @@ class PaymentPackage(models.Model):
     appliedVAT = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
 
     def __str__(self):
-        return self.description + ' - ' + self.appliedVAT
+        return self.description + ' - ' + str(self.appliedVAT)
 
 
 class Portfolio(models.Model):
@@ -94,11 +90,14 @@ class Portfolio(models.Model):
     portfolioModule = models.ManyToManyField('PortfolioModule', blank=True)
     zone = models.ManyToManyField(Zone, blank=True)
     hiring = models.ForeignKey(PaymentPackage, blank=True, null=True, on_delete=models.CASCADE)
-    artist = models.OneToOneField(Artist, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.artisticName
 
+
+class Artist(UserAbstract):
+    portfolio = models.OneToOneField(Portfolio, null=True, on_delete=models.SET_NULL)
+    pass
 
 ModuleTypeField = (
     ('PHOTO', 'PHOTO'),
