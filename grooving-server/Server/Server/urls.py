@@ -18,13 +18,19 @@ from django.urls import path
 from django.urls import include, path
 from rest_framework import routers
 from principal import views
+from django.conf import settings
+from django.conf.urls import url, include
 
+from offer.views import OfferManage
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^offers/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
 ]
+
