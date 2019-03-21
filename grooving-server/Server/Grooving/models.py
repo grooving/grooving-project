@@ -1,21 +1,26 @@
-from collections import defaultdict
-
 from decimal import Decimal
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.postgres.fields import ArrayField
-from enum import Enum
 
 
 # Create your models here.
 
+class AbstractEntity(models.Model):
+    creationMoment = models.DateTimeField(auto_now_add=True)
+    lastModification = models.DateTimeField(auto_now=True)
+    isHidden = models.BooleanField(default=False)
 
-class Actor(models.Model):
+    class Meta:
+        abstract = True
+
+
+class Actor(AbstractEntity):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.username
+        return self.user.username
 
     class Meta:
         abstract = True
@@ -51,11 +56,8 @@ class CreditCardField:
 class Customer(UserAbstract):
     creditCard = CreditCardField
 
-    def __str__(self):
-        return self.username
 
-
-class Calendar(models.Model):
+class Calendar(AbstractEntity):
     year = models.IntegerField(null=False, validators=[MinValueValidator(2019), MaxValueValidator(3000)])
     days = ArrayField(models.BooleanField(default=False), size=366)
 
@@ -63,7 +65,7 @@ class Calendar(models.Model):
         return self.year
 
 
-class ArtisticGender(models.Model):
+class ArtisticGender(AbstractEntity):
     name = models.CharField(blank=False, null=False, max_length=140)
     parentGender = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
@@ -71,7 +73,7 @@ class ArtisticGender(models.Model):
         return self.name
 
 
-class Zone(models.Model):
+class Zone(AbstractEntity):
     name = models.CharField(blank=False, null=False, max_length=140)
     parentZone = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
@@ -79,7 +81,7 @@ class Zone(models.Model):
         return self.name
 
 
-class PaymentPackage(models.Model):
+class PaymentPackage(AbstractEntity):
     description = models.TextField(blank=True, null=True)
     appliedVAT = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
 
@@ -87,7 +89,7 @@ class PaymentPackage(models.Model):
         return self.description + ' - ' + self.appliedVAT
 
 
-class Portfolio(models.Model):
+class Portfolio(AbstractEntity):
     artisticName = models.CharField(blank=True, null=True, max_length=140)
     calendar = models.ForeignKey(Calendar, blank=True, null=True, on_delete=models.CASCADE)
     artisticGender = models.ManyToManyField(ArtisticGender, blank=True, null=True)
@@ -108,7 +110,7 @@ ModuleTypeField = (
     ('MEMBER', 'MEMBER'))
 
 
-class PortfolioModule(models.Model):
+class PortfolioModule(AbstractEntity):
     type = models.CharField(max_length=255, choices=ModuleTypeField)
     link = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
@@ -126,6 +128,9 @@ class MoneyField:
         self.amount = amount
         self.currency = currency
 
+    def __str__(self):
+        return self.amount + ' ' + self.currency
+
 
 class Performance(PaymentPackage):
     info = models.TextField(blank=False, null=False)
@@ -141,7 +146,7 @@ class Custom(PaymentPackage):
     minimumPrice = MoneyField
 
 
-class SystemConfiguration(models.Model):
+class SystemConfiguration(AbstractEntity):
     minimumPrice = MoneyField
     paypalTax = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
     creditCardTax = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
@@ -156,10 +161,10 @@ class SystemConfiguration(models.Model):
     privacyText = models.TextField(blank=False, null=True)
 
 
-class EventLocation(models.Model):
-    name = models.CharField(max_length=255, blank=False, null=False)
+class EventLocation(AbstractEntity):
+    name = models.CharField(max_length=255, blank=True, null=True)
     address = models.CharField(max_length=255, blank=False, null=False)
-    equipment = models.TextField(blank=False, null=False)
+    equipment = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -178,13 +183,13 @@ OfferStatusField =(
     ('PAYMENT_MADE', "PAYMENT_MADE"))
 
 
-class Offer(models.Model):
+class Offer(AbstractEntity):
     description = models.TextField(blank=False, null=False)
     status = models.CharField(max_length=20, choices=OfferStatusField)
     date = models.DateTimeField(null=False, blank=False)
-    hours = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.5'))])
+    hours = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.5'))])
     price = MoneyField
-    paymentCode = models.CharField(max_length=140)
+    paymentCode = models.CharField(max_length=140, unique=True)
     paymentPackage = models.OneToOneField(PaymentPackage, on_delete=models.CASCADE)
     eventLocation = models.ForeignKey(EventLocation, on_delete=models.CASCADE)
 
