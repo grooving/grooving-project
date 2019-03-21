@@ -15,7 +15,7 @@ class Actor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.username
+        return self.user.username
 
     class Meta:
         abstract = True
@@ -29,10 +29,6 @@ class UserAbstract(Actor):
 
     class Meta:
         abstract = True
-
-
-class Artist(UserAbstract):
-    pass
 
 
 class CreditCardField:
@@ -106,6 +102,10 @@ ModuleTypeField = (
     ('AUDIO', 'AUDIO'),
     ('SOCIAL', 'SOCIAL'),
     ('MEMBER', 'MEMBER'))
+
+
+class Artist(UserAbstract):
+    portfolio = models.OneToOneField(Portfolio, on_delete=models.CASCADE)
 
 
 class PortfolioModule(models.Model):
