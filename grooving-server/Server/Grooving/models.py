@@ -48,7 +48,7 @@ class Customer(UserAbstract):
     creditCard = CreditCardField
 
     def __str__(self):
-        return self.username
+        return self.user.username
 
 
 class Calendar(models.Model):
@@ -80,7 +80,7 @@ class PaymentPackage(models.Model):
     appliedVAT = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
 
     def __str__(self):
-        return self.description + ' - ' + self.appliedVAT
+        return self.description + ' - ' + str(self.appliedVAT)
 
 
 class Portfolio(models.Model):
