@@ -1,4 +1,7 @@
 <template>
+<div class="prueba">
+    <div class="title"><p>Choose a date</p></div>
+    
     <div class="everything">
         <div class="tarjeta">
             <a v-bind:href="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></a>
@@ -17,6 +20,7 @@
           <div class="continueButtonDiv"><a v-bind:href="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></a></div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -34,7 +38,7 @@ export default {
         },
         artistImage: {
             type: String,
-            default: 'https://img.europapress.es/fotoweb/fotonoticia_20181107115306_1920.jpg',
+            default: 'http://www.tiumag.com/wp-content/uploads/rosalia-2018-2-705x564.jpg',
         },
         artistName: {
             type: String,
@@ -152,6 +156,15 @@ export default {
         background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
     }
 
+    .continueButtonDiv {
+        margin-top: 30px;
+        margin-bottom: 10%;
+    }
+
+    .title {
+        display: none;
+    }
+
     @media (min-width:768px)  {
         .tarjeta {
             min-width: 335px;
@@ -162,7 +175,11 @@ export default {
         }
 
         .calendarButton  {
-            margin-left: 10px;
+            margin-left: 5%;
+            width: 50%;
+            margin-top: 0%;
+            margin-right: 0%;
+            display: inline-block;
         }
       
         .continueButtonDiv {
@@ -173,9 +190,22 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 10%;
+            margin-top: 5%;
             text-align: center;
             padding: 15px;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top:0%;
+        }
+        .title {
+            display: inline-block;
+            margin-left: 18%;
+            text-align: left;
+            font-size: 50px;
+            margin-top: 5%;
+            margin-bottom: 0%;
+            margin-left: 1px;
+            font-weight: bold;
         }
     }
 
