@@ -90,10 +90,11 @@ class PaymentPackage(models.Model):
 class Portfolio(models.Model):
     artisticName = models.CharField(blank=True, null=True, max_length=140)
     calendar = models.ForeignKey(Calendar, blank=True, null=True, on_delete=models.CASCADE)
-    artisticGender = models.ManyToManyField(ArtisticGender, blank=True, null=True)
-    portfolioModule = models.ManyToManyField('PortfolioModule', blank=True, null=True)
-    zone = models.ManyToManyField(Zone, blank=True, null=True)
+    artisticGender = models.ManyToManyField(ArtisticGender, blank=True)
+    portfolioModule = models.ManyToManyField('PortfolioModule', blank=True)
+    zone = models.ManyToManyField(Zone, blank=True)
     hiring = models.ForeignKey(PaymentPackage, blank=True, null=True, on_delete=models.CASCADE)
+    artist = models.OneToOneField(Artist, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.artisticName
@@ -162,7 +163,7 @@ class EventLocation(models.Model):
     equipment = models.TextField(blank=False, null=False)
     description = models.TextField(blank=True, null=True)
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
