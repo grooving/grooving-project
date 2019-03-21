@@ -34,12 +34,14 @@ export default {
 }
 
 $(window).bind('scroll', function () {
-    if ($(window).scrollTop() > 60) {
-        $('#sidebar').addClass('fixed');
+    if ($(window).scrollTop() > 75) {
+        $('#sidebar').offset({top:window.pageYOffset});        
     } else {
-        $('#sidebar').removeClass('fixed');
+        
+        $('#sidebar').offset({top:75});
     }
 });
+
 
 </script>
 
@@ -89,28 +91,14 @@ $(window).bind('scroll', function () {
     width: 100%;
 }
 
-.collaps{
-    width: 20px;
-    height: 20px;
-    background-color: yellowgreen;
-}
-
-.fixed {
-    position: fixed;
-    top: 0;
-}
-
-.fixedm {
-    position: fixed;
-    top: 30px;
-}
 
 @media (min-width: 768px) {
+
     #sidebar.collapse {
         
-        text-align: right;
+        text-align: right ;
         z-index: 2000;
-        transition: all .3s ease;
+        transition: right .3s ease;
         right: -30%; /* -width of sidebar */
         width: 0;
         height: 100% !important;
@@ -120,17 +108,18 @@ $(window).bind('scroll', function () {
 
     #sidebar.collapsing {
         text-align: right;
-        transition: all .18s ease-in;
+        transition: right .18s ease-in;
         right: -30%;  /* -width of sidebar */
-        width: fit-content;  /* width of sidebar */
+        width: 25%;  /* width of sidebar */
         height: 100% !important;
         display: block;
         overflow: auto
+        
     }
 
     #sidebar.collapse.show {
         text-align: right;
-        width: fit-content;  /* width of sidebar */
+        width: 25%;  /* width of sidebar */
     }
     #sidebar {
         
@@ -138,21 +127,7 @@ $(window).bind('scroll', function () {
         float: right;
 
     }
-    .collaps{
-        width: 20px;
-        height: 20px;
-        background-color: yellowgreen;
-    }
 
-    .fixed {
-        position: fixed;
-        top: 0;
-    }
-
-    .fixedm {
-        position: fixed;
-        top: 30;
-    }
 }
 
 </style>
