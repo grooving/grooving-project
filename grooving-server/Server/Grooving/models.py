@@ -36,10 +36,6 @@ class UserAbstract(Actor):
         abstract = True
 
 
-class Artist(UserAbstract):
-    pass
-
-
 class CreditCardField:
     holder = models.CharField(max_length=255, blank=False, null=False)
     expirationDate = models.DateField(blank=False, null=False)
@@ -62,7 +58,7 @@ class Calendar(AbstractEntity):
     days = ArrayField(models.BooleanField(default=False), size=366)
 
     def __str__(self):
-        return self.year
+        return str(self.year)
 
 
 class ArtisticGender(AbstractEntity):
@@ -86,20 +82,24 @@ class PaymentPackage(AbstractEntity):
     appliedVAT = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('00.0'))])
 
     def __str__(self):
-        return self.description + ' - ' + self.appliedVAT
+        return self.description + ' - ' + str(self.appliedVAT)
 
 
 class Portfolio(AbstractEntity):
     artisticName = models.CharField(blank=True, null=True, max_length=140)
     calendar = models.ForeignKey(Calendar, blank=True, null=True, on_delete=models.CASCADE)
-    artisticGender = models.ManyToManyField(ArtisticGender, blank=True, null=True)
-    portfolioModule = models.ManyToManyField('PortfolioModule', blank=True, null=True)
-    zone = models.ManyToManyField(Zone, blank=True, null=True)
+    artisticGender = models.ManyToManyField(ArtisticGender, blank=True)
+    portfolioModule = models.ManyToManyField('PortfolioModule', blank=True)
+    zone = models.ManyToManyField(Zone, blank=True)
     hiring = models.ForeignKey(PaymentPackage, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.artisticName
 
+
+class Artist(UserAbstract):
+    portfolio = models.OneToOneField(Portfolio, null=True, on_delete=models.SET_NULL)
+    pass
 
 ModuleTypeField = (
     ('PHOTO', 'PHOTO'),
@@ -167,7 +167,7 @@ class EventLocation(AbstractEntity):
     equipment = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
