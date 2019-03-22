@@ -19,7 +19,7 @@
         props: {
             offerID: {
                 type: Number,
-                default: 3
+                default: 1
             },
             sentText: {
                 type: String,
