@@ -5,8 +5,8 @@
 ## USER_TRAVIS --------> usuario de github                 #
 ## EMAIL_TRAVIS -------> email de github                   #
 ## MILESTONE_TRAVIS ---> número de milestone               #
-## NOMBRE_ZIP ---------> decide                            #
-## RAMA_TRAVIS --------> master                            #
+## NOMBRE_ZIP ---------> grooving                          #
+## RAMA_TRAVIS --------> CI-Integration                    #
 ## TOKEN_TRAVIS -------> token personal sin encriptar      #
 ############################################################
 
