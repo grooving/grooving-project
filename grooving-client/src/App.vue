@@ -8,7 +8,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/acceptnotif">AcceptNotif</router-link> |
-      <router-link to="/sentnotif">SentNotif</router-link> |
+      <router-link to="/paidnotif">SentNotif</router-link> |
+      <router-link to="/hiringtypes">HiringType</router-link> |
       <router-link to="/tarjeta">Tarjeta</router-link>
     </div>
     <router-view/>

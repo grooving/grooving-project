@@ -56,7 +56,7 @@ $(window).bind('scroll', function () {
     text-align: right;
     position: fixed;
     z-index: 2000;
-    transition: all .3s ease;
+    transition: right .3s ease;
     right: -130%; /* -width of sidebar */
     width: 100%;
     height: fit-content !important;
@@ -66,7 +66,7 @@ $(window).bind('scroll', function () {
 
 #sidebar.collapsing {
     text-align: right;
-    transition: all .18s ease-in;
+    transition: right .18s ease-in;
     position: fixed;
     right: -130%;  /* -width of sidebar */
     width: 100%;  /* width of sidebar */
@@ -114,7 +114,6 @@ $(window).bind('scroll', function () {
         height: 100% !important;
         display: block;
         overflow: auto
-        
     }
 
     #sidebar.collapse.show {
@@ -122,10 +121,8 @@ $(window).bind('scroll', function () {
         width: 25%;  /* width of sidebar */
     }
     #sidebar {
-        
         width: auto;
         float: right;
-
     }
 
 }

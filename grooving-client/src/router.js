@@ -31,9 +31,14 @@ export default new Router({
       component: () => import('./components/AcceptedNotif.vue')
     },
     {
-      path: '/sentnotif',
-      name: 'sentnotif',
-      component: () => import('./components/SentOfferNotif.vue')
+      path: '/paidnotif',
+      name: 'paidnotif',
+      component: () => import('./components/PaymentNotif.vue')
+    },
+    {
+      path: '/hiringtypes',
+      name: 'hiringtypes',
+      component: () => import('./components/HiringType.vue')
     },
   ]
 })
