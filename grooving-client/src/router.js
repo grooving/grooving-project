@@ -20,25 +20,6 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
-    {
-      path: '/tarjeta',
-      name: 'tarjeta',
-      component: () => import('./views/DateSelection.vue')
-    },
-    {
-      path: '/acceptnotif',
-      name: 'acceptnotif',
-      component: () => import('./components/AcceptedNotif.vue')
-    },
-    {
-      path: '/paidnotif',
-      name: 'paidnotif',
-      component: () => import('./components/PaymentNotif.vue')
-    },
-    {
-      path: '/hiringtypes',
-      name: 'hiringtypes',
-      component: () => import('./components/HiringType.vue')
-    },
+
   ]
 })
