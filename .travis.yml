@@ -23,8 +23,8 @@ addons:
 services:
   - postgresql
 
-env:
-  - DJANGO_SETTINGS_MODULE="grooving.settings"
+# env:
+# - DJANGO_SETTINGS_MODULE="grooving.settings"
 
 install:
   - pip install -r grooving-server/Server/requirements.txt
