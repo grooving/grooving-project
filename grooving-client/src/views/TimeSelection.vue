@@ -1,6 +1,6 @@
 <template>
 <div class="prueba">
-    <div class="title"><p>Choose a date</p></div>
+    <div class="title"><p style="text-align: left !important;">Choose a time range</p></div>
     
     <div class="everything">
         <div class="tarjeta">
@@ -15,8 +15,8 @@
                 </div>
             </div>
         </div>
-        <div class="calendarButton">
-          <div class="calendar"><Calendar/></div>
+        <div class="sliderButton">
+          <div class="slider"><DoubleSlider/></div>
           <div class="continueButtonDiv"><a v-bind:href="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></a></div>
         </div>
     </div>
@@ -24,12 +24,12 @@
 </template>
 
 <script>
-import Calendar from '@/components/Calendar.vue'
+import DoubleSlider from '@/components/DoubleSlider.vue'
 
 export default {
-  name: 'dateSelection',
+  name: 'timeSelection',
   components: {
-    Calendar
+    DoubleSlider
   },
   props: {
         artistURI: {
@@ -156,6 +156,13 @@ export default {
         background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
     }
 
+    .sliderButton  {
+        margin-top: 20%;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .continueButtonDiv {
         margin-top: 30px;
         margin-bottom: 10%;
@@ -172,9 +179,10 @@ export default {
 
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
             margin-right: 10px;
+            margin-bottom: 10%;
         }
 
-        .calendarButton  {
+        .sliderButton  {
             margin-left: 5%;
             width: 50%;
             margin-top: 0%;
@@ -183,7 +191,7 @@ export default {
         }
       
         .continueButtonDiv {
-            margin-top: 15px;
+            margin-top: 50px;
         }
       
         .everything {
@@ -197,6 +205,7 @@ export default {
             margin-right: 10%;
             margin-top:0%;
         }
+
         .title {
             display: inline-block;
             margin-left: 18%;
@@ -207,6 +216,8 @@ export default {
             margin-left: 1px;
             font-weight: bold;
         }
+
+        
     }
 
 </style>
