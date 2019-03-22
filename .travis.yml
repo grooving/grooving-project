@@ -55,7 +55,7 @@ deploy:
   skip_cleanup: true
   on:
     branch: $RAMA_TRAVIS
-    condition: $DEPLOY_TRAVIS = 0
+    condition: $DEPLOY_TRAVIS = 1
     tags: false
 
 notifications:
