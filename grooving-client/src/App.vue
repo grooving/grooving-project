@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <div class="content">
-    <div class="Header"><Header/></div>
-    <div class="RightMenu"><RightMenu/></div>
+      <div class="content">
+        <div class="Header"><Header @authenticated="setAuthenticated" v-bind:authenticated="authenticated"/></div>
+        <div class="RightMenu"><RightMenu/></div>
     
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-    </div>
-    <footer><Footer/></footer>
+        <div id="nav">
+          <router-link to="/">Home</router-link> |
+          <router-link to="/about">About</router-link>
+        </div>
+        <router-view  />
+      </div>
+      <footer><Footer/></footer>
   </div>
 </template>
 
@@ -18,12 +18,42 @@
 import Header from "./components/menus/Header.vue"
 import RightMenu from "./components/RightMenu.vue"
 import Footer from "./components/Footer.vue"
-export default{
-components:{
-  Header, RightMenu, Footer
-}
-}
 
+export default {
+  data() {
+    return {
+      authenticated: false,
+      mockAccount: {
+        username: "pug",
+        password: "pug",
+      }
+    }
+  },
+
+  components:{
+    Header, RightMenu, Footer
+  },
+
+  mounted() {
+    if(!this.authenticated) {
+      this.$router.replace({name: "#"});
+    }
+  },
+  
+  methods: {
+    setAuthenticated(status) {
+      if (status == "false") {
+        this.authenticated = false;
+      }
+      if (status == "true") {
+        this.authenticated = true;
+      }
+    },
+    logout() {
+      this.authenticated = false;
+    }
+  }
+}
 
 </script>
 

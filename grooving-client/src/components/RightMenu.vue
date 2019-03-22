@@ -18,7 +18,7 @@
                 </li>
                 <b-dropdown-divider class="divider"/>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Log Out</a>
+                    <a class="nav-link" href="" v-on:click="logout()">Log Out</a>
                 </li>
             </ul>
         </div>
@@ -30,7 +30,13 @@ export default {
   name: 'RightMenu',
     props: {
         blur: Boolean
+    },
+    methods: {
+    logout() {
+      this.$emit("authenticated", "false");
+          this.$router.replace({ name: "#" });
     }
+  },
 }
 
 $(window).bind('scroll', function () {
