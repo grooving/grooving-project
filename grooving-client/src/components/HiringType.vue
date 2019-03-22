@@ -133,7 +133,7 @@ export default {
     }
 .heads {
     background-color:white; text-align: left; border-bottom: none; 
-    padding-top: 3%; padding-bottom: 1%; margin-left: 2%;
+    padding-top: 3%; padding-bottom: 0.5%; margin-left: 15px;
 }
 
 .Hbutton{
@@ -141,8 +141,8 @@ export default {
 }
 
 .bodies{
-    text-align: left; margin-left: 4%; padding-top: 1%; padding-bottom: 3%;
-    margin-bottom: 1%;
+    text-align: left;  padding-top: 1%; padding-bottom: 3%;
+    margin-bottom: 1%; margin-left: 20px;
     
 }
 
@@ -150,7 +150,8 @@ export default {
     display: inline-block;
     width: 100%;
     box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
-    margin-bottom: 3% 
+    margin-bottom: 3%;
+
 }
 
 .tarjetaB {
@@ -178,15 +179,6 @@ h2 {
     text-align: left;
     margin-left: 5%;
     margin-top: 2.5%
-}
-
-.notice {
-    color: grey; 
-    font-weight: bold; 
-    font-size: 125%; 
-    padding-bottom: 10px; 
-    margin-left: 3%; 
-    margin-right: 3%;
 }
 
 .card-img-top {
@@ -250,10 +242,11 @@ h2 {
     background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
 }
 
+
  @media (min-width:768px)  {
     .heads {
         background-color:white; text-align: left; border-bottom: none; 
-        padding-top: 3%; padding-bottom: 1%; margin-left: 2%;
+        padding-top: 2%; padding-bottom: 0.5%; margin-left: 15px;
     }
 
     .Hbutton{
@@ -261,7 +254,7 @@ h2 {
     }
 
     .bodies{
-        text-align: left; margin-left: 4%; padding-top: 1%; padding-bottom: 3%;
+        text-align: left; margin-left: 20px; padding-top: 1%; padding-bottom: 3%;
         margin-bottom: 1%;
         
     }
@@ -290,24 +283,17 @@ h2 {
     }
 
     .accordion {
-        margin: 2.5%;
-        margin-left: 5%;
-        margin-right: 5%;
+        margin-top: 1.5%;
+        margin-bottom: 2.5%;
+        margin-left: 25%;
+        margin-right: 25%;
+        align-items: center;
     }
 
     h2 {
         text-align: left;
-        margin-left: 5%;
-        margin-top: 2.5%
-    }
-
-    .notice {
-        color: grey; 
-        font-weight: bold; 
-        font-size: 125%; 
-        padding-bottom: 10px; 
-        margin-left: 3%; 
-        margin-right: 3%;
+        margin-left: 25%;
+        margin-top: 1.5%
     }
 
     .card-img-top {
