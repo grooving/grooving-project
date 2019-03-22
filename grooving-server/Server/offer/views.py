@@ -11,8 +11,8 @@ from .serializers import OfferSerializer
 from rest_framework import status
 from django.http import Http404
 
-class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
+class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
@@ -47,11 +47,13 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         serializer = OfferSerializer(offer)
         return Response(serializer.data)
 
-
-
     def put(self, request, pk):
         offer = self.get_object(pk)
-        serializer = OfferSerializer(offer, data=request.data)
+        if len(request.data) == 1 and 'status' in request.data:
+            serializer = OfferSerializer(offer, data=request.data, partial=True)
+
+        else:
+            serializer = OfferSerializer(offer, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -61,4 +63,12 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         offer = self.get_object(pk)
         offer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def update(self, request, pk, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object(pk)
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
 
