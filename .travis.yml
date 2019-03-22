@@ -49,13 +49,13 @@ before_deploy:
 
 deploy:
   provider: releases
-  api-key:
-    secure: $TOKEN_TRAVIS
+  # api-key:
+  #   secure: $TOKEN_TRAVIS
   file: "./$NOMBRE_ZIP.zip"
   skip_cleanup: true
   on:
     branch: $RAMA_TRAVIS
-    condition: $DEPLOY_TRAVIS = 1
+    condition: $DEPLOY_TRAVIS = 0
     tags: false
 
 notifications:
