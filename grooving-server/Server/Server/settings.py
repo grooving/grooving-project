@@ -40,19 +40,22 @@ INSTALLED_APPS = [
     'Grooving.apps.GroovingConfig',
     'django_filters',
     'rest_framework',
+    'rest_framework_swagger',
     'rest_framework.authtoken',
-    'rest_framework_swagger'
+    'login'
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
     'DEFAULT_FILTER_BACKEND': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'}
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
