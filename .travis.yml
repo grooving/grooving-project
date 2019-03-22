@@ -24,13 +24,13 @@ services:
   - postgresql
 
 env:
-  - DJANGO_SETTINGS_MODULE="decide.settings"
+  - DJANGO_SETTINGS_MODULE="grooving.settings"
 
 install:
   - pip install -r grooving-server/Server/requirements.txt
 
 before_script:
-  - psql -c "create  user root with password 'root'" -U postgres
+  - psql -c "create user root with password 'root'" -U postgres
   - psql -c "create database grooving owner root" -U postgres
 
 script:
