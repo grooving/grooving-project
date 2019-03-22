@@ -31,6 +31,7 @@ class UserAbstract(Actor):
         abstract = True
 
 
+
 class CreditCardField:
     holder = models.CharField(max_length=255, blank=False, null=False)
     expirationDate = models.DateField(blank=False, null=False)
@@ -94,6 +95,10 @@ class Portfolio(models.Model):
     def __str__(self):
         return self.artisticName
 
+
+class Artist(UserAbstract):
+    portfolio = models.OneToOneField(Portfolio,null=True,on_delete=models.SET_NULL)
+    pass
 
 ModuleTypeField = (
     ('PHOTO', 'PHOTO'),

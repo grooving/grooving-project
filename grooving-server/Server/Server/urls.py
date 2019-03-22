@@ -14,18 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+
 from django.urls import include, path
 from rest_framework import routers
-from Grooving import views
+from django.conf.urls import url, include
+from portfolio.views import PortfolioManager
+from offer.views import OfferManage
 
-router = routers.DefaultRouter()
-router.register(r'artists', views.ArtistViewSet)
-router.register(r'portfolios', views.PortfolioViewSet)
-router.register(r'artisticGenders', views.ArtisticGenderViewSet)
+
+'''router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)'''
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
+    url(r'^portfolio/(?P<pk>[0-9]+)/$', PortfolioManager.as_view()),
+
 ]
+
