@@ -14,7 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-
 from django.urls import include, path
 from rest_framework import routers
 from django.conf.urls import url, include
@@ -34,4 +33,3 @@ urlpatterns = [
     url(r'^portfolio/(?P<pk>[0-9]+)/$', PortfolioManager.as_view()),
 
 ]
-
