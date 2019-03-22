@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -137,5 +136,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Activate Django-Heroku
-django_heroku.settings(locals())
+if 'HEROKU' in os.environ:
+    try:
+        from local_settings_heroku import *
+
+        BASEURL = 'https://'+os.environ['REPO_NAME']+'.herokuapp.com'
+
+        # Heroku (Esta configuración debe ir aquí)
+        import django_heroku
+        django_heroku.settings(locals())
+    except ImportError:
+        print("local_settings_heroku.py not found")
