@@ -31,7 +31,7 @@ install:
 
 before_script:
   - psql -c "create user root with password 'e35bdc42'" -U postgres
-  - psql -c "create database grooving owner grooving" -U postgres
+  - psql -c "create database grooving owner root" -U postgres
 
 script:
   - python ./grooving-server/Server/manage.py makemigrations
