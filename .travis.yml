@@ -27,7 +27,7 @@ services:
 # - DJANGO_SETTINGS_MODULE="grooving.settings"
 
 install:
-  - pip install -r grooving-server/requirements.txt
+  - pip install -r requirements.txt
 
 before_script:
   - psql -c "create user grooving with password 'e35bdc42'" -U postgres
