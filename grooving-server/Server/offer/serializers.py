@@ -11,9 +11,9 @@ class PaymentPackageSerializer(serializers.ModelSerializer):
 
 
 class OfferSerializer(serializers.ModelSerializer):
-    paymentpackage_set = PaymentPackageSerializer(read_only=True, many=False)
+    paymentpackage = PaymentPackageSerializer(read_only=True, many=False)
 
     class Meta:
         model = Offer
-        fields = ('description', 'status', 'date', 'hours', 'paymentpackage_set', 'eventLocation_id')
+        fields = ('description', 'status', 'date', 'hours', 'paymentpackage', 'eventLocation_id')
 
