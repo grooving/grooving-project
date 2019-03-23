@@ -30,4 +30,11 @@ class OfferSerializer(serializers.ModelSerializer):
         fields = ('description', 'status', 'date', 'hours', 'paymentCode', 'paymentPackage_id', 'eventLocation_id')
 
 
+class CreateOfferRequest(serializers.ModelSerializer):
+
+    class Meta:
+        model = Offer
+        fields = ('description', 'date', 'hours', 'price', 'paymentPackage_id', 'eventLocation_id')
+
+
 
