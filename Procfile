@@ -1,2 +1,2 @@
 % web: gunicorn --chdir ./grooving-server/ Server.wsgi --log-file -
-web: sh -c 'gunicorn --pythonpath ./grooving-server/ Server.wsgi'
+web: sh -c 'cd grooving-project && gunicorn Server.wsgi'
