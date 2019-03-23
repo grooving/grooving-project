@@ -16,17 +16,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
+from django.conf.urls import url, include
+from portfolio.views import PortfolioManager
+from offer.views import OfferManage
+from paymentPackage.views import PaymentPackageByArtist
+from calendars.views import CalendarByArtist
+from eventLocation.views import EventLocationManager
 from rest_framework.authtoken.views import obtain_auth_token
 from login import views
-
 router = routers.DefaultRouter()
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    #path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
+    url(r'^eventlocation/(?P<pk>[0-9]+)/$', EventLocationManager.as_view()),
+    url(r'^portfolio/(?P<pk>[0-9]+)/$', PortfolioManager.as_view()),
+    url(r'^artist/paymentPackages/(?P<pk>[0-9]+)/$', PaymentPackageByArtist.as_view()),
+    url(r'^artist/calendar/(?P<pk>[0-9]+)/$', CalendarByArtist.as_view()),
     path('api/login/', obtain_auth_token, name='login'),
-    # Testing
     path('api/try-login/', views.HelloView.as_view(), name='try-login'),
 ]
+
