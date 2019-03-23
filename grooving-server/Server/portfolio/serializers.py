@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from Grooving.models import Portfolio,Calendar,ArtisticGender,PortfolioModule,Zone,PaymentPackage
+from Grooving.models import Portfolio, Calendar, ArtisticGender, PortfolioModule, Zone, PaymentPackage
 
 
 class CalendarSerializer(serializers.ModelSerializer):
