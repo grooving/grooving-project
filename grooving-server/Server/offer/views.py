@@ -10,6 +10,7 @@ from rest_framework import generics
 from .serializers import OfferSerializer
 from rest_framework import status
 from django.http import Http404
+from rest_framework.permissions import IsAuthenticated
 
 
 class OfferManage(generics.RetrieveUpdateDestroyAPIView):
@@ -72,3 +73,21 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         self.perform_update(serializer)
 
 
+class CreateOffer(generics.CreateAPIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        serializer = OfferSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.data.status = 'PENDING'
+            if serializer.validated_data.paymentPackage.performance is not None:
+                serializer.validated_data.hours = serializer.validated_data.paymentPackage.performance.hours
+                serializer.validated_data.price = serializer.validated_data.paymentPackage.performance.price
+            elif serializer.validated_data.paymentPackage.fare is not None:
+                serializer.validated_data.price = serializer.validated_data.paymentPackage.fare.price * \
+                                                  serializer.validated_data.hours
+            serializer.validated_data.paymentCode = None
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

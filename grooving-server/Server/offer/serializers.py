@@ -22,8 +22,12 @@ from Grooving.models import Offer
         return instance
 '''
 
+
 class OfferSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Offer
         fields = ('description', 'status', 'date', 'hours', 'paymentCode', 'paymentPackage_id', 'eventLocation_id')
+
+
 

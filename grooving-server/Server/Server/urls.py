@@ -18,7 +18,7 @@ from django.urls import include, path
 from rest_framework import routers
 from django.conf.urls import url, include
 from portfolio.views import PortfolioManager
-from offer.views import OfferManage
+from offer.views import OfferManage, CreateOffer
 from paymentPackage.views import PaymentPackageByArtist
 from calendars.views import CalendarByArtist
 urlpatterns = [
@@ -26,6 +26,7 @@ urlpatterns = [
     #path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
+    url(r'^createOffer/', CreateOffer.as_view()),
     url(r'^portfolio/(?P<pk>[0-9]+)/$', PortfolioManager.as_view()),
     url(r'^artist/paymentPackages/(?P<pk>[0-9]+)/$', PaymentPackageByArtist.as_view()),
     url(r'^artist/calendar/(?P<pk>[0-9]+)/$', CalendarByArtist.as_view()),
