@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
 ]
 
 REST_FRAMEWORK = {
@@ -98,6 +98,9 @@ DATABASES = {
         'PORT': '5432',
         'USER': 'root',
         'PASSWORD': 'root',
+        'TEST': {
+            'NAME': 'test_grooving',
+        }
     }
 }
 

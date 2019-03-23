@@ -21,7 +21,6 @@ class Actor(AbstractEntity):
 
     def __str__(self):
         return str(self.user.username)
-
     class Meta:
         abstract = True
 
@@ -34,6 +33,7 @@ class UserAbstract(Actor):
 
     class Meta:
         abstract = True
+
 
 
 class Customer(UserAbstract):
@@ -82,6 +82,10 @@ class Artist(UserAbstract):
     portfolio = models.OneToOneField(Portfolio, null=True, on_delete=models.CASCADE)
     pass
 
+
+class Artist(UserAbstract):
+    portfolio = models.OneToOneField(Portfolio,null=True,on_delete=models.SET_NULL)
+    pass
 
 ModuleTypeField = (
     ('PHOTO', 'PHOTO'),
