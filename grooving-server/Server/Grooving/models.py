@@ -177,7 +177,7 @@ class Offer(AbstractEntity):
     hours = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2, validators=[MinValueValidator(Decimal('0.5'))])
     price = models.DecimalField(max_digits=20, decimal_places=2, validators=[MinValueValidator(Decimal('0.0'))])
     currency = models.CharField(blank=False, null=False, default='EUR', max_length=3)
-    paymentCode = models.CharField(max_length=140, unique=True)
+    paymentCode = models.CharField(max_length=140, unique=True, null=True, blank=True)
     paymentPackage = models.OneToOneField(PaymentPackage, blank=True, null=True, on_delete=models.SET_NULL)
     eventLocation = models.ForeignKey(EventLocation, on_delete=models.PROTECT)
 
