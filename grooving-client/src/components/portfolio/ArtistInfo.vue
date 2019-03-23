@@ -33,7 +33,7 @@
 
 <script>
 export default {
-    name: "ArtistCard",
+    name: "ArtistInfo",
     props: {
         artistURI: {
             type: String,
