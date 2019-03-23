@@ -1,2 +1,2 @@
 # grooving-project
-A project for ISPP from University of Seville.
+A project from ISPP at University of Seville
