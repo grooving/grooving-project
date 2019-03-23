@@ -30,12 +30,12 @@ install:
   - pip install -r grooving-server/Server/requirements.txt
 
 before_script:
-  - psql -c "create user root with password 'root'" -U postgres
-  - psql -c "create database grooving owner root" -U postgres
+  - psql -c "create user grooving with password 'e35bdc42'" -U postgres
+  - psql -c "create database grooving owner grooving" -U postgres
 
 script:
-  - python ./grooving-server/Server/manage.py makemigrations
-  - python ./grooving-server/Server/manage.py migrate
+  - python ./grooving-server/manage.py makemigrations
+  - python ./grooving-server/manage.py migrate
 #  - python ./decide/manage.py compilemessages
 #  - python ./decide/manage.py test ./decide
   - if [[ $TRAVIS_BRANCH == $RAMA_TRAVIS ]] && [[ $DEPLOY_TRAVIS == "1" ]]; then git archive --format zip --output ./$NOMBRE_ZIP.zip $RAMA_TRAVIS; echo "Zip generado correctamente."; fi
