@@ -30,7 +30,7 @@ install:
   - pip install -r ./grooving-server/Server/requirements.txt 
 
 before_script:
-  - psql -c "create user grooving with password 'e35bdc42'" -U postgres
+  - psql -c "create user root with password 'e35bdc42'" -U postgres
   - psql -c "create database grooving owner grooving" -U postgres
 
 script:
