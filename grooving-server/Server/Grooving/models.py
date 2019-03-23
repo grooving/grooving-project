@@ -36,14 +36,6 @@ class UserAbstract(Actor):
         abstract = True
 
 
-class Customer(UserAbstract):
-    #creditcard
-    holder = models.CharField(max_length=255, blank=False, null=False)
-    expirationDate = models.DateField(blank=False, null=False)
-    number = models.CharField(blank=False, null=False, max_length=16)
-    cvv = models.CharField(blank=False, null=False, max_length=3)
-
-
 class ArtisticGender(AbstractEntity):
     name = models.CharField(blank=False, null=False, max_length=140)
     parentGender = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
@@ -154,10 +146,18 @@ class EventLocation(AbstractEntity):
     equipment = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return str(self.name)
+
+
+class Customer(UserAbstract):
+    #creditcard
+    holder = models.CharField(max_length=255, blank=False, null=False)
+    expirationDate = models.DateField(blank=False, null=False)
+    number = models.CharField(blank=False, null=False, max_length=16)
+    cvv = models.CharField(blank=False, null=False, max_length=3)
+    eventLocation = models.ForeignKey(EventLocation, null=True, on_delete=models.SET_NULL)
 
 
 OfferStatusField =(
