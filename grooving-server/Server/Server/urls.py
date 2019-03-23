@@ -20,11 +20,13 @@ from django.conf.urls import url, include
 from django.urls import path
 
 from offer.views import OfferManage
+from eventLocation.views import EventLocationManager
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('', include(router.urls)),
     path('api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
+    url(r'^eventlocation/(?P<pk>[0-9]+)/$', EventLocationManager.as_view()),
 ]
 
