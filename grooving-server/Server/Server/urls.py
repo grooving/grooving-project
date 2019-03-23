@@ -16,11 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
+from django.conf.urls import url, include
+from django.urls import path
 
-router = routers.DefaultRouter()
+from offer.views import OfferManage
+
+'''router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)'''
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    path('api/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    #path('', include(router.urls)),
+    path('api/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
 ]
+
