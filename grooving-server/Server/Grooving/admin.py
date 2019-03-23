@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Artist, Portfolio, PortfolioModule, ArtisticGender, Customer, Offer, EventLocation, SystemConfiguration, Custom, Fare, Performance, PaymentPackage, Zone, Calendar
-
 admin.site.register(Artist)
 admin.site.register(Portfolio)
 admin.site.register(PortfolioModule)
