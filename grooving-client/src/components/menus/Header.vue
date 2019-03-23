@@ -2,7 +2,8 @@
     <div>
     <nav class="navbar navbar-light bg-light">
       <div class="navbar-brand vertical-center">
-        <button class="d-inline d-md-none navbar-toggler no-border">
+        <button class="d-inline d-md-none navbar-toggler no-border" role="button" data-toggle="collapse" data-target="#sidebarleft" 
+        v-on:click=" collapsed = !collapsed">
           <span class="navbar-toggler-icon"></span>
         </button>
         <a class="ml-2 vertical-center" href="#"><img src="@/assets/logos/logo_name.png" width="100px"/></a>

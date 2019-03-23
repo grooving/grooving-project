@@ -3,11 +3,7 @@
     <div class="content">
     <div class="Header"><Header/></div>
     <div class="RightMenu"><RightMenu/></div>
-    
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <div class="LeftMenu"><LeftMenu/></div>
     <router-view/>
     </div>
     <footer><Footer/></footer>
@@ -17,10 +13,13 @@
 <script>
 import Header from "./components/menus/Header.vue"
 import RightMenu from "./components/RightMenu.vue"
+import LeftMenu from "./components/LeftMenu.vue"
 import Footer from "./components/Footer.vue"
+import Index from "./views/Index.vue"
+
 export default{
 components:{
-  Header, RightMenu, Footer
+  Header, RightMenu, LeftMenu, Index,Footer
 }
 }
 

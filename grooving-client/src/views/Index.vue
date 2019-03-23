@@ -1,11 +1,7 @@
 <template>
-    <div id="carouselExampleControls" style="border: 3px !important;" class="carousel slide" data-ride="carousel">
-      <div style="box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, .2)"  class="carousel-inner">
-        <div  class="carousel-item active">
-          <img class="d-block w-100" src="@/assets/img/banner.png" alt="First slide">
-        </div>
-      </div>
-    </div>
+
+  <img class="d-block w-100 banner" src="@/assets/img/banner.png" alt="First slide" style="box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, .2) !important;">
+
 </template>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -22,13 +18,3 @@ export default {
   name: 'Index'
 }
 </script>
-
-<style>
-  img{
-    border-radius: 25px;
-  }
-
-  *{
-    background-color: red !important;
-  }
-</style>

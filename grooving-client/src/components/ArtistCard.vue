@@ -67,8 +67,9 @@ export default {
     }
 
     .tarjeta {
-        width: 25rem;
-
+        max-width: 350px;
+        width: 100%;
+        margin: 0 auto !important;
         border-radius: 20px;
         box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
     }
@@ -94,7 +95,7 @@ export default {
 
     .artistName {
         font-weight: bold;
-        font-size: 32px;
+        font-size: 2rem;
     }
 
     .artistGenres {
