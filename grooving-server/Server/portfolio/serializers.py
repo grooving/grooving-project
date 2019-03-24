@@ -54,6 +54,8 @@ class PortfolioSerializer(serializers.ModelSerializer):
 
 class ShortPortfolioSerializer(serializers.ModelSerializer):
 
+    artisticGender = ArtisticGenderSerializer(read_only=True, many=True)
+
     class Meta:
 
         model = Portfolio

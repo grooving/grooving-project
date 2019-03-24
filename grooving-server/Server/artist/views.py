@@ -1,7 +1,8 @@
 from Grooving.models import Artist, ArtisticGender
 from rest_framework import viewsets
 from .serializers import ListArtistSerializer
-from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.response import Response
 
 
 class ListArtist(viewsets.ModelViewSet):
@@ -16,8 +17,11 @@ class ListArtist(viewsets.ModelViewSet):
             if artisticname:
                 queryset = Artist.objects.filter(portfolio__artisticName=artisticname)
             if artisticgender:
-                artgen = get_object_or_404(ArtisticGender.objects, name=artisticgender)
-
+                try:
+                    artgen = ArtisticGender.objects.get(name=artisticgender)
+                except ObjectDoesNotExist:
+                    queryset = []
+                    return queryset
                 if artisticname:
                     queryset = queryset.filter(portfolio__artisticGender=artgen)
                 else:
