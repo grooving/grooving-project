@@ -9,13 +9,10 @@ import OfferDetails from './views/OfferDetails.vue'
 import AddressInput from './views/AddressInput.vue'
 import EventInput from './views/EventInput.vue'
 import TypeOfHiring from './views/TypeOfHiring.vue'
-<<<<<<< HEAD
-import Portfolio from './views/Portfolio.vue'
-=======
 import PaymentSelector from './views/PaymentSelector.vue'
 import Payment from './views/Payment.vue'
 import AcceptedOffer from './views/AcceptedOffer.vue'
->>>>>>> 5b4f516142ddc8fd673932b4b407b5ffd53af2a0
+import Portfolio from './views/Portfolio.vue'
 
 Vue.use(Router)
 
