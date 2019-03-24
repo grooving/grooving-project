@@ -6,11 +6,11 @@
          <h2>Menu</h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Top Artisrs</a>
+                    <router-link class="nav-link" to="artist_search">Top Artists</router-link> 
                 </li>
                 <b-dropdown-divider class="divider"/>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">My Offers</a>
+                    <router-link class="nav-link" to="offers">My Offers</router-link>
                 </li>
                 <b-dropdown-divider class="divider"/>
                 <li class="nav-item">
