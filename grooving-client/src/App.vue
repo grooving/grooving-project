@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="content">
-    <div class="Header"><Header/></div>
+    <div class="Header"><Header @authenticated="setAuthenticated" v-bind:authenticated="authenticated"/></div>
     <div class="RightMenu"><RightMenu/></div>
     <div class="LeftMenu"><LeftMenu/></div>
     <router-view/>
@@ -15,14 +15,42 @@ import Header from "./components/menus/Header.vue"
 import RightMenu from "./components/RightMenu.vue"
 import LeftMenu from "./components/LeftMenu.vue"
 import Footer from "./components/Footer.vue"
-import Index from "./views/Index.vue"
 
-export default{
-components:{
-  Header, RightMenu, LeftMenu, Index,Footer
-}
-}
+export default {
+  data() {
+    return {
+      authenticated: false,
+      mockAccount: {
+        username: "pug",
+        password: "pug",
+      }
+    }
+  },
 
+  components:{
+    Header, RightMenu, LeftMenu, Footer
+  },
+
+  mounted() {
+    if(!this.authenticated) {
+      this.$router.replace({name: "#"});
+    }
+  },
+  
+  methods: {
+    setAuthenticated(status) {
+      if (status == "false") {
+        this.authenticated = false;
+      }
+      if (status == "true") {
+        this.authenticated = true;
+      }
+    },
+    logout() {
+      this.authenticated = false;
+    }
+  }
+}
 
 </script>
 
