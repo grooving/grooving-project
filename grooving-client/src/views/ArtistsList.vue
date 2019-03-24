@@ -110,31 +110,42 @@ export default {
       }
     }
 }
+
 </script>
 
 <style scoped>
 
-    .tarjeta{
-      padding-bottom: 20px;
-    }
+  .hidden {
+    display: none;
+  }
+  .container-fluid{
+    margin-top: 50px;
+    margin-bottom: 30px;
+  }
 
-    .floating-btn{
-      position:fixed;
-      width:60px;
-      height:60px;
-      bottom:40px;
-      right:40px;
-      background-image: linear-gradient(to right, #00fb82, #187fe6);
-      color:#FFF;
-      border-radius:50px;
-      text-align:center;
-      box-shadow: 2px 2px 3px #999;
-      text-decoration:none;
-    }
+  .tarjeta{
+    padding-bottom: 20px;
+  }
 
-    .floating-btn:hover{
-      background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
-    }
+  .floating-btn{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    z-index: 10;
+    background-image: linear-gradient(to right, #00fb82, #187fe6);
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+    text-decoration:none;
+    
+  }
+
+  .floating-btn:hover{
+    background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
+  }
 
   .vertical-center{
     display: flex; 

@@ -59,9 +59,6 @@ export default {
 html{ height:100%; }
 body{ min-height:100%; padding:0; margin:0; position:relative; }
 
-body {
-  position: relative;
-}
 
 body::after {
   content: '';

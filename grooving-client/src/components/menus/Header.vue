@@ -18,11 +18,11 @@
       <div class="ml-auto align-middle">
         <ul class="navbar-nav row-alignment">
           <li class="nav-item active mx-2 right-float">
-            <div class="d-md-none">
+            <div class="d-md-none serch">
               <a class="nav-link" href="#" @click="toggleSearchPanel()"><i class="material-icons align-middle">search</i></a>
             </div>
             <div class="d-none d-md-inline nav-item">
-              <form class="form-inline my-2 my-lg-0">
+              <form class="form-inline serch">
                 <input v-model="searchQuery" class="form-control mr-sm-2" style="border-radius:100px;" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn" type="submit" @click="search()"><i class="material-icons align-middle ">search</i></button>
               </form>
@@ -149,6 +149,7 @@ export default {
     background-color: transparent;
     border-color: transparent;
   }
+
 </style>
 
 
@@ -254,6 +255,11 @@ export default {
     display: flex; 
     align-items: center;  /*Aligns vertically center */
     justify-content: center; /*Aligns horizontally center */
+  }
+
+  .serch {
+    padding-top: 8px;
+    vertical-align: auto;
   }
 
   @media (min-width: 900px){
