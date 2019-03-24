@@ -61,7 +61,7 @@ export default {
         },
         errors: {
             type: Boolean,
-            default: true
+            default: false
         }
     },
 
