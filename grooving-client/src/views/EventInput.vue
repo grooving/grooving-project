@@ -5,7 +5,7 @@
     <div class="everything">
         
         <div class="tarjeta">
-            <a v-bind:href="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></a>
+            <router-link v-bind:to="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></router-link>
             <div class="card-body cuerpoTarjeta">
                 <div class="leftContent">
                     <h5 class="card-title artistName">{{ artistName }}</h5>
@@ -171,11 +171,11 @@ export default {
 
     @media (min-width:768px)  {
 
-        .tarjeta {
-            height: 300px;
+         .tarjeta {
+            min-width: 335px;
             width: 25%;
-            border-radius: 10px;
-            box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, .3);
+
+            box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
             margin-right: 10px;
         }
 
@@ -189,11 +189,6 @@ export default {
       
         .continueButtonDiv {
             margin-top: 15px;
-        }
-
-
-        .artistImage{
-            border-radius: 10px 10px 0px 0px;
         }
       
         .everything {
@@ -209,12 +204,13 @@ export default {
         }
         .title {
             display: inline-block;
-            margin-left: 18%;
+            margin-right: 12%;
+            margin-left: 10%;
             text-align: left;
             font-size: 50px;
             margin-top: 5%;
             margin-bottom: 0%;
-            margin-left: 1px;
+
             font-weight: bold;
         }
         

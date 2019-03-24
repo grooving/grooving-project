@@ -1,22 +1,12 @@
 <template>
   <div class="SentOfferNotif">
-    <div class="tarjeta">
-        <a v-bind:href="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></a>
-        <div class="card-body cuerpoTarjeta">
-            <div class="leftContent">
-                <h5 class="card-title artistName">{{ artistName }}</h5>
-                <span class="card-text artistGenres">{{ genresToString() }}</span>
-            </div>
-            <div class="rightContent">
-                <p class="price">{{ price }}</p>
-            </div>
+      <div class="tarjeta">
+        <div class="hello">
+        <div class="confirmation"><img class="tick" src="@/assets/img/approved_tick.png"/>
+            <p class="price">{{sentText}}</p>
         </div>
-    </div>
-    <div class="hello">
-    <div class="confirmation"><img class="tick" src="@/assets/img/approved_tick.png"/>
-        <p class="price">{{sentText}}</p>
-    </div>
-    <p class="notice">{{noticeText}}</p>
+        <p class="notice">{{noticeText}}</p>
+        </div>
     </div>
   </div>
 </template>
@@ -55,7 +45,7 @@ export default {
         },
         noticeText: {
           type: String,
-          default: "You won't be charged until the artist arrives at the venue"
+          default: "You won't be charged until the artist arrives at the venue."
         }
     },
 
@@ -97,6 +87,7 @@ export default {
     }
     .tick{
         width: 140px;
+        margin-top: 10px;
     }
 
     .confirmation {
@@ -113,7 +104,6 @@ export default {
     .tarjeta {
         display: inline-block;
         width: 100%;
-        box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
     }
 
     .artistImage {
@@ -158,11 +148,10 @@ export default {
 
     @media (min-width:768px)  {
         .tarjeta {
-            min-width: 335px;
-            width: 25%;
+            width: 340px;
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
-            margin-right: 10px;
-            margin-top: 2.5%
+            border-radius: 10px;
+            display: inline-block;
         }
         .everything {
             display: flex;
@@ -183,7 +172,7 @@ export default {
             color: grey; 
             font-weight: bold; 
             font-size: 125%; 
-            width: 25%;
+            width: 80%;
             display: inline-block;
         }
     }

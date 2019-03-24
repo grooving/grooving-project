@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from './views/Index.vue'
 import ArtistsList from './views/ArtistsList.vue'
 import OffersList from './views/OffersList.vue'
 import DateSelection from './views/DateSelection.vue'
@@ -13,13 +13,14 @@ import PaymentSelector from './views/PaymentSelector.vue'
 import Payment from './views/Payment.vue'
 import AcceptedOffer from './views/AcceptedOffer.vue'
 import Portfolio from './views/Portfolio.vue'
+import SentOffer from './views/SentOffer.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/index',
+      path: "/a",
       name: 'home',
       component: Home
     },
@@ -87,9 +88,14 @@ export default new Router({
       component: AcceptedOffer
     },
     {
-    path: '/showPortfolio',
-    name: 'showPortfolio',
-    component: Portfolio
+      path: '/showPortfolio',
+      name: 'showPortfolio',
+      component: Portfolio
+    },
+    {
+      path: '/sentOffer',
+      name: 'sentOffer',
+      component: SentOffer
     },
 
   ]

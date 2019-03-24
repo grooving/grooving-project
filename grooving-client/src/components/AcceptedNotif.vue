@@ -84,7 +84,6 @@ export default {
 
     .continueButton {
         font-size: 22px;
-                
         border: none;
         border-radius: 30px;
         width: 65%;
@@ -100,7 +99,6 @@ export default {
         .tarjeta {
             min-width: 335px;
             width: 25%;
-
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
             margin-right: 10px;
         }

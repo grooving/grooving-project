@@ -15,6 +15,6 @@
 // @ is an alias to /src
 
 export default {
-  name: 'Index'
+  name: 'index'
 }
 </script>

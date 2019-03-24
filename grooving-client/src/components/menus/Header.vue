@@ -28,10 +28,10 @@
               </form>
             </div>
           </li>
-          <li v-if="authenticated" class="nav-item mx-2 right-float vertical-center" >
+          <li v-if="authenticated" class="serch nav-item mx-2 right-float vertical-center" >
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" v-on:click=" collapsed = !collapsed">
               <a class="nav-link vertical-center" href="#">
-                <img v-bind:src="profileImage" class="profileImage align-middle" alt="Profile Image">
+                <img v-bind:src="profileImage" class="profileImage" alt="Profile Image">
               </a>
             </button>
           </li>
@@ -173,6 +173,7 @@ export default {
   .profileImage {
     max-width: 24px;
     border-radius: 25px;
+    margin-bottom: 5px;
   }
 
   input:hover{

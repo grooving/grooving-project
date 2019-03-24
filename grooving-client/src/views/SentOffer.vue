@@ -1,10 +1,9 @@
 <template>
-    <div class="hell">
-        <div class="title"><p>Address information</p></div>
-
+<div class="prueba">
+    <div class="title"><p>Your offer has been sent to the artist</p></div>
+    
     <div class="everything">
-        
-         <div class="tarjeta">
+        <div class="tarjeta">
             <router-link v-bind:to="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></router-link>
             <div class="card-body cuerpoTarjeta">
                 <div class="leftContent">
@@ -16,25 +15,24 @@
                 </div>
             </div>
         </div>
-        <div class="addDiv">
-          <div class="addressData"><AddressData/></div>
-        </div>
+        <div class="sentOffer"><PaymentNotif/></div>
+
     </div>
-    </div>
+</div>
 </template>
 
 <script>
-import AddressData from '@/components/AddressData.vue'
+import PaymentNotif from '@/components/PaymentNotif.vue'
 
 export default {
-  name: 'addressData',
+  name: 'sentOffer',
   components: {
-    AddressData
+    PaymentNotif
   },
   props: {
         artistURI: {
             type: String,
-            default: '#'
+            default: 'showPortfolio'
         },
         artistImage: {
             type: String,
@@ -48,18 +46,11 @@ export default {
             type: Array,
             default: ['Pop', 'Flamenco']
         },
-        continueURI: {
-            type: String,
-            default: '#'
-        },
         price: {
           type: String,
-          default: '$200.00'
+          default: '$63.00/h'
         },
-        errors: {
-            type: Boolean,
-            default: true
-        }
+
     },
 
     methods: {
@@ -170,7 +161,6 @@ export default {
     }
 
     @media (min-width:768px)  {
-
         .tarjeta {
             min-width: 335px;
             width: 25%;
@@ -213,7 +203,6 @@ export default {
 
             font-weight: bold;
         }
-        
     }
 
 </style>
