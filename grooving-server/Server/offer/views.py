@@ -10,6 +10,7 @@ from rest_framework import generics
 from .serializers import OfferSerializer
 from rest_framework import status
 from django.http import Http404
+from django.core import serializers
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -96,9 +97,12 @@ class CreateOffer(generics.CreateAPIView):
     serializer_class = OfferSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = OfferSerializer(data=request.data)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = OfferSerializer(data=request.data, partial=True)
+        if serializer.validate(request.data):
+            offer = serializer.save()
+            serialized = OfferSerializer(offer)
+            return Response(serialized.data, status=status.HTTP_201_CREATED)
+
     """
     def post(self, request, *args, **kwargs):
         serializer = OfferSerializer(data=request.data)

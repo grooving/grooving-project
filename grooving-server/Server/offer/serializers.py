@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from Grooving.models import Offer
+from Grooving.models import Offer, PaymentPackage, EventLocation
 from utils.Assertions import assert_true
 
 '''class OfferSerializer(serializers.Serializer):
@@ -23,47 +23,83 @@ from utils.Assertions import assert_true
 '''
 
 
+class PaymentPackageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentPackage
+        fields = ('id', 'description', 'appliedVAT', 'portfolio_id', 'performance_id', 'fare_id', 'custom_id')
+
+
+class EventLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventLocation
+        fields = ('id', 'address', 'equipment', 'description')
+
+
 class OfferSerializer(serializers.ModelSerializer):
-    paymentCode = serializers.CharField(default=None)
+
+    paymentPackage = PaymentPackageSerializer(read_only=True)
+    paymentPackage_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=PaymentPackage.objects.all(),
+                                                           source='paymentPackage')
+    eventLocation = EventLocationSerializer(read_only=True)
+    eventLocation_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=EventLocation.objects.all(),
+                                                          source='eventLocation')
 
     class Meta:
         model = Offer
-        fields = ('description', 'status', 'date', 'hours', 'paymentCode', 'paymentPackage_id', 'eventLocation_id')
+        fields = ('id', 'description', 'status', 'date', 'hours', 'price', 'paymentCode', 'paymentPackage',
+                  'paymentPackage_id', 'eventLocation', 'eventLocation_id')
 
     # Esto sobrescrive una función heredada del serializer.
     def save(self):
-        # Raise exception with True
-        self.is_valid(True)
-        offer=self.
-        print("Clave primaria:"+str(offer.pk))
-        # creation
-        if offer.pk is None:
-            offer = self._service_create(offer)
-        # edit
+        if self.initial_data.get('id') is None:
+            # creation
+            offer = Offer()
+            offer = self._service_create(self.initial_data, offer)
         else:
-            offer = self._service_update(offer)
+            # edit
+            print("Clave primaria:" + str(self.initial_data.get('id')))
+            offer = Offer.objects.get(pk=self.initial_data.get('id'))
+            offer = self._service_update(self.initial_data, offer)
+        offer.save()
+        return offer
 
-        Offer.objects.save(offer)
-
-    #Se pondrá service delante de nuestros métodos para no sobrescribir por error métodos del serializer
+    # Se pondrá service delante de nuestros métodos para no sobrescribir por error métodos del serializer
     @staticmethod
-    def _service_create(offer):
+    def _service_create(json: dict, offer: Offer):
+        offer.description = json.get('description')
+        offer.date = json.get('date')
         offer.status = 'PENDING'
+        offer.paymentCode = None
+        offer.eventLocation = EventLocation.objects.get(pk=json.get('eventLocation_id'))
+        offer.paymentPackage = PaymentPackage.objects.get(pk=json.get('paymentPackage_id'))
         if offer.paymentPackage.performance is not None:
             offer.hours = offer.paymentPackage.performance.hours
             offer.price = offer.paymentPackage.performance.price
+            offer.currency = offer.paymentPackage.performance.currency
         elif offer.paymentPackage.fare is not None:
-            offer.price = offer.paymentPackage.fare.price * offer.hours
-        else:
-            assert_true(offer.paymentPackage.custom is not None, "Una oferta debe tener un algún paquete")
-        # offer.paymentCode = None
+            offer.price = offer.paymentPackage.fare.priceHour * json['hours']
+            offer.currency = offer.paymentPackage.fare.currency
+        elif offer.paymentPackage.custom is not None:
+            offer.price = json['price']
+            offer.currency = offer.paymentPackage.custom.currency
         return offer
 
     @staticmethod
-    def _service_update(offer):
-        offer_in_db = Offer.objects.filter(pk=offer.pk).first()
+    def _service_update(json: dict):
+        offer_in_db = Offer.objects.filter(pk=json.id).first()
         assert_true(offer_in_db, "No existe una oferta con esa id")
-        return offer
+        return json
+
+    def validate(self, data):
+        if data.get("description") is None:
+            raise serializers.ValidationError("description field not provided")
+        if data.get("date") is None:
+            raise serializers.ValidationError("date field not provided")
+        if data.get("paymentPackage_id") is None:
+            raise serializers.ValidationError("paymentPackage_id field not provided")
+        if data.get("eventLocation_id") is None:
+            raise serializers.ValidationError("eventLocation_id field not provided")
+        return True
 
 
 
