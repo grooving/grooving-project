@@ -1,6 +1,11 @@
 <template>
   <div class="container-fluid">
       <div class="owl-wrapper horizontal-center">
+          <div class="row" style="padding-bottom: 15px">
+            <div class="col-sm-12 col-md-8 horizontal-center">
+              <h3 style="text-align: left"><strong>Video Showcase</strong></h3>
+            </div>
+          </div>
           <div class="row">
               <div class="col-sm-12 col-md-8 horizontal-center">
                   <div class="col-sm-12"> 
@@ -33,37 +38,6 @@ $(window).on('resize', function(){
 
 });
 
-/* Initializes Owl Carousel */
-$(document).ready(function(){  
-  var windowWidth = $( window ).width();
-  windowWidth -= 100;
-
-  $('.owl-wrapper').css('width', windowWidth);
-
-  $('.owl-carousel').owlCarousel({
-    loop:true,
-    margin: 10,
-    video: true,
-    autoplay: true,
-    nav: false,
-    responsive:{
-        0:{
-            items:1,
-            nav: true,
-            navText: ["<span style='font-size: 3rem; padding-right: 15px;'><</span>","<span style='font-size: 3rem; padding-left: 15px;'>></span>"],
-        },
-        600:{
-            items:2,
-        },
-        992:{
-            items:3,
-        }
-    },
-
-  });
-
-});
-
 export default {
   name: "VideoCarousel",
   props:{
@@ -75,6 +49,35 @@ export default {
               {id: 1, videoURL: "https://www.youtube.com/watch?v=IFr3GnboNRU"}
             ],
     },
+  },
+  mounted: function(){
+    /* Initializes Owl Carousel */
+    var windowWidth = $( window ).width();
+    windowWidth -= 100;
+
+    $('.owl-wrapper').css('width', windowWidth);
+
+    $('.owl-carousel').owlCarousel({
+      loop:true,
+      margin: 10,
+      video: true,
+      autoplay: true,
+      nav: false,
+      responsive:{
+          0:{
+              items:1,
+              nav: true,
+              navText: ["<span style='font-size: 3rem; padding-right: 15px;'><</span>","<span style='font-size: 3rem; padding-left: 15px;'>></span>"],
+          },
+          600:{
+              items:2,
+          },
+          992:{
+              items:3,
+          }
+      },
+
+    });
   }
 }
 </script>

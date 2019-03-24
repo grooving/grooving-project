@@ -9,6 +9,7 @@ import OfferDetails from './views/OfferDetails.vue'
 import AddressInput from './views/AddressInput.vue'
 import EventInput from './views/EventInput.vue'
 import TypeOfHiring from './views/TypeOfHiring.vue'
+import Portfolio from './views/Portfolio.vue'
 
 Vue.use(Router)
 
@@ -66,6 +67,11 @@ export default new Router({
       path: '/hiringType',
       name: 'hiringType',
       component: TypeOfHiring
+    },
+    {
+      path: '/showPortfolio',
+      name: 'showPortfolio',
+      component: Portfolio
     },
 
   ]

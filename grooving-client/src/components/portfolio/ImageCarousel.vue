@@ -1,6 +1,11 @@
 <template>
   <div class="container-fluid">
       <div class="owl-wrapper horizontal-center">
+          <div class="row" style="padding-bottom: 15px">
+            <div class="col-sm-12 col-md-8 horizontal-center">
+              <h3 style="text-align: left"><strong>Image Showcase</strong></h3>
+            </div>
+          </div>
           <div class="row">
               <div class="col-sm-12 col-md-8 horizontal-center">
                   <div class="owl-carousel owl-theme">       
@@ -30,34 +35,6 @@ $(window).on('resize', function(){
   $('.owl-wrapper').css('width', windowWidth);
 });
 
-/* Initializes Owl Carousel */
-$(document).ready(function(){  
-  var windowWidth = $( window ).width();
-  windowWidth -= 100;
-
-  $('.owl-wrapper').css('width', windowWidth);
-
-  $('.owl-carousel').owlCarousel({
-    loop:true,
-    margin: 10,
-    autoplay: true,
-    nav: false,
-    responsive:{
-        0:{
-            items:1,
-        },
-        600:{
-            items:2,
-        },
-        992:{
-            items:3,
-        }
-    },
-
-  });
-
-});
-
 export default {
   name: "ImageCarousel",
   props:{
@@ -68,6 +45,33 @@ export default {
               {id: 0, imageURL: "https://4c79id2ej5i11apui01ll2wc-wpengine.netdna-ssl.com/wp-content/uploads/2018/09/Charli-XCX-Gallery-1.jpg", link: '#'}
             ]
     },
+  },
+  mounted: function () {
+
+    /* Initializes Owl Carousel */
+    var windowWidth = $( window ).width();
+    windowWidth -= 100;
+
+    $('.owl-wrapper').css('width', windowWidth);
+
+    $('.owl-carousel').owlCarousel({
+      loop:true,
+      margin: 10,
+      autoplay: true,
+      nav: false,
+      responsive:{
+          0:{
+              items:1,
+          },
+          600:{
+              items:2,
+          },
+          992:{
+              items:3,
+          }
+      },
+
+    });
   }
 }
 </script>
@@ -82,7 +86,7 @@ export default {
       object-fit: cover;
       height: 12rem;
       width: 100%;
-      border-radius: 20px 20px 20px 20px;
+      border-radius: 10px 10px 10px 10px;
     }
   }
 
@@ -91,7 +95,7 @@ export default {
       object-fit: cover;
       height: 15rem;
       width: 100%;
-      border-radius: 20px 20px 20px 20px;
+      border-radius: 10px 10px 10px 10px;
     }
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div> 
-        <h2 class="availableDates">Available dates</h2>  
+        <h2 class="availableDates"><strong>Available dates</strong></h2>  
     <div class="contentCalendar">
         
         <div><vuejs-datepicker :disabledDates="disabledDates" :value="currentDate" :full-month-name="true" :inline="true"></vuejs-datepicker></div>
