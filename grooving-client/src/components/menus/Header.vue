@@ -11,7 +11,7 @@
       <div class="d-none d-md-block mr-auto">
         <ul class="navbar-nav row-alignment right-float">
           <li v-for="item in menu_links" class="nav-item mx-2" v-bind:class="{active: item.selected}">
-            <router-link class="nav-link font" :to="item.link">{{item.text}}</router-link> 
+            <router-link v-if="(!item.authRequired || authenticated)" class="nav-link font" :to="item.link">{{item.text}}</router-link> 
           </li>
         </ul>
       </div>
@@ -24,7 +24,7 @@
             <div class="d-none d-md-inline nav-item">
               <form class="form-inline my-2 my-lg-0">
                 <input v-model="searchQuery" class="form-control mr-sm-2" style="border-radius:100px;" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn" type="submit" @click="search()"><i class="material-icons align-middle ">search</i></button>
+                <button class="btn" type="button" @click="search()"><i class="material-icons align-middle ">search</i></button>
               </form>
             </div>
           </li>
@@ -70,9 +70,9 @@ export default {
   data: function() {
     return {
         menu_links: [
-          {text: "Top Artists", link: "#", selected: true},
-          {text: "My Offers", link: "#", selected: false},
-          {text: "FAQ", link: "#", selected: false}
+          {text: "Top Artists", link: "#", selected: true, authRequired: false},
+          {text: "My Offers", link: "offers", selected: false, authRequired: true},
+          {text: "FAQ", link: "#", selected: false, authRequired: false}
         ],
         showSearchMenu: false,
         searchQuery: '',
