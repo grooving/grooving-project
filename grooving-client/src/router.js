@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import ArtistsList from './views/ArtistsList.vue'
 import OffersList from './views/OffersList.vue'
+import DateSelection from './views/DateSelection.vue'
+import TimeSelection from './views/TimeSelection.vue'
+import OfferDetails from './views/OfferDetails.vue'
 
 
 Vue.use(Router)
@@ -31,6 +34,22 @@ export default new Router({
       path: '/offers',
       name: 'offers',
       component: OffersList
-    }
+    },
+    {
+      path: '/dateSelection',
+      name: 'dateSelection',
+      component: DateSelection
+    },
+    {
+      path: '/timeSelection',
+      name: 'timeSelection',
+      component: TimeSelection
+    },
+    {
+      path: '/offerDetails',
+      name: 'offerDetails',
+      component: OfferDetails
+    },
+
   ]
 })
