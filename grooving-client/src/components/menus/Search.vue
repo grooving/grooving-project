@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-10 col-lg-11">
                         <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <input @keypress.enter="search()" v-model="searchQuery" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                         </form>
                     </div>
                     <div class="col-2 col-lg-1 vertical-center">
@@ -26,10 +26,19 @@
 <script>
   export default {
     name: 'Search',
+    data: function() {
+        return {
+            searchQuery: ''
+        }
+    },
     methods: {
       close() {
         this.$emit('closeSearch');
       },
+      search() {
+          this.close();
+          this.$router.push({ path: '/artist_search', query: { query : this.searchQuery } });
+      }
     },
   };
 </script>

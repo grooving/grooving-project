@@ -6,7 +6,7 @@
         v-on:click=" collapsed = !collapsed">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="ml-2 vertical-center" href="#"><img src="@/assets/logos/logo_name.png" width="100px"/></a>
+        <a class="ml-2 vertical-center" href="/"><img src="@/assets/logos/logo_name.png" width="100px"/></a>
       </div>
       <div class="d-none d-md-block mr-auto">
         <ul class="navbar-nav row-alignment right-float">
@@ -23,8 +23,8 @@
             </div>
             <div class="d-none d-md-inline nav-item">
               <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" style="border-radius:100px;" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn" type="submit"><i class="material-icons align-middle ">search</i></button>
+                <input v-model="searchQuery" class="form-control mr-sm-2" style="border-radius:100px;" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn" type="submit" @click="search()"><i class="material-icons align-middle ">search</i></button>
               </form>
             </div>
           </li>
@@ -52,6 +52,7 @@ export default {
             {text:"FAQ", link:"#", selected: false}
           ],
           showSearchMenu: false,
+          searchQuery: '',
       }
     },
     components:{
@@ -67,6 +68,10 @@ export default {
             $(document.body).css("overflow", "")
           }
 
+        },
+
+        search: function() {
+          this.$router.push({ path: '/artist_search', query: { query : this.searchQuery } })
         }
       }
 }
