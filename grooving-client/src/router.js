@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import ArtistsList from './views/ArtistsList.vue'
+import OffersList from './views/OffersList.vue'
 
 Vue.use(Router)
 
@@ -25,5 +26,10 @@ export default new Router({
       name: 'artist_search',
       component: ArtistsList
     },
+    {
+      path: '/offers',
+      name: 'offers',
+      component: OffersList
+    }
   ]
 })

@@ -4,12 +4,16 @@
             <ul class="list-group list-group-flush"><li class="list-group-item">Offer #{{ offerID }}</li></ul>
             <div class="card-body cuerpoTarjeta">
                 <div class="leftContent">
+                    <div class="details">
                     <p class="card-text"><span style="font-weight: bold;">Date: </span>{{ date }}</p>
                     <p class="card-text"><span style="font-weight: bold;">Duration: </span>{{ startingHour }}h - {{ endingHour }}h</p>
                     <p class="card-text"><span style="font-weight: bold;">Price: </span>${{ price }}</p>
                     <p class="card-text"><span style="font-weight: bold;">Address: </span>{{ address }}</p>
+                    </div>
+                    <div class="description">
                     <p class="card-text"><span style="font-weight: bold;">Description: </span></p>
                     <p class="card-text">{{ description }}</p>
+                    </div>
                 </div>
                 
             </div>
@@ -75,7 +79,6 @@
 
     .tarjeta {
         width: 100%;
-        box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
     }
 
     .list-group-item {
@@ -98,26 +101,31 @@
     }
 
     .confirmButton, .cancelButton {
-        font-size: 21px;
-        font-weight:bold;
-        
+        font-size: 18px;
+        padding-left: 10%;
+        padding-right: 10%;
         border: none;
         border-radius: 30px;
+        font-weight: bold;
     }
 
     .confirmButton {
+        margin-left: 3%;
         background-image: linear-gradient(to right, #00fb82, #187fe6);
     }
 
-    .cancelButton {        
+    .cancelButton {
+        margin-right: 3%;        
         background-image: linear-gradient(to right, #a2a2a2, #474747);
     }
 
     .confirmButton:hover {
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .7) !important;
         background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
     }
 
     .cancelButton:hover {
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .7) !important;
         background-image: linear-gradient(to right, #515151, #232323) !important;
     }
 
@@ -125,7 +133,8 @@
 
         .tarjeta {
             min-width: 335px;
-            width: 25%;
+            width: 70%;
+            max-width: 900px;
 
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
         }
@@ -139,8 +148,35 @@
             padding: 15px;
             margin-left: 10%;
             margin-right: 10%;
-            margin-top:0%;
+            margin-top:5%;
         }
+
+        .details {
+            float: left;
+            margin-right: 3%;
+            flex-basis: 50%;
+            flex-grow: 0;
+        }
+
+        .description {
+            max-width: 250 px;
+            flex-basis: 50%;
+            flex-grow: 0;
+            margin-left: 3%;
+        }
+
+        .leftContent {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+
+</style>
+
+<style>
+
+    p.card-text {
+        word-break: break-word;
     }
 
 </style>

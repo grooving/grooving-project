@@ -4,11 +4,6 @@
     <div class="Header"><Header/></div>
     <div class="RightMenu"><RightMenu/></div>
     <div class="LeftMenu"><LeftMenu/></div>
-    <div class="Index"><Index/></div>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
     </div>
     <footer><Footer/></footer>
