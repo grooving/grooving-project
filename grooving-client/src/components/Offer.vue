@@ -20,8 +20,8 @@
                     </div>
                 </div>
                 <div class="row botonera">
-                <div class="rejectButtonDiv"><a v-bind:href="rejectURI" class="btn btn-primary rejectButton"><span class="continueText">REJECT</span></a></div>
-                <div class="confirmButtonDiv"><a v-bind:href="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">ACCEPT</span></a></div>
+                <div class="rejectButtonDiv"><router-link v-bind:to="rejectURI" class="btn btn-primary rejectButton"><span class="continueText">REJECT</span></router-link></div>
+                <div class="confirmButtonDiv"><router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">ACCEPT</span></router-link></div>
             </div>
             </div>
         </div>
