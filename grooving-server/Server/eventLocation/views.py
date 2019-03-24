@@ -28,17 +28,9 @@ class EventLocationManager(generics.RetrieveUpdateDestroyAPIView):
         serializer = EventLocationSerializer(eventLocation)
         return Response(serializer.data)
 
-    def post(self, request, pk, **kwargs):
-        eventLocation = self.get_object(pk)
-        serializer = EventLocationSerializer(eventLocation, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def put(self, request, pk):
         eventLocation = self.get_object(pk)
-        if len(request.data) == 1 and 'status' in request.data:
+        if len(request.data) == 1:
             serializer = EventLocationSerializer(eventLocation, data=request.data, partial=True)
 
         else:
