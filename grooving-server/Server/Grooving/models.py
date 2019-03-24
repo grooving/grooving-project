@@ -178,8 +178,6 @@ class Offer(AbstractEntity):
     price = models.DecimalField(max_digits=20, decimal_places=2, validators=[MinValueValidator(Decimal('0.0'))])
     currency = models.CharField(blank=False, null=False, default='EUR', max_length=3)
     paymentCode = models.CharField(max_length=140, unique=True, null=True, blank=True)
-    paymentPackage = models.OneToOneField(PaymentPackage, blank=True, null=True, on_delete=models.SET_NULL)
-    eventLocation = models.ForeignKey(EventLocation, on_delete=models.PROTECT)
 
     def __str__(self):
         return str(self.description)
