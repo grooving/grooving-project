@@ -32,7 +32,8 @@
                 <input :value="cvv" maxlength="3" type="text" class="form-control" placeholder="CVV">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary continueButton">SUBMIT</button>
+        <router-link v-bind:to="continueURI" 
+            class="btn btn-primary continueButton"><span class="continueText">SUBMIT</span></router-link>
 
     </form>
     </div>
@@ -65,6 +66,10 @@ export default {
         cvv: {
             type: String,
             default: '754'
+        },
+        continueURI: {
+            type: String,
+            default: 'acceptedOffer'
         } 
     },
     components: {

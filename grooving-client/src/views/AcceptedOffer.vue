@@ -57,7 +57,7 @@
 
     .list-group-item {
         font-size: 36px;
-        text-align: left;
+        text-align: center;
     }
 
     @media (min-width:768px)  {

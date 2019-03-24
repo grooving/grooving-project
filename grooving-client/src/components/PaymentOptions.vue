@@ -2,9 +2,10 @@
     <div class="content">
         <div class="paymentOptions">
             <p>Choose between</p>
-            <div class="continueButtonDiv"><a v-bind:href="continueURI" class="btn btn-primary continueButton"><span class="continueText">PAYPAL</span></a></div>
+            <div class="continueButtonDiv"><router-link v-bind:to="continueURI" class="btn btn-primary continueButton"><span class="continueText">PAYPAL</span></router-link></div>
             <br>
-            <div class="continueButtonDiv"><a v-bind:href="continueURI" class="btn btn-primary continueButton"><span class="continueText">CREDIT CARD</span></a></div>
+            <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
+            class="btn btn-primary continueButton"><span class="continueText">CREDIT CARD</span></router-link></div>
         </div>
     </div>
 </template>
@@ -13,6 +14,10 @@
 export default {
     name: "PaymentOptions",
     props: {
+        continueURI: {
+            type: String,
+            default: 'payment'
+        } 
     },
     components: {
     },

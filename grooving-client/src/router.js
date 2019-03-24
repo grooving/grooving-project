@@ -9,13 +9,16 @@ import OfferDetails from './views/OfferDetails.vue'
 import AddressInput from './views/AddressInput.vue'
 import EventInput from './views/EventInput.vue'
 import TypeOfHiring from './views/TypeOfHiring.vue'
+import PaymentSelector from './views/PaymentSelector.vue'
+import Payment from './views/Payment.vue'
+import AcceptedOffer from './views/AcceptedOffer.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/index',
       name: 'home',
       component: Home
     },
@@ -67,6 +70,21 @@ export default new Router({
       name: 'hiringType',
       component: TypeOfHiring
     },
+    {
+      path: '/paymentSelector',
+      name: 'paymentSelector',
+      component: PaymentSelector
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: Payment
+    },
+    {
+      path: '/acceptedOffer',
+      name: 'acceptedOffer',
+      component: AcceptedOffer
+    }
 
   ]
 })

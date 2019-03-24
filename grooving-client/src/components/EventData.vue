@@ -23,7 +23,7 @@ export default {
         },
         continueURI: {
             type: String,
-            default: 'addressInput'
+            default: 'paymentSelector'
         } 
     },
     components: {
