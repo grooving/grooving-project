@@ -1,22 +1,26 @@
 from django.shortcuts import render
 from django.shortcuts import redirect, render
-from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import generics
 from .serializers import ArtistInfoSerializer
 from django.core.exceptions import PermissionDenied
 from Grooving.models import Artist
+from rest_framework.response import Response
 
 
-class GetPersonalInformation(generics.RetrieveUpdateDestroyAPIView):
+class GetPersonalInformationOfArtist(generics.RetrieveUpdateDestroyAPIView):
 
     serializer_class = ArtistInfoSerializer
-    queryset = []
 
-    def get_queryset(self):
+    def get(self, name):
 
         if self.request.user.is_authenticated:
             loggeduser = self.request.user
-            queryset = Artist.objects.filter(user=loggeduser)
-            return queryset
+            try:
+                queryset = Artist.objects.get(user=loggeduser)
+                serializer = ArtistInfoSerializer(queryset)
+                return Response(serializer.data)
+            except ObjectDoesNotExist:
+                raise PermissionDenied()
         else:
             raise PermissionDenied()
