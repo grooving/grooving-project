@@ -1,6 +1,6 @@
 <template>
     <div class="hell">
-        <div class="title"><p>Event information</p></div>
+        <div class="title"><p>Address information</p></div>
 
     <div class="everything">
         
@@ -16,20 +16,20 @@
                 </div>
             </div>
         </div>
-        <div class="evDiv">
-          <div class="eventData"><EventData/></div>
+        <div class="addDiv">
+          <div class="addressData"><AddressData/></div>
         </div>
     </div>
     </div>
 </template>
 
 <script>
-import EventData from '@/components/EventData.vue'
+import AddressData from '@/components/AddressData.vue'
 
 export default {
-  name: 'eventData',
+  name: 'addressData',
   components: {
-    EventData
+    AddressData
   },
   props: {
         artistURI: {
