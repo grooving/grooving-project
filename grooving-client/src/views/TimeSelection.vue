@@ -4,7 +4,7 @@
     
     <div class="everything">
         <div class="tarjeta">
-            <a v-bind:href="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></a>
+            <router-link v-bind:to="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></router-link>
             <div class="card-body cuerpoTarjeta">
                 <div class="leftContent">
                     <h5 class="card-title artistName">{{ artistName }}</h5>
@@ -17,7 +17,7 @@
         </div>
         <div class="sliderButton">
           <div class="slider"><DoubleSlider/></div>
-          <div class="continueButtonDiv"><a v-bind:href="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></a></div>
+          <div class="continueButtonDiv"><router-link v-bind:to="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
         </div>
     </div>
 </div>
@@ -34,7 +34,7 @@ export default {
   props: {
         artistURI: {
             type: String,
-            default: '#'
+            default: 'showPortfolio'
         },
         artistImage: {
             type: String,
@@ -50,7 +50,7 @@ export default {
         },
         continueURI: {
             type: String,
-            default: '#'
+            default: 'paymentSelector'
         },
         price: {
           type: String,
