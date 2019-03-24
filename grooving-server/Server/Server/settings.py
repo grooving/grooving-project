@@ -101,6 +101,8 @@ DATABASES = {
         'PORT': '5432',
         'USER': 'root',
         'PASSWORD': 'root',
+        #'USER': 'grooving',
+        #'PASSWORD': 'grooving',
         'TEST': {
             'NAME': 'test_grooving',
         }
