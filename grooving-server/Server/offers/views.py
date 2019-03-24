@@ -13,7 +13,7 @@ class ListOffers(generics.RetrieveUpdateDestroyAPIView):
     def get(self, name):
         print(self.request.user)
 
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and not self.request.user.is_staff:
             try:
                 artist = Artist.objects.get(user=self.request.user)
                 queryset = Offer.objects.get(paymentPackage__portfolio__artist=artist)
