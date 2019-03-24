@@ -20,6 +20,7 @@ from django.conf.urls import url, include
 from portfolio.views import PortfolioManager
 from offer.views import OfferManage
 from artist.views import GetPersonalInformation
+from customer.views import GetPersonalInformationCustomer
 from paymentPackage.views import PaymentPackageByArtist
 from calendars.views import CalendarByArtist
 from eventLocation.views import EventLocationManager
@@ -37,5 +38,6 @@ urlpatterns = [
     url(r'^artist/paymentPackages/(?P<pk>[0-9]+)/$', PaymentPackageByArtist.as_view()),
     url(r'^artist/calendar/(?P<pk>[0-9]+)/$', CalendarByArtist.as_view()),
     url(r'^artist/personalInformation/(?P<pk>[0-9]+)/$', GetPersonalInformation.as_view()),
+    url(r'^customer/personalInformation/(?P<pk>[0-9]+)/$', GetPersonalInformationCustomer.as_view()),
     path('api/login/', obtain_auth_token, name='login'),
 ]
