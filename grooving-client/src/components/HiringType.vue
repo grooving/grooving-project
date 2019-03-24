@@ -1,17 +1,5 @@
 <template>
   <div class="SentOfferNotif">
-      <div class="tarjeta">
-        <a v-bind:href="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></a>
-        <div class="card-body cuerpoTarjeta">
-            <div class="leftContent">
-                <h5 class="card-title artistName">{{ artistName }}</h5>
-                <span class="card-text artistGenres">{{ genresToString() }}</span>
-            </div>
-            <div class="rightContent">
-                <p class="price">Hello</p>
-            </div>
-        </div>
-    </div>
       <h2 class="titleType">Type of Hiring</h2>
 
      <div class="accordion" id="accordionExample">
@@ -26,7 +14,8 @@
 
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
       <div class="bodies">{{performanceDescription}}  
-          <div class="continueButtonDiv"><a v-bind:href="continueURI" class="btn btn-primary continueButton"><span class="continueText">SELECT</span></a></div>
+           <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
+            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
       </div>  
     </div>
   </div>
@@ -40,7 +29,8 @@
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
       <div class="bodies">{{fareDescription}} 
-          <div class="continueButtonDiv"><a v-bind:href="continueURI" class="btn btn-primary continueButton"><span class="continueText">SELECT</span></a></div>
+           <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
+            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
       </div>
     </div>
   </div>
@@ -54,7 +44,8 @@
     </div>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
       <div class="bodies">{{customDescription}}
-          <div class="continueButtonDiv"><a v-bind:href="continueURI" class="btn btn-primary continueButton"><span class="continueText">SELECT</span></a></div>
+           <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
+            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
       </div>
     </div>
   </div>
@@ -78,10 +69,6 @@ export default {
             type: String,
             default: "Descripción de la modalidad custom."
         },
-        artistURI: {
-            type: String,
-            default: '#'
-        },
         artistImage: {
             type: String,
             default: 'https://img.europapress.es/fotoweb/fotonoticia_20181107115306_1920.jpg',
@@ -96,7 +83,7 @@ export default {
         },
         continueURI: {
             type: String,
-            default: '#'
+            default: 'dateSelection'
         },
         price: {
           type: String,
@@ -283,16 +270,15 @@ h2 {
     }
 
     .accordion {
+        width: 320px;
         margin-top: 1.5%;
         margin-bottom: 2.5%;
-        margin-left: 25%;
-        margin-right: 25%;
+
         align-items: center;
     }
 
     h2 {
         text-align: left;
-        margin-left: 25%;
         margin-top: 1.5%
     }
 

@@ -6,7 +6,9 @@ import OffersList from './views/OffersList.vue'
 import DateSelection from './views/DateSelection.vue'
 import TimeSelection from './views/TimeSelection.vue'
 import OfferDetails from './views/OfferDetails.vue'
-
+import AddressInput from './views/AddressInput.vue'
+import EventInput from './views/EventInput.vue'
+import TypeOfHiring from './views/TypeOfHiring.vue'
 
 Vue.use(Router)
 
@@ -49,6 +51,21 @@ export default new Router({
       path: '/offerDetails',
       name: 'offerDetails',
       component: OfferDetails
+    },
+    {
+      path: '/addressInput',
+      name: 'addressInput',
+      component: AddressInput
+    },
+    {
+      path: '/eventInput',
+      name: 'eventInput',
+      component: EventInput
+    },
+    {
+      path: '/hiringType',
+      name: 'hiringType',
+      component: TypeOfHiring
     },
 
   ]

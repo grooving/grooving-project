@@ -7,8 +7,8 @@
                     placeholder="Information about your event" rows="7"></textarea>
             </div>  
         </div>
-        <button type="submit" class="btn btn-primary continueButton">CONTINUE</button>
-
+        <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
+            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
     </form>
     </div>
 </template>
@@ -21,6 +21,10 @@ export default {
             type: String,
             default: 'Monday night party at the campus.'
         },
+        continueURI: {
+            type: String,
+            default: 'addressInput'
+        } 
     },
     components: {
     },

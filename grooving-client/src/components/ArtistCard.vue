@@ -37,7 +37,7 @@ export default {
         },
         hireURI: {
             type: String,
-            default: 'paymentSelector'
+            default: 'hiringType'
         } 
     },
 

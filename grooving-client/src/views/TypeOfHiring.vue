@@ -1,6 +1,6 @@
 <template>
 <div class="prueba">
-    <div class="title"><p style="text-align: left !important;">Choose a time range</p></div>
+    <div class="title"><p>Choose type of hiring </p></div>
     
     <div class="everything">
         <div class="tarjeta">
@@ -15,21 +15,19 @@
                 </div>
             </div>
         </div>
-        <div class="sliderButton">
-          <div class="slider"><DoubleSlider/></div>
-          <div class="continueButtonDiv"><router-link v-bind:to="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
-        </div>
+        <div class="hiringType"><HiringType/></div>
+
     </div>
 </div>
 </template>
 
 <script>
-import DoubleSlider from '@/components/DoubleSlider.vue'
+import HiringType from '@/components/HiringType.vue'
 
 export default {
-  name: 'timeSelection',
+  name: 'hiringType',
   components: {
-    DoubleSlider
+    HiringType
   },
   props: {
         artistURI: {
@@ -48,14 +46,11 @@ export default {
             type: Array,
             default: ['Pop', 'Flamenco']
         },
-        continueURI: {
-            type: String,
-            default: 'addressInput'
-        },
         price: {
           type: String,
           default: '$63.00/h'
-        }
+        },
+
     },
 
     methods: {
@@ -156,13 +151,6 @@ export default {
         background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
     }
 
-    .sliderButton  {
-        margin-top: 20%;
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
     .continueButtonDiv {
         margin-top: 30px;
         margin-bottom: 10%;
@@ -179,10 +167,9 @@ export default {
 
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
             margin-right: 10px;
-            margin-bottom: 10%;
         }
 
-        .sliderButton  {
+        .calendarButton  {
             margin-left: 5%;
             width: 50%;
             margin-top: 0%;
@@ -191,7 +178,7 @@ export default {
         }
       
         .continueButtonDiv {
-            margin-top: 50px;
+            margin-top: 15px;
         }
       
         .everything {
@@ -205,7 +192,6 @@ export default {
             margin-right: 10%;
             margin-top:0%;
         }
-
         .title {
             display: inline-block;
             margin-left: 18%;
@@ -216,8 +202,6 @@ export default {
             margin-left: 1px;
             font-weight: bold;
         }
-
-        
     }
 
 </style>

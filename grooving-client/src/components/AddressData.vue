@@ -16,7 +16,8 @@
                 <input :value="street" type="text" class="form-control" placeholder="Street">
             </div>  
         </div>
-        <button type="submit" class="btn btn-primary continueButton">CONTINUE</button>
+        <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
+            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
 
     </form>
     </div>
@@ -38,6 +39,10 @@ export default {
             type: String,
             default: 'C/ Reina Mercedes, 10'
         },
+        continueURI: {
+            type: String,
+            default: 'eventInput'
+        } 
     },
     components: {
     },
@@ -81,7 +86,6 @@ export default {
         width: fit-content;
         margin-top: 2%;
         font-weight: bold;
-        margin-top: 10%;
     
         background-image: linear-gradient(to right, #00fb82, #187fe6);
     }
