@@ -1,10 +1,11 @@
 <template>
-<div class="prueba">
-    <div class="title"><p>Choose a date</p></div>
-    
+    <div class="hell">
+        <div class="title"><p>Event information</p></div>
+
     <div class="everything">
+        
         <div class="tarjeta">
-            <router-link v-bind:to="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></router-link>
+            <a v-bind:href="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></a>
             <div class="card-body cuerpoTarjeta">
                 <div class="leftContent">
                     <h5 class="card-title artistName">{{ artistName }}</h5>
@@ -15,26 +16,25 @@
                 </div>
             </div>
         </div>
-        <div class="calendarButton">
-          <div class="calendar"><Calendar/></div>
-          <div class="continueButtonDiv"><router-link v-bind:to="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
+        <div class="addrDiv">
+          <div class="eventData"><EventData/></div>
         </div>
     </div>
-</div>
+    </div>
 </template>
 
 <script>
-import Calendar from '@/components/Calendar.vue'
+import EventData from '@/components/EventData.vue'
 
 export default {
-  name: 'dateSelection',
+  name: 'eventData',
   components: {
-    Calendar
+    EventData
   },
   props: {
         artistURI: {
             type: String,
-            default: 'showPortfolio'
+            default: '#'
         },
         artistImage: {
             type: String,
@@ -50,11 +50,15 @@ export default {
         },
         continueURI: {
             type: String,
-            default: 'timeSelection'
+            default: '#'
         },
         price: {
           type: String,
-          default: '$63.00/h'
+          default: '$200.00'
+        },
+        errors: {
+            type: Boolean,
+            default: true
         }
     },
 
@@ -99,7 +103,7 @@ export default {
 
     .tarjeta {
         width: 100%;
-        box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
+        box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, .3);
     }
 
     .artistImage {
@@ -166,11 +170,12 @@ export default {
     }
 
     @media (min-width:768px)  {
-        .tarjeta {
-            min-width: 335px;
-            width: 25%;
 
-            box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
+        .tarjeta {
+            height: 300px;
+            width: 25%;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, .3);
             margin-right: 10px;
         }
 
@@ -184,6 +189,11 @@ export default {
       
         .continueButtonDiv {
             margin-top: 15px;
+        }
+
+
+        .artistImage{
+            border-radius: 10px 10px 0px 0px;
         }
       
         .everything {
@@ -207,6 +217,7 @@ export default {
             margin-left: 1px;
             font-weight: bold;
         }
+        
     }
 
 </style>

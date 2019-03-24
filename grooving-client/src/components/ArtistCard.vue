@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="card tarjeta">
-            <a v-bind:href="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></a>
+            <router-link v-bind:to="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></router-link>
             <div class="card-body cuerpoTarjeta">
                 <div class="leftContent">
                     <h5 class="card-title artistName">{{ artistName }}</h5>
                     <span class="card-text artistGenres">{{ genresToString() }}</span>
                 </div>
                 <div class="rightContent">
-                    <a v-bind:href="hireURI" class="btn btn-primary hireButton"><span class="hireText">HIRE</span></a>
+                    <router-link v-bind:to="hireURI" class="btn btn-primary hireButton"><span class="hireText">HIRE</span></router-link>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@ export default {
     props: {
         artistURI: {
             type: String,
-            default: '#'
+            default: 'showPortfolio'
         },
         artistImage: {
             type: String,
@@ -37,7 +37,7 @@ export default {
         },
         hireURI: {
             type: String,
-            default: '#'
+            default: 'paymentSelector'
         } 
     },
 

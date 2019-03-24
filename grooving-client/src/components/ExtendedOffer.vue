@@ -18,8 +18,8 @@
                 
             </div>
             <div class="bothButtons">
-                <div class="cancelButtonDiv"><a v-bind:href="cancelURI" class="btn btn-primary cancelButton"><span class="continueText">CANCEL</span></a></div>
-                <div class="confirmButtonDiv"><a v-bind:href="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></a></div>
+                <div class="cancelButtonDiv"><router-link v-bind:to="cancelURI" class="btn btn-primary cancelButton"><span class="continueText">CANCEL</span></router-link></div>
+                <div class="confirmButtonDiv"><router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></router-link></div>
             </div>
         </div>
     </div>
@@ -61,11 +61,11 @@
             },
             cancelURI: {
                 type: String,
-                default: '#'
+                default: 'offers'
             },
             confirmURI: {
                 type: String,
-                default: '#'
+                default: 'acceptedOffer'
             }
         },
     }   

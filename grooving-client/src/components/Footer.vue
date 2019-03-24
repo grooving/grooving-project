@@ -2,9 +2,9 @@
     <div>
         <footer class="bg-light">
             <div class="info">
-                <a v-bind:href="aboutUsURI" class="link">About Us</a> | 
-                <a v-bind:href="FAQsURI" class="link">FAQs</a> | 
-                <a v-bind:href="termsURI" class="link">Terms of Use</a> | 
+                <router-link v-bind:to="aboutUsURI" class="link">About Us</router-link>
+                <router-link v-bind:to="FAQsURI" class="link">FAQs</router-link> | 
+                <router-link v-bind:to="termsURI" class="link">Terms of Use</router-link> | 
                 <span>Contact Us:</span> grupogrooving@gmail.com 
             </div>
 
@@ -21,17 +21,17 @@ export default {
     props: {
         aboutUsURI: {
             type: String,
-            default: '#'
+            default: 'aboutUs'
         },
 
         FAQsURI: {
             type: String,
-            default: '#'
+            default: 'FAQs'
         },
 
         termsURI: {
             type: String,
-            default: '#'
+            default: 'termsOfUse'
         },
 
         groovingURI: {
