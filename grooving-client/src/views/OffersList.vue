@@ -7,7 +7,7 @@
           <div id="results" class="col-12 col-lg-9 col-xl-10 results">
             <div class="row">
               <div v-for="oferta in datos_prueba" :key="oferta.offerID" class="tarjeta col-12 col-md-6 col-xl-6">
-                <Offer :offerID="oferta.offerID" :date="oferta.date" :price="oferta.price" :place="oferta.place" />
+                <Offer :offerID="oferta.offerID" :confirmURI="oferta.confirmURI" :date="oferta.date" :price="oferta.price" :place="oferta.place" />
               </div>
             </div>
           </div>
@@ -37,18 +37,21 @@ export default {
             date: 'January 1, 2019',
             price: 95.00,
             place: 'LPGC',
+            confirmURI: 'offerDetails'
           },
           {
             offerID: 3, 
             date: 'February 19, 2019',
             price: 38.00,
             place: 'La Orotava',
+            confirmURI: 'offerDetails'
           },
           {
             offerID: 5, 
             date: 'June 28, 2019',
             price: 120.00,
             place: 'Tacoronte',
+            confirmURI: 'offerDetails'
           },
         ], 
       }

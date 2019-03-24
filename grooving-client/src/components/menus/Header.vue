@@ -70,7 +70,7 @@ export default {
   data: function() {
     return {
         menu_links: [
-          {text: "Top Artists", link: "#", selected: true, authRequired: false},
+          {text: "Top Artists", link: "artist_search", selected: true, authRequired: false},
           {text: "My Offers", link: "offers", selected: false, authRequired: true},
           {text: "FAQ", link: "#", selected: false, authRequired: false}
         ],
