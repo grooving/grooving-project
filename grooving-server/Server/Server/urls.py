@@ -19,7 +19,9 @@ from rest_framework import routers
 from django.conf.urls import url, include
 from portfolio.views import PortfolioManager
 from offer.views import OfferManage
+
 from artist.views import ListArtist
+from offers.views import ListOffers
 from paymentPackage.views import PaymentPackageByArtist
 from calendars.views import CalendarByArtist
 from eventLocation.views import EventLocationManager
@@ -37,5 +39,7 @@ urlpatterns = [
     url(r'^artist/calendar/(?P<pk>[0-9]+)/$', CalendarByArtist.as_view()),
     url(r'^artists/$', ListArtist.as_view({'get': 'list'})),
     path('api/login/', obtain_auth_token, name='login'),
+    url(r'^offers/$', ListOffers.as_view())
+
 ]
 
