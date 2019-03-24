@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import ArtistsList from './views/ArtistsList.vue'
 import OffersList from './views/OffersList.vue'
 
+
 Vue.use(Router)
 
 export default new Router({

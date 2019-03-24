@@ -92,4 +92,21 @@ footer {
   width: 100%;
 
 }
+
+@media (max-width: 768px) {
+
+  body::after {
+    content: '';
+    display: block;
+    height: 10px; /* Set same as footer's height */
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0px;
+    display: none;
+  }
+}
 </style>
