@@ -6,7 +6,7 @@
         v-on:click=" collapsed = !collapsed">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="ml-2 vertical-center" href="/"><img src="@/assets/logos/logo_name.png" width="100px"/></a>
+        <router-link class="ml-2 vertical-center" to="/home"><img src="@/assets/logos/logo_name.png" width="100px"/></router-link>
       </div>
       <div class="d-none d-md-block mr-auto">
         <ul class="navbar-nav row-alignment right-float">

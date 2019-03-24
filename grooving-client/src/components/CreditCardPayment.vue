@@ -69,7 +69,7 @@ export default {
         },
         continueURI: {
             type: String,
-            default: 'acceptedOffer'
+            default: 'sentOffer'
         } 
     },
     components: {
