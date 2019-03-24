@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
@@ -99,6 +100,8 @@ DATABASES = {
         'NAME': 'grooving',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+        #'USER': 'grooving',
+        #'PASSWORD': 'grooving',
         'USER': 'root',
         'PASSWORD': 'root',
         'TEST': {
