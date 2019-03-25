@@ -3,11 +3,12 @@
       <h2 class="titleType">Type of Hiring</h2>
 
      <div class="accordion" id="accordionExample">
-  <div class="tarjetaB" >
-    <div class="heads" id="headingOne">
+  <div class="tarjetaB">
+    <div class="heads" id="headingOne" data-toggle="collapse" 
+            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
       <h5 class="mb-0">
-        <button class="Hbutton" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <h5 style="font-weight: bold ;">Performance</h5>
+        <button class="Hbutton">
+          <h5 class="titles">Performance</h5>
         </button>
       </h5>
     </div>
@@ -20,10 +21,11 @@
     </div>
   </div>
   <div class="tarjetaB">
-    <div class="heads" id="headingTwo">
+    <div class="heads" id="headingTwo" data-toggle="collapse" 
+            data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
       <h5 class="mb-0">
-        <button class="Hbutton" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          <h5 style="font-weight: bold">Fare</h5>
+        <button class="Hbutton">
+          <h5 class="titles">Fare</h5>
         </button>
       </h5>
     </div>
@@ -35,10 +37,11 @@
     </div>
   </div>
   <div class="tarjetaB">
-    <div class="heads"  id="headingThree">
+    <div class="heads" id="headingThree"  data-toggle="collapse" 
+            data-target="#collapseThree" aria-expanded="true" aria-controls="collapseOne">
       <h5 class="mb-0">
         <button class="Hbutton" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          <h5 style="font-weight: bold">Custom</h5>
+          <h5 class="titles">Custom</h5>
         </button>
       </h5>
     </div>
@@ -59,15 +62,15 @@ export default {
   props: {
         performanceDescription: {
             type: String,
-            default: "Descripción de la modalidad performance."
+            default: "Performance hiring type description."
         },
         fareDescription: {
             type: String,
-            default: "Descripción de la modalidad fare.",
+            default: "Fare hiring type description.",
         },
         customDescription: {
             type: String,
-            default: "Descripción de la modalidad custom."
+            default: "Custom hiring type description."
         },
         artistImage: {
             type: String,
@@ -121,6 +124,7 @@ export default {
 .heads {
     background-color:white; text-align: left; border-bottom: none; 
     padding-top: 3%; padding-bottom: 0.5%; margin-left: 15px;
+    
 }
 
 .Hbutton{
@@ -165,7 +169,7 @@ export default {
 h2 {
     text-align: left;
     margin-left: 5%;
-    margin-top: 2.5%
+    margin-top: 2.5%;
 }
 
 .card-img-top {
@@ -181,6 +185,7 @@ h2 {
 .cuerpoTarjeta {
     display: flex;
     align-items: center;
+    
 }
 
 .leftContent {
@@ -221,13 +226,19 @@ h2 {
     border-radius: 30px;
     width: fit-content;
     margin-top: 2%;
-    
     background-image: linear-gradient(to right, #00fb82, #187fe6);
 }
 
 .continueButton:hover{
     background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
 }
+
+.titles {
+    font-weight: bold ; 
+    margin-left:-2px;
+     
+}
+
 
 
  @media (min-width:768px)  {
@@ -273,7 +284,6 @@ h2 {
         width: 320px;
         margin-top: 1.5%;
         margin-bottom: 2.5%;
-
         align-items: center;
     }
 
@@ -335,12 +345,15 @@ h2 {
         border-radius: 30px;
         width: fit-content;
         margin-top: 2%;
-        
         background-image: linear-gradient(to right, #00fb82, #187fe6);
     }
 
     .continueButton:hover{
         background-image: linear-gradient(to right, #14Ca9f, #1648d0) !important;
+    }
+
+    .SentOfferNotif {
+        height: 305px;
     }
 
  }

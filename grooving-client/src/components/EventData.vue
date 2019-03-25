@@ -104,7 +104,7 @@ export default {
 
         .content{
             margin-left: 3%;
-            height: 300px;
+            height: 305px;
             border-radius: 10px;
             display: flex;
             align-items: center;

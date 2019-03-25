@@ -3,24 +3,26 @@
    
      <div class="collapse navbar-collapse width px-2 bg-light" id="sidebar">
          <p>
-         <h2>Hello, Pug</h2>
+        <div class="navContent">
+         <h2 class="title">Hello, Pug</h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
-                <li class="nav-item">
+                <li class="nav-item section">
                     <a class="nav-link" href="#">My Account</a>
                 </li>
                 <b-dropdown-divider class="divider"/>
-                <li class="nav-item">
+                <li class="nav-item section">
                     <a class="nav-link" href="#">My Portfolio</a>
                 </li>
                 <b-dropdown-divider class="divider"/>
-                <li class="nav-item">
+                <li class="nav-item section">
                     <a class="nav-link" href="#">Messages</a>
                 </li>
                 <b-dropdown-divider class="divider"/>
-                <li class="nav-item">
+                <li class="nav-item section">
                     <a class="nav-link" href="" v-on:click="logout()">Log Out</a>
                 </li>
             </ul>
+        </div>
         </div>
   </div>
 </template>
@@ -58,11 +60,25 @@ $(window).bind('scroll', function () {
     font-family: "Archivo"
 }
 
+.title {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.navContent {
+    margin-right: 20px;
+}
+
+.section {
+    font-size: 18px;
+}
+
 #sidebar.collapse {
     text-align: right;
     position: fixed;
     z-index: 2000;
     transition: right .3s ease;
+    
     right: -130%; /* -width of sidebar */
     width: 100%;
     height: fit-content !important;
@@ -99,6 +115,20 @@ $(window).bind('scroll', function () {
 
 
 @media (min-width: 768px) {
+
+    .title {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .navContent {
+        margin-right: 20px;
+    }
+
+    .section {
+        font-size: 20px;
+    }
+
 
     #sidebar.collapse {
         

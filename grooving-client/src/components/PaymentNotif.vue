@@ -148,7 +148,7 @@ export default {
 
     @media (min-width:768px)  {
         .tarjeta {
-            width: 340px;
+            height: 305px;
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
             border-radius: 10px;
             display: inline-block;
