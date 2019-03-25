@@ -1,7 +1,7 @@
 <template>
     <div class="everything">
         <div class="card tarjeta">
-            <ul class="list-group list-group-flush"><li class="list-group-item">Offer #{{ offerID }}</li></ul>
+            <ul class="list-group list-group-flush"><li style="font-weight: bold" class="list-group-item">Offer #{{ offerID }}</li></ul>
             <div class="card-body cuerpoTarjeta">
                 <div class="leftContent">
                     <div class="details">
