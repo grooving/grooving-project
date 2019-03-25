@@ -91,7 +91,8 @@
     }
 
     .cancelButtonDiv, .confirmButtonDiv {
-        padding: 5px;
+        margin-left: 5%;
+        margin-right: 5%;
     }
 
     .bothButtons {
@@ -102,8 +103,6 @@
 
     .confirmButton, .cancelButton {
         font-size: 18px;
-        padding-left: 10%;
-        padding-right: 10%;
         border: none;
         border-radius: 30px;
         font-weight: bold;
