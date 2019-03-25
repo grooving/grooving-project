@@ -131,13 +131,13 @@ class SystemConfiguration(AbstractEntity):
     creditCardTax = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.0'))])
     vat = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.0'))])
     profit = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.0'))])
-    corporateEmail = models.EmailField(default="info@grooving.com")
-    reportEmail = models.EmailField(default="report@grooving.com")
+    corporateEmail = models.EmailField(default='info@grooving.com')
+    reportEmail = models.EmailField(default='report@grooving.com')
     logo = models.CharField(max_length=255)
     appName = models.CharField(max_length=255)
     slogan = models.CharField(max_length=255, blank=True, null=True)
-    termsText = models.TextField(default="Terms text", max_length=255)
-    privacyText = models.TextField(default="Privacy text", max_length=255)
+    termsText = models.TextField(default='Terms text', max_length=255)
+    privacyText = models.TextField(default='Privacy text', max_length=255)
 
 
 class EventLocation(AbstractEntity):
@@ -171,7 +171,7 @@ OfferStatusField =(
 
 
 class Offer(AbstractEntity):
-    description = models.TextField(max_length=255)
+    description = models.TextField(default='Description', max_length=255)
     status = models.CharField(max_length=20, choices=OfferStatusField)
     date = models.DateTimeField(default=datetime.now)
     hours = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2, validators=[MinValueValidator(Decimal('0.5'))])
