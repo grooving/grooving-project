@@ -60,8 +60,10 @@ export default {
         border-radius: 10px;
         background-color: rgb(246, 247, 248); 
         text-align: left; 
-        max-width:300px;
+ 
         box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
+        margin-top: 60px;
+        width: 100%;
     }
 
     .contenido{

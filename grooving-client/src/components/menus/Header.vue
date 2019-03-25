@@ -31,7 +31,8 @@
           <li v-if="authenticated" class="serch nav-item mx-2 right-float vertical-center" >
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" v-on:click=" collapsed = !collapsed">
               <a class="nav-link vertical-center" href="#">
-                <img v-bind:src="profileImage" class="profileImage" alt="Profile Image">
+                <img v-if="isArtist" v-bind:src="artistImage" class="profileImage" alt="Profile Image">
+                <img v-else v-bind:src="customerImage" class="profileImage" alt="Profile Image">
               </a>
             </button>
           </li>
@@ -103,8 +104,13 @@ export default {
     },
     login() {
       if(this.input.username != "" && this.input.password != "") {
-        if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
+        if(this.input.username == this.$parent.customerAccount.username && this.input.password == this.$parent.customerAccount.password) {
           this.$emit("authenticated", "true");
+          this.$emit("isArtist", "false")
+          this.$router.replace({ name: "#" });
+        } else if (this.input.username == this.$parent.artistAccount.username && this.input.password == this.$parent.artistAccount.password) {
+          this.$emit("authenticated", "true");
+          this.$emit("isArtist", "true")
           this.$router.replace({ name: "#" });
         } else {
           console.log("The username and / or password is incorrect");
@@ -119,9 +125,16 @@ export default {
     authenticated: {
       type: Boolean,
     },
-    profileImage: {
+    isArtist: {
+      type: Boolean,
+    },
+    customerImage: {
       type: String,
       default: 'http://i65.tinypic.com/35mpp1h.jpg'
+    },
+    artistImage: {
+      type: String,
+      default: 'https://img.europapress.es/fotoweb/fotonoticia_20181107115306_1920.jpg'
     },
   },
 
@@ -171,8 +184,10 @@ export default {
   .right-float{ float: right; }
 
   .profileImage {
-    max-width: 24px;
-    border-radius: 25px;
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 20px;
     margin-bottom: 5px;
   }
 

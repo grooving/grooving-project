@@ -67,8 +67,8 @@ export default {
     }
 
     .tarjeta {
-        max-width: 350px;
-        width: 100%;
+        max-width: 400px;
+        width: 105%;
         margin: 0 auto !important;
         border-radius: 20px;
         box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
