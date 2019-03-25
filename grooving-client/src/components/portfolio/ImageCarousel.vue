@@ -3,7 +3,7 @@
       <div class="owl-wrapper horizontal-center">
           <div class="row" style="padding-bottom: 15px">
             <div class="col-sm-12 col-md-8 horizontal-center">
-              <h3 style="text-align: left"><strong>Image Showcase</strong></h3>
+              <h3 style="text-align: left; color: black;"><strong>Image Showcase</strong></h3>
             </div>
           </div>
           <div class="row">

@@ -1,19 +1,19 @@
 <template>
-    <div> 
-        <h2 class="availableDates"><strong>Available dates</strong></h2>  
-    <div class="contentCalendar">
-        
-        <div><vuejs-datepicker :disabledDates="disabledDates" :value="currentDate" :full-month-name="true" :inline="true"></vuejs-datepicker></div>
-        <!--<div class="contentForm"> 
-            <form class="form-inline formulario">
-                <div class="form-group mb-2">
-                    <input class="form-control inputFecha" type="text" id="inputFecha" placeholder="YYYY-MM-DD">
-                </div>
-                <button class="btn btn-primary mb-2" v-on:click="addRejectedDate">ADD</button>
-            </form>
-        </div>-->
-    </div>
-    </div>
+    
+    <div class="container-fluid">
+      <div class="owl-wrapper horizontal-center">
+          <div class="row" style="padding-bottom: 15px">
+            <div class="col-sm-12 col-md-8 horizontal-center">
+              <h3 class="titleCalendar" style="text-align: left;"><strong>Available Dates</strong></h3>
+            </div>
+          </div>
+          <div class="row contentCalendar">
+              <div class="col-sm-12 col-md-8 horizontal-center">
+                  <div><vuejs-datepicker :disabledDates="disabledDates" :value="currentDate" :full-month-name="true" :inline="true"></vuejs-datepicker></div>
+              </div>
+          </div>
+      </div>
+  </div>
 </template>
 
 <script>
@@ -62,6 +62,35 @@ export default {
 
 <style>
 
+.titleCalendar{
+    color: green !important;
+}
+
+.horizontal-center{
+    margin: 0 auto;
+  }
+
+  @media (max-width: 576px) {
+    .artistImage {
+      object-fit: cover;
+      height: 12rem;
+      width: 100%;
+      border-radius: 10px 10px 10px 10px;
+    }
+  }
+
+  @media (min-width: 576px) {
+    .artistImage {
+      object-fit: cover;
+      height: 15rem;
+      width: 100%;
+      border-radius: 10px 10px 10px 10px;
+    }
+  }
+    .horizontal-center{
+        margin: 0 auto;
+
+    }
     .contentForm{
         margin: 0 auto !important;
     }
@@ -76,8 +105,8 @@ export default {
         margin-top: 10px;
     }
 
-    .contentCalendar{
-        width: 100%;
+    .container-fluid{
+        width: 100% !important;
         margin: 0 auto !important;
         padding-left: 10px;
         padding-right: 10px;
@@ -88,13 +117,12 @@ export default {
 
     .availableDates{
         text-align: left;
-        margin-left: 20px;
         font-weight: semibold;
     }
 
     @media (min-width: 768px){
         .vdp-datepicker__calendar {
-            width: 100%;
+            width: 100% !important;
             border: 0px;
             margin-top: 10px;
             margin: 0 auto !important;
@@ -107,7 +135,8 @@ export default {
         }
 
         .contentCalendar{
-            width: 30%;
+            padding-top: 20px !important;
+            width: 65% !important;
             
             margin: 0 auto !important;
             padding-left: 10px;
