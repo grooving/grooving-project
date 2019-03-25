@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="content">
-    <div class="Header"><Header @authenticated="setAuthenticated" v-bind:authenticated="authenticated"/></div>
-    <div class="RightMenu"><RightMenu/></div>
+    <div class="Header"><Header @isArtist="setIsArtist" @authenticated="setAuthenticated" v-bind:authenticated="authenticated" v-bind:isArtist="isArtist"/></div>
+    <div class="RightMenu"><RightMenu v-bind:isArtist="isArtist"/></div>
     <div class="LeftMenu"><LeftMenu/></div>
     <router-view/>
     </div>
@@ -20,9 +20,14 @@ export default {
   data() {
     return {
       authenticated: false,
-      mockAccount: {
+      isArtist: true,
+      customerAccount: {
         username: "pug",
         password: "pug",
+      },
+      artistAccount: {
+        username: "rosalia",
+        password: "rosalia",
       }
     }
   },
@@ -48,6 +53,14 @@ export default {
     },
     logout() {
       this.authenticated = false;
+    },
+    setIsArtist(status) {
+      if (status == "false") {
+        this.isArtist = false;
+      }
+      if (status == "true") {
+        this.isArtist = true;
+      }
     }
   }
 }

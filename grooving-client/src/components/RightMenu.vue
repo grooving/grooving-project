@@ -3,7 +3,7 @@
    
      <div class="collapse navbar-collapse width px-2 bg-light" id="sidebar">
          <p>
-         <h2>Hello, Pug</h2>
+         <h2>Hello, <span v-if="isArtist">ROSALÍA</span><span v-else>Pug</span></h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
                 <li class="nav-item">
                     <a class="nav-link" href="#">My Account</a>
@@ -29,7 +29,8 @@
 export default {
   name: 'RightMenu',
     props: {
-        blur: Boolean
+        blur: Boolean,
+        isArtist: Boolean,
     },
     methods: {
     logout() {
