@@ -38,7 +38,7 @@ export default {
 
   mounted() {
     if(!this.authenticated) {
-      this.$router.replace({name: "#"});
+      this.$router.push({path: "/"});
     }
   },
   
