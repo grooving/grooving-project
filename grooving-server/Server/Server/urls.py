@@ -18,20 +18,21 @@ from django.urls import include, path
 from rest_framework import routers
 from django.conf.urls import url, include
 from portfolio.views import PortfolioManager
-from offer.views import OfferManage
-
+from offer.views import OfferManage, CreateOffer
 from artist.views import ListArtist
 from offers.views import ListOffers
 from paymentPackage.views import PaymentPackageByArtist
 from calendars.views import CalendarByArtist
 from eventLocation.views import EventLocationManager
 from rest_framework.authtoken.views import obtain_auth_token
+
 router = routers.DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', include(router.urls)),
+    path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^offer/$', CreateOffer.as_view()),
     url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
     url(r'^eventlocation/(?P<pk>[0-9]+)/$', EventLocationManager.as_view()),
     url(r'^portfolio/(?P<pk>[0-9]+)/$', PortfolioManager.as_view()),

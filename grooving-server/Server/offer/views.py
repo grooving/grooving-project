@@ -10,12 +10,15 @@ from rest_framework import generics
 from .serializers import OfferSerializer
 from rest_framework import status
 from django.http import Http404
+from django.core import serializers
+from rest_framework.permissions import IsAuthenticated
 
 
 class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
+    #permission_classes = (IsAuthenticated,)
 
     '''def accept_offer(self, request):
         offer_id = request.GET.get('offer_id')
@@ -49,15 +52,16 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
     def put(self, request, pk):
         offer = self.get_object(pk)
-        if len(request.data) == 1 and 'status' in request.data:
-            serializer = OfferSerializer(offer, data=request.data, partial=True)
+        #if len(request.data) == 1 and 'status' in request.data:
+            #partial=True es muy importante, sin ello no funciona la actualización parcial de datos
+        serializer = OfferSerializer(offer, data=request.data, partial=True)
 
-        else:
-            serializer = OfferSerializer(offer, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        #else:
+        #    serializer = OfferSerializer(offer, data=request.data)
+        #if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
         offer = self.get_object(pk)
@@ -70,5 +74,48 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
+    """
+    def post(self, request):
+        serializer = CreateOfferRequest(data=request.data)
+        if serializer.is_valid():
+            serializer.data.status = 'PENDING'
+            if serializer.validated_data.paymentPackage.performance is not None:
+                serializer.validated_data.hours = serializer.validated_data.paymentPackage.performance.hours
+                serializer.validated_data.price = serializer.validated_data.paymentPackage.performance.price
+            elif serializer.validated_data.paymentPackage.fare is not None:
+                serializer.validated_data.price = serializer.validated_data.paymentPackage.fare.price * \
+                                                  serializer.validated_data.hours
+            serializer.validated_data.paymentCode = None
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    """
 
 
+class CreateOffer(generics.CreateAPIView):
+    queryset = Offer.objects.all()
+    serializer_class = OfferSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = OfferSerializer(data=request.data, partial=True)
+        if serializer.validate(request.data):
+            offer = serializer.save()
+            serialized = OfferSerializer(offer)
+            return Response(serialized.data, status=status.HTTP_201_CREATED)
+
+    """
+    def post(self, request, *args, **kwargs):
+        serializer = OfferSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.data.status = 'PENDING'
+            if serializer.validated_data.paymentPackage.performance is not None:
+                serializer.validated_data.hours = serializer.validated_data.paymentPackage.performance.hours
+                serializer.validated_data.price = serializer.validated_data.paymentPackage.performance.price
+            elif serializer.validated_data.paymentPackage.fare is not None:
+                serializer.validated_data.price = serializer.validated_data.paymentPackage.fare.price * \
+                                                  serializer.validated_data.hours
+            serializer.validated_data.paymentCode = None
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    """
