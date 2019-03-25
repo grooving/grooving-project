@@ -174,9 +174,13 @@ export default {
         .tarjeta {
             min-width: 335px;
             width: 25%;
-
-            box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, .3);
             margin-right: 10px;
+        }
+
+        .artistImage{
+            border-radius: 10px 10px 0px 0px;
         }
 
         .calendarButton  {
@@ -209,8 +213,6 @@ export default {
             text-align: left;
             font-size: 50px;
             margin-top: 5%;
-            margin-bottom: 0%;
-
             font-weight: bold;
         }
         

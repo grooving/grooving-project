@@ -6,7 +6,7 @@
         v-on:click=" collapsed = !collapsed">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <router-link class="ml-2 vertical-center" to="/home"><img src="@/assets/logos/logo_name.png" width="100px"/></router-link>
+        <router-link class="ml-2 vertical-center" to="/"><img src="@/assets/logos/logo_name.png" width="100px"/></router-link>
       </div>
       <div class="d-none d-md-block mr-auto">
         <ul class="navbar-nav row-alignment right-float">
@@ -28,10 +28,11 @@
               </form>
             </div>
           </li>
-          <li v-if="authenticated" class="serch nav-item mx-2 right-float vertical-center" >
+          <li v-if="authenticated" class="nav-item mx-2 right-float vertical-center">
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" v-on:click=" collapsed = !collapsed">
               <a class="nav-link vertical-center" href="#">
-                <img v-bind:src="profileImage" class="profileImage" alt="Profile Image">
+                <img v-if="isArtist" v-bind:src="artistImage" class="profileImage" alt="Profile Image">
+                <img v-else v-bind:src="customerImage" class="profileImage" alt="Profile Image">
               </a>
             </button>
           </li>
@@ -103,8 +104,13 @@ export default {
     },
     login() {
       if(this.input.username != "" && this.input.password != "") {
-        if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
+        if(this.input.username == this.$parent.customerAccount.username && this.input.password == this.$parent.customerAccount.password) {
           this.$emit("authenticated", "true");
+          this.$emit("isArtist", "false")
+          this.$router.replace({ name: "#" });
+        } else if (this.input.username == this.$parent.artistAccount.username && this.input.password == this.$parent.artistAccount.password) {
+          this.$emit("authenticated", "true");
+          this.$emit("isArtist", "true")
           this.$router.replace({ name: "#" });
         } else {
           console.log("The username and / or password is incorrect");
@@ -119,9 +125,16 @@ export default {
     authenticated: {
       type: Boolean,
     },
-    profileImage: {
+    isArtist: {
+      type: Boolean,
+    },
+    customerImage: {
       type: String,
       default: 'http://i65.tinypic.com/35mpp1h.jpg'
+    },
+    artistImage: {
+      type: String,
+      default: 'https://img.europapress.es/fotoweb/fotonoticia_20181107115306_1920.jpg'
     },
   },
 
@@ -132,6 +145,16 @@ export default {
 </script>
 
 <style>
+  .material-icons:hover {
+    background: -webkit-linear-gradient(left, #00fb82, #187fe6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .navbar {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .3) !important;
+  }
+
   .btn-secondary {
     color: #212529;
     background-color: transparent;
@@ -139,7 +162,7 @@ export default {
   }
 
   .btn-secondary:hover {
-    color: #101214;
+    color: #212529;
     background-color: transparent;
     border-color: transparent;
   }
@@ -171,9 +194,15 @@ export default {
   .right-float{ float: right; }
 
   .profileImage {
-    max-width: 24px;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
     border-radius: 25px;
     margin-bottom: 5px;
+  }
+
+  .profileImage:hover {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .5) !important;
   }
 
   input:hover{

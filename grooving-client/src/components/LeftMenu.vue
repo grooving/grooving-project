@@ -3,24 +3,26 @@
    
      <div class="collapse navbar-collapse width px-2 bg-light" id="sidebarleft">
          <p>
-         <h2>Menu</h2>
+         <div class="navContent">
+         <h2 class="title">Menu</h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
-                <li class="nav-item">
+                <li class="nav-item section">
                     <router-link class="nav-link" to="artist_search">Top Artists</router-link> 
                 </li>
                 <b-dropdown-divider class="divider"/>
-                <li class="nav-item">
+                <li class="nav-item section">
                     <router-link class="nav-link" to="offers">My Offers</router-link>
                 </li>
                 <b-dropdown-divider class="divider"/>
-                <li class="nav-item">
+                <li class="nav-item section">
                     <a class="nav-link" href="#">QR Scan</a>
                 </li>
                 <b-dropdown-divider class="divider"/>
-                <li class="nav-item">
+                <li class="nav-item section">
                     <a class="nav-link" href="#">FAQ</a>
                 </li>
             </ul>
+        </div>
         </div>
   </div>
 </template>
@@ -51,6 +53,19 @@ $(window).bind('scroll', function () {
 
 * {
     font-family: "Archivo"
+}
+
+.title {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.navContent {
+    margin-left: 15px;
+}
+
+.section {
+    font-size: 18px;
 }
 
 #sidebarleft.collapse {
@@ -91,6 +106,18 @@ $(window).bind('scroll', function () {
 
 @media (min-width: 768px) {
     
+    .title {
+        font-weight: bold;
+        margin-left: 5px;
+    }
+
+    .navContent {
+        margin-left: 20px;
+    }
+
+    .section {
+        font-size: 18px;
+    }
 
     #sidebarleft.collapse {
         display: none;
