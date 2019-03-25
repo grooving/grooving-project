@@ -28,7 +28,7 @@
               </form>
             </div>
           </li>
-          <li v-if="authenticated" class="serch nav-item mx-2 right-float vertical-center" >
+          <li v-if="authenticated" class="nav-item mx-2 right-float vertical-center">
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" v-on:click=" collapsed = !collapsed">
               <a class="nav-link vertical-center" href="#">
                 <img v-if="isArtist" v-bind:src="artistImage" class="profileImage" alt="Profile Image">
@@ -145,6 +145,16 @@ export default {
 </script>
 
 <style>
+  .material-icons:hover {
+    background: -webkit-linear-gradient(left, #00fb82, #187fe6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .navbar {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .3) !important;
+  }
+
   .btn-secondary {
     color: #212529;
     background-color: transparent;
@@ -152,7 +162,7 @@ export default {
   }
 
   .btn-secondary:hover {
-    color: #101214;
+    color: #212529;
     background-color: transparent;
     border-color: transparent;
   }
@@ -184,11 +194,15 @@ export default {
   .right-float{ float: right; }
 
   .profileImage {
-    width: 24px;
-    height: 24px;
+    width: 45px;
+    height: 45px;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 25px;
     margin-bottom: 5px;
+  }
+
+  .profileImage:hover {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .5) !important;
   }
 
   input:hover{

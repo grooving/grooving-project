@@ -49,7 +49,8 @@ export default {
 
 
     footer {
-        padding: 15px;  
+        padding: 15px; 
+        box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, .3) !important;
     }
 
     .info {
