@@ -1,7 +1,7 @@
 <template>
   <div>
     <hr />
-    <TabbedSubMenu />
+    <TabbedSubMenu @selectedTab="setSelectedTab"/>
     <div class="container-fluid" style="padding-top: 20px">
       <div class="container">
           <div id="results" class="col-12 col-lg-9 col-xl-10 results">
@@ -53,7 +53,8 @@ export default {
             place: 'Tacoronte',
             confirmURI: 'offerDetails'
           },
-        ], 
+        ],
+        selectedTab: 0, 
       }
     },
     methods: {
@@ -72,8 +73,11 @@ export default {
             this.filter_parameters[j].selected = true;
           }
         }
+      },
+      setSelectedTab(status) {
+        this.selectedTab = status;
       }
-    }
+    },
 }
 </script>
 

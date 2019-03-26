@@ -33,6 +33,7 @@ export default {
         selectTab: function(event) {
           var index = event.target.id;
           this.selected = index;
+          this.$emit("selectedTab", this.selected);
         }
       }
 }
