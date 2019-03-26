@@ -15,6 +15,7 @@ import AcceptedOffer from './views/AcceptedOffer.vue'
 import Portfolio from './views/Portfolio.vue'
 import SentOffer from './views/SentOffer.vue'
 import ReceivePayment from './views/ReceivePayment.vue'
+import PaymentConfirmation from './views/PaymentConfirmation.vue'
 
 Vue.use(Router)
 
@@ -103,6 +104,10 @@ export default new Router({
       name: 'receivePayment',
       component: ReceivePayment
     },
-
+    {
+      path: '/paymentConfirmation',
+      name: 'paymentConfirmation',
+      component: PaymentConfirmation
+    },
   ]
 })

@@ -24,7 +24,7 @@ export default {
         },
         continueURI: {
             type: String,
-            default: ''
+            default: 'paymentConfirmation'
         } 
     },
 }
