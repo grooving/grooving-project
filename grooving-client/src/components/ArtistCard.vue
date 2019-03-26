@@ -7,7 +7,7 @@
                     <h5 class="card-title artistName">{{ artistName }}</h5>
                     <span class="card-text artistGenres">{{ genresToString() }}</span>
                 </div>
-                <div class="rightContent">
+                <div v-if="!isArtist" class="rightContent">
                     <router-link v-bind:to="hireURI" class="btn btn-primary hireButton"><span class="hireText">HIRE</span></router-link>
                 </div>
             </div>
@@ -38,7 +38,11 @@ export default {
         hireURI: {
             type: String,
             default: 'hiringType'
-        } 
+        },
+        isArtist: {
+            type: Boolean,
+            default: false
+        }
     },
 
     methods: {

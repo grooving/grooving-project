@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       authenticated: false,
-      isArtist: true,
+      isArtist: false,
       customerAccount: {
         username: "pug",
         password: "pug",
@@ -38,7 +38,7 @@ export default {
 
   mounted() {
     if(!this.authenticated) {
-      this.$router.replace({name: "#"});
+      this.$router.push({path: "/"});
     }
   },
   

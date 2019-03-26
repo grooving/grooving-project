@@ -142,6 +142,10 @@ export default {
         color: #187FE6;
     }
 
+    .calendar {
+        margin-top: 5%;
+    }
+
     .continueButton {
         font-size: 22px;
                 
@@ -158,28 +162,43 @@ export default {
 
     .continueButtonDiv {
         margin-top: 30px;
-        margin-bottom: 10%;
+        margin-bottom: 5%;
     }
 
     .title {
         display: none;
     }
 
+    @media (max-width:767px)  {
+        .calendarButton {
+            padding-top: 5%;
+            margin-right: 3%;
+            margin-left: 3%;
+        }
+    }
+
     @media (min-width:768px)  {
         .tarjeta {
             min-width: 335px;
             width: 25%;
-
+            border-radius: 10px;
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
             margin-right: 10px;
         }
 
+        .artistImage {
+            border-radius: 10px 10px 0px 0px;
+        }
+
         .calendarButton  {
             margin-left: 5%;
-            width: 50%;
+            width: 40%;
             margin-top: 0%;
             margin-right: 0%;
             display: inline-block;
+
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, .3);
         }
       
         .continueButtonDiv {

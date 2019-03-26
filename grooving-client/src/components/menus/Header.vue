@@ -6,7 +6,7 @@
           @click="sideMenus()">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <router-link class="ml-2 vertical-center" to="/home"><img src="@/assets/logos/logo_name.png" width="100px"/></router-link>
+        <router-link class="ml-2 vertical-center" to="/"><img src="@/assets/logos/logo_name.png" width="100px"/></router-link>
       </div>
       <div class="d-none d-md-block mr-auto">
         <ul class="navbar-nav row-alignment right-float">
@@ -76,7 +76,7 @@ export default {
           {text: "FAQ", link: "#", selected: false, authRequired: false}
         ],
         showSearchMenu: false,
-        sideMenu: true,
+        sideMenu: false,
         searchQuery: '',
         input: {
           username: "",
@@ -156,6 +156,16 @@ export default {
 </script>
 
 <style>
+  .material-icons:hover {
+    background: -webkit-linear-gradient(left, #00fb82, #187fe6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .navbar {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .3) !important;
+  }
+
   .btn-secondary {
     color: #212529;
     background-color: transparent;
@@ -163,7 +173,7 @@ export default {
   }
 
   .btn-secondary:hover {
-    color: #101214;
+    color: #212529;
     background-color: transparent;
     border-color: transparent;
   }
@@ -195,11 +205,15 @@ export default {
   .right-float{ float: right; }
 
   .profileImage {
-    width: 24px;
-    height: 24px;
+    width: 45px;
+    height: 45px;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 25px;
     margin-bottom: 5px;
+  }
+
+  .profileImage:hover {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .5) !important;
   }
 
   input:hover{

@@ -3,14 +3,14 @@
   <div class="container">
     <div class="row">
       
-      <div id="filters_desktop" class="d-none d-lg-inline col-lg-4 col-xl-2">
+      <div v-if="showFilters" id="filters_desktop" class="d-none d-lg-inline col-lg-4 col-xl-2">
         <FiltersSideMenu :filters_data="filter_parameters" @onFiltersChange="updateFilters" />
       </div>
-      <div id="results" class="col-12 col-lg-8 col-xl-10">
+      <div id="results" :class="{'col-lg-8 col-xl-10' : showFilters}" class="col-12">
         <h1 class="titleView">Top Artists</h1>
         <div class="row">
           <div v-for="artist in datos_prueba" :key="artist.artistURI" class="tarjeta col-12 col-md-6 col-xl-4">
-            <ArtistCard :artistImage="artist.artistImage" :artistName="artist.artistName" />
+            <ArtistCard :isArtist="isArtist" :artistImage="artist.artistImage" :artistName="artist.artistName" />
           </div>
         </div>
       </div>
@@ -91,6 +91,7 @@ export default {
           }     
         ], 
         showFilterSelectionModal: false,
+        isArtist: this.$parent.isArtist,
       }
     },
     methods: {
@@ -109,6 +110,12 @@ export default {
             this.filter_parameters[j].selected = true;
           }
         }
+      }
+    },
+    props:{
+      showFilters: {
+        type: Boolean,
+        default: true
       }
     }
 }

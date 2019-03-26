@@ -157,7 +157,7 @@ export default {
     }
 
     .sliderButton  {
-        margin-top: 20%;
+        margin-top: 15%;
         width: 90%;
         margin-left: auto;
         margin-right: auto;
@@ -172,22 +172,40 @@ export default {
         display: none;
     }
 
+    @media (max-width:767px)  {
+        .sliderButton {
+            padding-top: 5%;
+            margin-right: 3%;
+            margin-left: 3%;
+        }
+    }
+
     @media (min-width:768px)  {
         .tarjeta {
             min-width: 335px;
             width: 25%;
 
+            border-radius: 10px;
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
             margin-right: 10px;
-            margin-bottom: 10%;
+        }
+
+        .artistImage {
+            border-radius: 10px 10px 0px 0px;
         }
 
         .sliderButton  {
             margin-left: 5%;
-            width: 50%;
+            width: 40%;
             margin-top: 0%;
+            padding-top: 7%;
+            padding-left: 5%;
+            padding-right: 5%;
             margin-right: 0%;
             display: inline-block;
+
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, .3);
         }
       
         .continueButtonDiv {
