@@ -3,9 +3,8 @@
         <div class="card tarjeta">
             <div class="container-fluid">
                 <div class="container">
-                    <div class="right-div right-text" style="width: 100px; text-align: left; vertical-align: top;s">
+                    <div class="right-div right-text offerInfo">
                         <span class="card-title"><h2>Offer #{{ offerID }} - {{price}}€</h2></span><br>
-                        
                         <p>{{date}}</p>
                         <p>  In {{place}}</p>
                     </div>
@@ -15,9 +14,9 @@
                     </div>
                 </div>
                 <div class="collapse" v-bind:id="noHashtag()">
-                    <div class="form-group" style="text-align: left;">
-                        <label for="exampleFormControlTextarea1" style="font-weight:bold;">Please, confirm your rejection:</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="You can explain the reason why you are rejecting this offer. It will be shown to the person that contacted you."></textarea>
+                    <div class="form-group">
+                        <label for="rejectionReason">Please, confirm your rejection:</label>
+                        <textarea class="form-control" id="rejectionReason" rows="3" placeholder="You can explain the reason why you are rejecting this offer. It will be shown to the person that contacted you."></textarea>
                     </div>
                     <div class="row container">
                         <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="enableOfferButtons()" class="btn btn-primary cancelButton" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">CANCEL</span></a></div>
@@ -70,7 +69,7 @@
             },
             offerStatus: {
                 type: String,
-                default: 'a',
+                default: 'pending',
             }
         },
 
@@ -97,7 +96,19 @@
 
 </script>
 
+<style>
+
+    .form-group {
+        text-align: left;
+    }
+
+</style>
+
+
 <style scoped>
+    * {
+        font-family: "Archivo"
+    }
 
     .row .container{
         margin: 0px !important;
@@ -113,44 +124,25 @@
         margin-top: 10%;
     }
 
+    .offerInfo {
+        width: 100px !important;
+        text-align: left !important;
+        vertical-align: top !important;
+    }
+
     .right-div{
         display: inline-block;
         text-align: center;
         width: 50% !important;
         padding: 20px !important;
     }
-    
-    .right-div2{
-        padding: 0px !important;
-    }
-
-    .right-div2{
-        padding: 10px !important;
-    }
 
     .right-div .right-text{
         width: 200px;
     }
 
-    * {
-        font-family: "Archivo"
-    }
-
-    .botonera{
-        
-        display:flex;
-        align-content: center;
-    }
-
-    .subtitle{
-        color: #187FE6;
-    }
-    .texto-izq{
-        text-align:left;
-    }
-
-    .texto-dcha{
-        text-align:right;
+    label {
+        font-weight: bold;
     }
 
     .card-title{
@@ -166,24 +158,6 @@
         width: 100%;
         box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
     }
-    
-    .leftContent {
-        text-align: left;
-    }
-
-    .rejectButtonDiv, .confirmButtonDiv {
-        padding: 5px;
-    }
-    
-    
-
-    .bothButtons {
-        display: flex;
-        justify-content: center;
-        padding-bottom: 20px;
-        width: 100% !important;
-    }
-
     .confirmButton, .rejectButton, .cancelButton {
         font-size: 21px;
         font-weight:bold;
@@ -216,6 +190,10 @@
         background-image: linear-gradient(to right, #515151, #232323) !important;
     }
 
+    .everything {
+        margin: 0 auto;
+    }
+
     @media (min-width:768px)  {
 
         .tarjeta {
@@ -223,10 +201,6 @@
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, .2);
         }
       
-    }
-
-    .everything {
-        margin: 0 auto;
     }
 
 </style>
