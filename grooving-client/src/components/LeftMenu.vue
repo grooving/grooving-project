@@ -7,19 +7,23 @@
          <h2 class="title">Menu</h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
                 <li class="nav-item section">
-                    <router-link class="nav-link" to="artist_search">Top Artists</router-link> 
+                    <router-link class="nav-link" to="artist_search" data-toggle="collapse" data-target="#sidebarleft" >Top Artists</router-link> 
+                    <b-dropdown-divider class="divider"/>
                 </li>
-                <b-dropdown-divider class="divider"/>
-                <li class="nav-item section">
-                    <router-link class="nav-link" to="offers">My Offers</router-link>
+                
+                <li v-if="authenticated" class="nav-item section">
+                    <router-link class="nav-link" to="offers" data-toggle="collapse" 
+                    data-target="#sidebarleft" >My Offers</router-link>
+                    <b-dropdown-divider class="divider"/>
                 </li>
-                <b-dropdown-divider class="divider"/>
-                <li class="nav-item section">
-                    <a class="nav-link" href="#">QR Scan</a>
+                
+                <li v-if="authenticated && !isArtist" class="nav-item section">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebarleft">QR Scan</a>
+                    <b-dropdown-divider class="divider"/>
                 </li>
-                <b-dropdown-divider class="divider"/>
+                
                 <li class="nav-item section">
-                    <a class="nav-link" href="#">FAQ</a>
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebarleft">FAQ</a>
                 </li>
             </ul>
         </div>
@@ -34,8 +38,19 @@
 export default {
   name: 'LeftMenu',
     props: {
-        blur: Boolean
-    }
+        blur: {
+            type: Boolean,
+        },
+        authenticated: {
+            type: Boolean,
+            default:false
+        },
+        isArtist: {
+            type: Boolean,
+            default:false
+        },
+        
+    },
 }
 
 $(window).bind('scroll', function () {
@@ -71,7 +86,7 @@ $(window).bind('scroll', function () {
 #sidebarleft.collapse {
     text-align: left;
     position: fixed;
-    z-index: 2000;
+    z-index: 2001;
     transition: all .3s ease;
     left: -130%; /* -width of sidebar */
     width: 100%;
@@ -84,6 +99,7 @@ $(window).bind('scroll', function () {
     text-align: left;
     transition: all .18s ease-in;
     position: fixed;
+    z-index: 2001;
     left: -130%;  /* -width of sidebar */
     width: 100%;  /* width of sidebar */
     height: fit-content !important;
@@ -121,10 +137,12 @@ $(window).bind('scroll', function () {
 
     #sidebarleft.collapse {
         display: none;
+        z-index: 2001;
     }
 
     #sidebarleft.collapsing {
         display: none;
+        z-index: 2001;
     }
 
     #sidebarleft.collapse.show {

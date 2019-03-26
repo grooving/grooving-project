@@ -2,8 +2,8 @@
   <div>
     <nav class="navbar navbar-light bg-light">
       <div class="navbar-brand vertical-center">
-        <button class="d-inline d-md-none navbar-toggler no-border" role="button" data-toggle="collapse" data-target="#sidebarleft" 
-        v-on:click=" collapsed = !collapsed">
+        <button class="d-inline d-md-none navbar-toggler no-border" role="button" data-toggle="collapse" data-target="#sidebarleft"
+          @click="sideMenus()">
           <span class="navbar-toggler-icon"></span>
         </button>
         <router-link class="ml-2 vertical-center" to="/home"><img src="@/assets/logos/logo_name.png" width="100px"/></router-link>
@@ -29,7 +29,7 @@
             </div>
           </li>
           <li v-if="authenticated" class="serch nav-item mx-2 right-float vertical-center" >
-            <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" v-on:click=" collapsed = !collapsed">
+            <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" @click="sideMenus()">
               <a class="nav-link vertical-center" href="#">
                 <img v-if="isArtist" v-bind:src="artistImage" class="profileImage" alt="Profile Image">
                 <img v-else v-bind:src="customerImage" class="profileImage" alt="Profile Image">
@@ -76,6 +76,7 @@ export default {
           {text: "FAQ", link: "#", selected: false, authRequired: false}
         ],
         showSearchMenu: false,
+        sideMenu: true,
         searchQuery: '',
         input: {
           username: "",
@@ -98,6 +99,16 @@ export default {
         $(document.body).css("overflow", "")
       }
 
+    },
+    sideMenus: function() {
+      this.sideMenu = !this.sideMenu;
+
+      if(this.sideMenu){
+        $(document.body).css("overflow", "hidden")
+
+      } else {
+        $(document.body).css("overflow", "")
+      }
     },
     search: function() {
       this.$router.push({ path: '/artist_search', query: { query : this.searchQuery } })

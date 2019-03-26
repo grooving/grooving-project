@@ -8,19 +8,20 @@
          <h2>Hello, <span v-if="isArtist">ROSALÍA</span><span v-else>Pug</span></h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
                 <li class="nav-item section">
-                    <a class="nav-link" href="#">My Account</a>
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebar">My Account</a>
+                    <b-dropdown-divider class="divider"/>
                 </li>
-                <b-dropdown-divider class="divider"/>
-                <li class="nav-item section">
-                    <a class="nav-link" href="#">My Portfolio</a>
+                <li class="nav-item section" v-if="isArtist">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebar">My Portfolio</a>
+                    <b-dropdown-divider class="divider"/>
                 </li>
-                <b-dropdown-divider class="divider"/>
+                
                 <li class="nav-item section">
-                    <a class="nav-link" href="#">Messages</a>
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebar">Messages</a>
+                     <b-dropdown-divider class="divider"/>
                 </li>
-                <b-dropdown-divider class="divider"/>
                 <li class="nav-item section">
-                    <a class="nav-link" href="" v-on:click="logout()">Log Out</a>
+                    <a class="nav-link" href="" v-on:click="logout()" data-toggle="collapse" data-target="#sidebar">Log Out</a>
                 </li>
             </ul>
         </div>
@@ -92,6 +93,7 @@ $(window).bind('scroll', function () {
     text-align: right;
     transition: right .18s ease-in;
     position: fixed;
+    z-index: 2000;
     right: -130%;  /* -width of sidebar */
     width: 100%;  /* width of sidebar */
     height: fit-content !important;
@@ -147,6 +149,7 @@ $(window).bind('scroll', function () {
     #sidebar.collapsing {
         text-align: right;
         transition: right .18s ease-in;
+        z-index: 2000;
         right: -30%;  /* -width of sidebar */
         width: 25%;  /* width of sidebar */
         height: 100% !important;

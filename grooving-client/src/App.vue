@@ -3,7 +3,7 @@
     <div class="content">
     <div class="Header"><Header @isArtist="setIsArtist" @authenticated="setAuthenticated" v-bind:authenticated="authenticated" v-bind:isArtist="isArtist"/></div>
     <div class="RightMenu"><RightMenu v-bind:isArtist="isArtist"/></div>
-    <div class="LeftMenu"><LeftMenu/></div>
+    <div class="LeftMenu"><LeftMenu v-bind:authenticated="authenticated" v-bind:isArtist="isArtist"/></div>
     <router-view/>
     </div>
     <footer><Footer/></footer>

@@ -88,8 +88,7 @@ export default {
         font-family: "Archivo"
     }
     .card-img-top {
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
+      border-radius: 0px;
     }
 
     .tarjeta {
