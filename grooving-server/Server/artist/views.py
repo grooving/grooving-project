@@ -23,7 +23,7 @@ class ListArtist(viewsets.ModelViewSet):
                     queryset = []
                     return queryset
                 if artisticname:
-                    queryset = queryset.filter(portfolio__artisticGender=artgen)
+                    queryset = queryset.filter(portfolio__artisticName=artisticname)
                 else:
                     queryset = Artist.objects.filter(portfolio__artisticGender=artgen)
         else:
