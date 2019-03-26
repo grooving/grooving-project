@@ -100,10 +100,8 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
         'USER': 'root',
-        'PASSWORD': 'root',
-        'TEST': {
-            'NAME': 'test_grooving',
-        }
+        'PASSWORD': 'root'
+
     }
 }
 

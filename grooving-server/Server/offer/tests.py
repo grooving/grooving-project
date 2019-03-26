@@ -1,17 +1,21 @@
 from django.test import TestCase
 
-from Grooving.models import Offer, MoneyField, Customer, CreditCardField, Artist, Portfolio, User, Calendar,PaymentPackage,EventLocation,Zone
+from Grooving.models import Offer, Customer, Artist, Portfolio, User, Calendar,EventLocation,Zone
 from datetime import datetime
 from rest_framework.test import APITestCase
 # Create your tests here.
 
+from rest_framework.test import APIClient
 
-class OfferTestCase(TestCase):
+
+class OfferTestCase(APITestCase):
+
+    def setUp(self):
+        self.client = APIClient()
 
 
     def test_accept_offer(self):
 
-        credit_card1 = CreditCardField('Pedro Rodriguez', datetime.now(), '1234567890123456', '203')
         user1 = User()
         user1.username = "pedro"
         user1.id = "42"
@@ -23,10 +27,13 @@ class OfferTestCase(TestCase):
         customer1.id = "41"
         customer1.phone = "959959959"
         customer1.paypalAccount = "user=paypal,password=paypal"
-        customer1.creditCard = credit_card1
+        #customer1.creditCard = credit_card1
         customer1.iban = "DE89 3704 0044 0532 0130 00"
+        customer1.number= "123456789"
         customer1.user_id = "42"
-
+        customer1.cvv="203"
+        customer1.holder="Pedro Rodriguez"
+        customer1.expirationDate = "2020-02-22"
         customer1.save()
 
         days = [True] * 366
@@ -52,13 +59,6 @@ class OfferTestCase(TestCase):
         portfolio1.calendar = calendar1
         portfolio1.artisticName = "Juanartist"
 
-        money = MoneyField('100.0', 'EUR')
-
-        paymentPackage = PaymentPackage()
-        paymentPackage.id = "87"
-        paymentPackage.description = "paymentPackage description"
-        paymentPackage.appliedVAT = "0.07"
-        paymentPackage.save()
         zone1 = Zone()
         zone1.id = "50"
         zone1.name = "Sevilla Sur"
@@ -74,15 +74,17 @@ class OfferTestCase(TestCase):
         eventLocation1.id = "45"
         eventLocation1.save()
 
-        offer1 = Offer(description="Offer1", status='PENDING', date=datetime.now(), hours=2, paymentCode='EEE')
-        offer1.paymentPackage_id = "87"
+        date1 = datetime(2020, 11, 22, 19, 53, 42)
+        offer1 = Offer(description="Offer1", status='PENDING', date=date1,price=200, hours=2, paymentCode='EEE')
+        offer1.paymentCode = "EEOO"
         offer1.eventLocation_id = "45"
         offer1.id = '40'
         offer1.save()
-        self.client.login(username='artist', password='artist')
+        self.client.get('/api/login/artist')
 
-        response = self.client.get('/offers/41/', format='json')
-        '''self.assertEqual(response.status_code, 200)'''
+        data = {"status": "PENDING"}
+        response = self.client.put('/offer/1/', data, format='json')
+        self.assertEqual(response.status_code, 200)
         print(response)
         self.client.logout()
         print(offer1.status)

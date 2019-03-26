@@ -36,10 +36,10 @@ class PaymentPackageSerializer(serializers.HyperlinkedModelSerializer):
 
 class OfferSerializer(serializers.HyperlinkedModelSerializer):
 
-    paymentPackage = PaymentPackageSerializer(read_only=True)
+    #paymentCode = PaymentPackageSerializer(read_only=True)
 
     class Meta:
         model = Offer
         depth = 1
-        fields = ('description', 'status', 'date', 'hours', 'eventLocation_id', 'paymentPackage')
+        fields = ('description', 'status', 'date', 'hours')
 

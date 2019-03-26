@@ -47,8 +47,8 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         serializer = OfferSerializer(offer)
         return Response(serializer.data)
 
-    def put(self, request, pk):
-        offer = self.get_object(pk)
+    def put(self, request,pk):
+        offer = Offer.objects.get(pk = pk)
         if len(request.data) == 1 and 'status' in request.data:
             serializer = OfferSerializer(offer, data=request.data, partial=True)
 
