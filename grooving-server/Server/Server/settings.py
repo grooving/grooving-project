@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Grooving.apps.GroovingConfig',
+    'artist.apps.ArtistConfig',
+    'customer.apps.CustomerConfig',
     'django_filters',
     'rest_framework',
     'rest_framework_swagger',
