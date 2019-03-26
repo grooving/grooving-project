@@ -10,14 +10,12 @@
                     <router-link class="nav-link" to="artist_search" data-toggle="collapse" data-target="#sidebarleft" >Top Artists</router-link> 
                     <b-dropdown-divider class="divider"/>
                 </li>
-                
-                <li v-if="authenticated" class="nav-item section">
+                <li v-if="gsecurity.isAuthenticated()" class="nav-item section">
                     <router-link class="nav-link" to="offers" data-toggle="collapse" 
                     data-target="#sidebarleft" >My Offers</router-link>
                     <b-dropdown-divider class="divider"/>
                 </li>
-                
-                <li v-if="authenticated && !isArtist" class="nav-item section">
+                <li v-if="gsecurity.hasRole('ARTIST')" class="nav-item section">
                     <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebarleft">QR Scan</a>
                     <b-dropdown-divider class="divider"/>
                 </li>
@@ -35,22 +33,20 @@
 <!-- Script -->
  
 <script>
+import GSecurity from '@/security/GSecurity.js';
+
 export default {
   name: 'LeftMenu',
     props: {
         blur: {
             type: Boolean,
-        },
-        authenticated: {
-            type: Boolean,
-            default:false
-        },
-        isArtist: {
-            type: Boolean,
-            default:false
-        },
-        
+        }  
     },
+    data: function(){
+        return{
+            gsecurity: GSecurity,
+        }
+    }
 }
 
 $(window).bind('scroll', function () {

@@ -5,13 +5,13 @@
          <p>
         <div class="navContent">
 
-         <h2>Hello, <span v-if="isArtist">ROSALÍA</span><span v-else>Pug</span></h2>
+         <h2>Hello, <span v-if="gsecurity.hasRole('ARTIST')">ROSALÍA</span><span v-else>Pug</span></h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
                 <li class="nav-item section">
                     <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebar">My Account</a>
                     <b-dropdown-divider class="divider"/>
                 </li>
-                <li class="nav-item section" v-if="isArtist">
+                <li class="nav-item section" v-if="gsecurity.hasRole('ARTIST')">
                     <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebar">My Portfolio</a>
                     <b-dropdown-divider class="divider"/>
                 </li>
@@ -21,7 +21,7 @@
                      <b-dropdown-divider class="divider"/>
                 </li>
                 <li class="nav-item section">
-                    <a class="nav-link" href="" v-on:click="logout()" data-toggle="collapse" data-target="#sidebar">Log Out</a>
+                    <a class="nav-link" href="" v-on:click="logout()">Log Out</a>
                 </li>
             </ul>
         </div>
@@ -30,16 +30,22 @@
 </template>
 
 <script>
+import GSecurity from '@/security/GSecurity.js';
+
 export default {
   name: 'RightMenu',
     props: {
         blur: Boolean,
-        isArtist: Boolean,
+    },
+    data: function(){
+        return{
+            gsecurity: GSecurity,
+        }
     },
     methods: {
     logout() {
-      this.$emit("authenticated", "false");
-          this.$router.replace({ name: "#" });
+      this.gsecurity.deauthenticate();
+      this.$router.push({ path: "/" });
     }
   },
 }

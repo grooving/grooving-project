@@ -10,8 +10,8 @@
       </div>
       <div class="d-none d-md-block mr-auto">
         <ul class="navbar-nav row-alignment right-float">
-          <li v-for="item in menu_links" class="nav-item mx-2" v-bind:class="{active: item.selected}">
-            <router-link v-if="(!item.authRequired || authenticated)" class="nav-link font" :to="item.link">{{item.text}}</router-link> 
+          <li v-for="item in userVisibleLinks" class="nav-item mx-2" v-bind:class="{active: item.selected}">
+            <router-link class="nav-link font" :to="item.link">{{item.text}}</router-link> 
           </li>
         </ul>
       </div>
@@ -28,16 +28,16 @@
               </form>
             </div>
           </li>
-          <li v-if="authenticated" class="serch nav-item mx-2 right-float vertical-center" >
+          <li v-if="gsecurity.isAuthenticated()" class="nav-item mx-2 right-float vertical-center" >
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" @click="sideMenus()">
               <a class="nav-link vertical-center" href="#">
-                <img v-if="isArtist" v-bind:src="artistImage" class="profileImage" alt="Profile Image">
+                <img v-if="gsecurity.hasRole('ARTIST')" v-bind:src="artistImage" class="profileImage" alt="Profile Image">
                 <img v-else v-bind:src="customerImage" class="profileImage" alt="Profile Image">
               </a>
             </button>
           </li>
           <li v-else>
-            <b-dropdown id="ddown-form" ref="ddown" class="m-2" right>
+            <b-dropdown :disabled="loginDisabled" id="ddown-form" ref="ddown" class="m-2" right>
               <template slot="button-content"><i class="material-icons align-middle">account_circle</i></template>
               
               <b-dropdown-form class="loginDropdown">
@@ -64,6 +64,7 @@
 
 <script>
 import Search from "./Search.vue";
+import GSecurity from '@/security/GSecurity.js';
 
 export default {
   name: 'Header',
@@ -71,9 +72,10 @@ export default {
   data: function() {
     return {
         menu_links: [
-          {text: "Top Artists", link: "artist_search", selected: true, authRequired: false},
-          {text: "My Offers", link: "offers", selected: false, authRequired: true},
-          {text: "FAQ", link: "#", selected: false, authRequired: false}
+          {text: "Top Artists", link: "artist_search", selected: true, requiedRoles: []},
+          {text: "My Offers", link: "offers", selected: false, requiedRoles: ['CUSTOMER', 'ARTIST']},
+          {text: "QR Scan", link: "QR Scan", selected: false, requiedRoles: ['ARTIST']},
+          {text: "FAQs", link: "#", selected: false, requiedRoles: []}
         ],
         showSearchMenu: false,
         sideMenu: false,
@@ -82,6 +84,8 @@ export default {
           username: "",
           password: "",
         },
+        gsecurity: GSecurity,
+        loginDisabled: false,
     }
   },
 
@@ -102,6 +106,7 @@ export default {
     },
     sideMenus: function() {
       this.sideMenu = !this.sideMenu;
+      this.loginDisabled = !this.loginDisabled;
 
       if(this.sideMenu){
         $(document.body).css("overflow", "hidden")
@@ -114,31 +119,13 @@ export default {
       this.$router.push({ path: '/artist_search', query: { query : this.searchQuery } })
     },
     login() {
-      if(this.input.username != "" && this.input.password != "") {
-        if(this.input.username == this.$parent.customerAccount.username && this.input.password == this.$parent.customerAccount.password) {
-          this.$emit("authenticated", "true");
-          this.$emit("isArtist", "false")
-          this.$router.replace({ name: "#" });
-        } else if (this.input.username == this.$parent.artistAccount.username && this.input.password == this.$parent.artistAccount.password) {
-          this.$emit("authenticated", "true");
-          this.$emit("isArtist", "true")
-          this.$router.replace({ name: "#" });
-        } else {
-          console.log("The username and / or password is incorrect");
-        }
-      } else {
-        console.log("A username and password must be present");
+      if(this.gsecurity.authenticate(this.input.username, this.input.password)){
+          this.$router.push({ path: "/" });
       }
     }
   },
 
   props: {
-    authenticated: {
-      type: Boolean,
-    },
-    isArtist: {
-      type: Boolean,
-    },
     customerImage: {
       type: String,
       default: 'http://i65.tinypic.com/35mpp1h.jpg'
@@ -152,6 +139,12 @@ export default {
   mounted: function() {
     $("button").removeClass("dropdown-toggle");
   },
+
+  computed: {
+    userVisibleLinks: function(){
+      return this.menu_links.filter(item => (item.requiedRoles.length == 0 || item.requiedRoles.includes(this.gsecurity.getRole())))
+    }
+  }
 }
 </script>
 
@@ -182,6 +175,16 @@ export default {
     color: #000000;
     background-color: transparent;
     border-color: transparent;
+  }
+  
+  .btn-secondary.disabled, .btn-secondary:disabled{
+    color: #000000;
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  .dropdown-toggle::after{
+    display: none
   }
 
 </style>

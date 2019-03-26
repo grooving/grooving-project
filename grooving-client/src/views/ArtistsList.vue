@@ -10,7 +10,7 @@
         <h1 class="titleView">Top Artists</h1>
         <div class="row">
           <div v-for="artist in datos_prueba" :key="artist.artistURI" class="tarjeta col-12 col-md-6 col-xl-4">
-            <ArtistCard :isArtist="isArtist" :artistImage="artist.artistImage" :artistName="artist.artistName" />
+            <ArtistCard :artistImage="artist.artistImage" :artistName="artist.artistName" />
           </div>
         </div>
       </div>
@@ -91,7 +91,6 @@ export default {
           }     
         ], 
         showFilterSelectionModal: false,
-        isArtist: this.$parent.isArtist,
       }
     },
     methods: {
