@@ -13,5 +13,4 @@ class CustomerInfoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         depth = 1
         model = Customer
-        fields = ('id', 'user', 'photo', 'phone', 'iban', 'paypalAccount', 'holder', 'expirationDate', 'number',
-                  'cvv', 'eventLocation')
+        fields = ('id', 'user', 'photo', 'phone', 'iban', 'paypalAccount', 'eventLocation')
