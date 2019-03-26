@@ -15,7 +15,7 @@
                 </li>
                 <b-dropdown-divider class="divider"/>
                 <li class="nav-item section">
-                    <a class="nav-link" href="#">QR Scan</a>
+                    <router-link class="nav-link" to="receivePayment">QR Scan</router-link>
                 </li>
                 <b-dropdown-divider class="divider"/>
                 <li class="nav-item section">

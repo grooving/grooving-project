@@ -14,6 +14,7 @@ import Payment from './views/Payment.vue'
 import AcceptedOffer from './views/AcceptedOffer.vue'
 import Portfolio from './views/Portfolio.vue'
 import SentOffer from './views/SentOffer.vue'
+import ReceivePayment from './views/ReceivePayment.vue'
 
 Vue.use(Router)
 
@@ -96,6 +97,11 @@ export default new Router({
       path: '/sentOffer',
       name: 'sentOffer',
       component: SentOffer
+    },
+    {
+      path: '/receivePayment',
+      name: 'receivePayment',
+      component: ReceivePayment
     },
 
   ]
