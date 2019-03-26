@@ -8,7 +8,7 @@
          <h2>Hello, <span v-if="isArtist">ROSALÍA</span><span v-else>Pug</span></h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
                 <li class="nav-item section">
-                    <a class="nav-link" href="#">My Account</a>
+                    <router-link class="nav-link" to="personalInfo">My Account</router-link>
                 </li>
                 <b-dropdown-divider class="divider"/>
                 <li class="nav-item section">
