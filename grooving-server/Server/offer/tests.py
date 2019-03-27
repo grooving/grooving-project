@@ -18,7 +18,6 @@ class OfferTestCase(APITestCase):
         customer1.save()
 
         days = [True] * 366
-        print(days)
 
         user2 = User.objects.create(username="artist", email="artist@artist.com", password="artist")
         user2.save()
@@ -60,4 +59,3 @@ class OfferTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
         print(response)
         self.client.logout()
-        print(offer1.status)

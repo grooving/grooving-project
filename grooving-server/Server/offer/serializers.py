@@ -60,7 +60,7 @@ class OfferSerializer(serializers.ModelSerializer):
             offer = self._service_create(self.initial_data, offer)
         else:
             # edit
-            id= (self.initia_data, pk)[pk is not None]
+            id= (self.initial_data, pk)[pk is not None]
 
             offer = Offer.objects.filter(pk=id).first()
             offer = self._service_update(self.initial_data, offer)
@@ -99,8 +99,8 @@ class OfferSerializer(serializers.ModelSerializer):
         json_status = json.get('status')
         if json_status:
             status_in_db = offer_in_db.status
-            normal_transitions = {'PENDING': 'NEGOTIATION',
-                                  'NEGOTIATION': 'CONTRACT_MADE', 'CONTRACT_MADE': 'PAYMENT_MADE'}
+            normal_transitions = {'PENDING': 'CONTRACT_MADE',
+                                   'CONTRACT_MADE': 'PAYMENT_MADE'}
 
             #TODO: Must be check the login
             customer_flowstop_transitions={'PENDING': 'WITHDRAWN',
@@ -127,9 +127,10 @@ class OfferSerializer(serializers.ModelSerializer):
                     except IntegrityError:
                         continue
 
+            print("ESTADO DB ANTES:" + offer_in_db.status)
             offer_in_db.status = json_status
             offer_in_db.save()
-
+            print("ESTADO DB DESSPUES:" + offer_in_db.status)
             return offer_in_db
 
     @staticmethod

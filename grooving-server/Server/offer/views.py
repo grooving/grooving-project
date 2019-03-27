@@ -57,8 +57,7 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         else:
             serializer = OfferSerializer(offer, data=request.data, partial=True)
             serializer.save(pk)
-            if serializer.is_valid():
-                return Response(status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
 
     def delete(self, request, pk, format=None):
         offer = self.get_object(pk)
@@ -100,14 +99,7 @@ class CreateOffer(generics.CreateAPIView):
             serialized = OfferSerializer(offer)
             return Response(serialized.data, status=status.HTTP_201_CREATED)
 
-class PaymentCode():
-    queryset = Offer.Objects.all()
-    serializer_class = OfferSerializer
 
-    def get(self, request, *args, **kwargs):
-        offerId= request.GET.get("offer", None)
-
-        serializer
 
     """
     def post(self, request, *args, **kwargs):
