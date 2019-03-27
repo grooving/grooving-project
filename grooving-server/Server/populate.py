@@ -1,5 +1,7 @@
 import os
 import django
+import random
+import string
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'Server.settings')
 django.setup()
 from Grooving.models import ArtisticGender, Portfolio, Artist, Zone, PortfolioModule, Calendar, PaymentPackage, \
@@ -7,6 +9,12 @@ from Grooving.models import ArtisticGender, Portfolio, Artist, Zone, PortfolioMo
 
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+
+
+def _service_generate_unique_payment_code():
+    random_alphanumeric = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(10))
+    payment_code = random_alphanumeric
+    return payment_code
 
 
 def delete_data():
@@ -82,49 +90,49 @@ def save_data():
 
     # Portfolios
 
-    portfolio1 = Portfolio.objects.create(artisticName='Carlos DJ')
+    portfolio1 = Portfolio.objects.create(artisticName='Carlos DJ', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio1.artisticGender.add(artistic_gender2)
     portfolio1.zone.add(zone1)
     portfolio1.save()
 
-    portfolio2 = Portfolio.objects.create(artisticName='From the noise')
+    portfolio2 = Portfolio.objects.create(artisticName='From the noise', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio2.artisticGender.add(artistic_gender4)
     portfolio2.zone.add(zone1)
     portfolio2.save()
 
-    portfolio3 = Portfolio.objects.create(artisticName='Los saraos')
+    portfolio3 = Portfolio.objects.create(artisticName='Los saraos', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio3.artisticGender.add(artistic_gender5)
     portfolio3.zone.add(zone1)
     portfolio3.save()
 
-    portfolio4 = Portfolio.objects.create(artisticName='Ana DJ')
+    portfolio4 = Portfolio.objects.create(artisticName='Ana DJ', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio4.zone.add(zone2)
     portfolio4.artisticGender.add(artistic_gender2)
     portfolio4.save()
 
-    portfolio5 = Portfolio.objects.create(artisticName='Pasando olimpicamente')
+    portfolio5 = Portfolio.objects.create(artisticName='Pasando olimpicamente', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio5.artisticGender.add(artistic_gender8)
     portfolio5.zone.add(zone2)
     portfolio5.save()
 
-    portfolio6 = Portfolio.objects.create(artisticName='Una chirigota sin clase')
+    portfolio6 = Portfolio.objects.create(artisticName='Una chirigota sin clase', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio6.artisticGender.add(artistic_gender8)
     portfolio6.zone.add(zone1)
     portfolio6.save()
 
-    portfolio7 = Portfolio.objects.create(artisticName='Batracio')
+    portfolio7 = Portfolio.objects.create(artisticName='Batracio', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio7.artisticGender.add(artistic_gender3)
     portfolio7.artisticGender.add(artistic_gender4)
     portfolio7.zone.add(zone1)
     portfolio7.save()
 
-    portfolio8 = Portfolio.objects.create(artisticName='Medictum')
+    portfolio8 = Portfolio.objects.create(artisticName='Medictum', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio8.artisticGender.add(artistic_gender3)
     portfolio8.artisticGender.add(artistic_gender4)
     portfolio8.zone.add(zone1)
     portfolio8.save()
 
-    portfolio9 = Portfolio.objects.create(artisticName='Waterdogs')
+    portfolio9 = Portfolio.objects.create(artisticName='Waterdogs', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio9.artisticGender.add(artistic_gender3)
     portfolio9.artisticGender.add(artistic_gender4)
     portfolio9.zone.add(zone2)
@@ -506,83 +514,83 @@ def save_data():
 
     # Offers
 
-    offer1 = Offer.objects.create(description='Oferta 1 to ', status='PENDING', date='2019-04-25 12:00:00', hours=2.5,
-                                  price='120', currency='EUR', paymentCode='59558462', paymentPackage=paymentPackage1_performance1,
-                                  eventLocation=event_location1)
+    offer1_performance1 = Offer.objects.create(description='Oferta 1 to Carlos DJ by performance', status='PENDING',
+                                               date='2019-04-25 12:00:00', hours=2.5, price='120', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage1_performance1,
+                                               eventLocation=event_location1)
+    offer1_performance1.save()
 
+    offer2_performance1 = Offer.objects.create(description='Oferta 2 to Carlos DJ by performance', status='NEGOTIATION',
+                                               date='2019-07-25 12:00:00', hours=1.5, price='120', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage1_performance1,
+                                               eventLocation=event_location1)
+    offer2_performance1.save()
 
-    '''
+    offer3_performance1 = Offer.objects.create(description='Oferta 3 to Carlos DJ by performance', status='CANCELED',
+                                               date='2019-10-25 12:00:00', hours=1.5, price='120', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage1_performance1,
+                                               eventLocation=event_location2)
+    offer3_performance1.save()
 
+    offer4_fare1 = Offer.objects.create(description='Oferta 4 to Carlos DJ by fare', status='PENDING',
+                                               date='2019-10-25 12:00:00', hours=1.5, price='120', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage2_fare1,
+                                               eventLocation=event_location2)
+    offer4_fare1.save()
 
-    # Offers
+    offer5_custom1 = Offer.objects.create(description='Oferta 5 to Carlos DJ by custom', status='CONTRACT_MADE',
+                                               date='2019-8-25 12:00:00', hours=1.5, price='115', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage3_custom1,
+                                               eventLocation=event_location1)
+    offer5_custom1.save()
 
-    offer1 = Offer.objects.create(description='Oferta 1', status='PENDING', date='2019-04-25 12:00:00', hours=2.5,
-                                  price='120', currency='EUR', paymentCode='59558462', paymentPackage=paymentPackage1,
-                                  eventLocation=event_location1)
-    offer1.save()
+    offer6_custom1 = Offer.objects.create(description='Oferta 6 to Carlos DJ by custom', status='REJECTED',
+                                               date='2019-10-25 19:00:00', hours=1.5, price='100', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage3_custom1,
+                                               eventLocation=event_location1)
+    offer6_custom1.save()
 
-    offer2 = Offer.objects.create(description='Oferta 2', status='NEGOTIATION', date='2019-08-14 12:00:00', hours=2.5,
-                                  price='110', currency='EUR', paymentCode='59551262', paymentPackage=paymentPackage1,
-                                  eventLocation=event_location1)
-    offer2.save()
+    offer7_performance2 = Offer.objects.create(description='Oferta 7 to From the noise by performance', status='REJECTED',
+                                               date='2019-10-25 15:00:00', hours=1.5, price='140', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage4_performance2,
+                                               eventLocation=event_location1)
+    offer7_performance2.save()
 
-    offer3 = Offer.objects.create(description='Oferta 3', status='CONTRACT_MADE', date='2019-08-14 12:00:00', hours=2.5,
-                                  price='160', currency='EUR', paymentCode='59158462', paymentPackage=paymentPackage1,
-                                  eventLocation=event_location1)
+    offer9_fare2 = Offer.objects.create(description='Oferta 9 to From the noise by fare', status='CANCELLED',
+                                               date='2019-03-27 00:00:00', hours=1.5, price='140', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage5_fare2,
+                                               eventLocation=event_location4)
+    offer9_fare2.save()
 
-    offer3.save()
+    offer10_fare2 = Offer.objects.create(description='Oferta 10 to From the noise by performance', status='NEGOTIATION',
+                                               date='2019-01-06 01:00:00', hours=1.5, price='140', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage5_fare2,
+                                               eventLocation=event_location4)
+    offer10_fare2.save()
 
-    offer4 = Offer.objects.create(description='Oferta 4', status='WITHDRAWN', date='2019-09-01 12:00:00', hours=2.5,
-                                  price='175', currency='EUR', paymentCode='59558478', paymentPackage=paymentPackage2,
-                                  eventLocation=event_location2)
-    offer4.save()
+    offer11_custom2 = Offer.objects.create(description='Oferta 11 to From the noise by performance', status='NEGOTIATION',
+                                               date='2019-01-06 01:00:00', hours=1.5, price='140', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage5_fare2,
+                                               eventLocation=event_location3)
+    offer11_custom2.save()
 
-    offer5 = Offer.objects.create(description='Oferta 5', status='REJECTED', date='2019-04-28 12:00:00', hours=1.5,
-                                  price='105', currency='EUR', paymentCode='59214292', paymentPackage=paymentPackage3,
-                                  eventLocation=event_location2)
-    offer5.save()
+    offer12_custom2 = Offer.objects.create(description='Oferta 12 to From the noise by performance', status='CANCELLED',
+                                               date='2017-01-06 01:00:00', hours=1.5, price='140', currency='EUR',
+                                               paymentCode=_service_generate_unique_payment_code(),
+                                               paymentPackage=paymentPackage5_fare2,
+                                               eventLocation=event_location3)
+    offer12_custom2.save()
 
-    offer6 = Offer.objects.create(description='Oferta 6', status='CANCELLED', date='2019-04-12 12:00:00', hours=3.5,
-                                  price='75', currency='EUR', paymentCode='59553292', paymentPackage=paymentPackage3,
-                                  eventLocation=event_location3)
-    offer6.save()
-
-    offer7 = Offer.objects.create(description='Oferta 7', status='CANCELLED', date='2019-08-24 12:00:00', hours=1.5,
-                                  price='97', currency='EUR', paymentCode='59523292', paymentPackage=paymentPackage3,
-                                  eventLocation=event_location3)
-    offer7.save()
-
-    offer8 = Offer.objects.create(description='Oferta 8', status='PAYMENT_MADE', date='2019-11-12 12:00:00', hours=1.5,
-                                  price='97', currency='EUR', paymentCode='59558332', paymentPackage=paymentPackage3,
-                                  eventLocation=event_location3)
-    offer8.save()
-
-    offer9 = Offer.objects.create(description='Oferta 9', status='CANCELLED', date='2019-04-12 12:00:00', hours=3.5,
-                                  price='75', currency='EUR', paymentCode='59553291', paymentPackage=paymentPackage3,
-                                  eventLocation=event_location3)
-    offer9.save()
-
-    offer10 = Offer.objects.create(description='Oferta 10', status='CANCELLED', date='2019-08-24 12:00:00', hours=1.5,
-                                  price='97', currency='EUR', paymentCode='59523290', paymentPackage=paymentPackage4,
-                                  eventLocation=event_location3)
-    offer10.save()
-
-    offer11 = Offer.objects.create(description='Oferta 11', status='PAYMENT_MADE', date='2019-11-12 12:00:00', hours=1.5,
-                                  price='97', currency='EUR', paymentCode='51238339', paymentPackage=paymentPackage3,
-                                  eventLocation=event_location3)
-    offer11.save()
-
-    offer12 = Offer.objects.create(description='Oferta 12', status='CANCELLED', date='2019-08-24 12:00:00', hours=1.5,
-                                  price='97', currency='EUR', paymentCode='59756290', paymentPackage=paymentPackage4,
-                                  eventLocation=event_location3)
-    offer12.save()
-
-    offer13 = Offer.objects.create(description='Oferta 13', status='PENDING', date='2020-11-12 12:00:00', hours=1.5,
-                                  price='97', currency='EUR', paymentCode='59318339', paymentPackage=paymentPackage4,
-                                  eventLocation=event_location3)
-    offer13.save()
-    '''
 
 delete_data()
 save_data()
-
