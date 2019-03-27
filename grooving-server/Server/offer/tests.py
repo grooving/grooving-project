@@ -1,6 +1,7 @@
 from Grooving.models import Offer, Customer, Artist, Portfolio, User, Calendar, PaymentPackage
 from Grooving.models import EventLocation, Zone, Performance
 from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 
 from rest_framework.test import APITestCase
 
@@ -11,16 +12,12 @@ class OfferTestCase(APITestCase):
 
     def test_accept_offer(self):
 
-        user1 = User.objects.create(username="pedro", email="pedro@pedro.com", password="pedro")
-        user1.save()
-        customer1 = Customer.objects.create(user=user1,phone="959959959", photo="www.google.png",
-                                            iban="DE89 3704 0044 0532 0130 00")
-        customer1.save()
-
         days = [True] * 366
 
-        user2 = User.objects.create(username="artist", email="artist@artist.com", password="artist")
-        user2.save()
+        user1_artist1 = User.objects.create(username='artist1', password=make_password('artist1artist1'),
+                                            first_name='Cdds', last_name='Pedro',
+                                            email='artist1@gmail.com')
+        user1_artist1.save()
 
         zone1 = Zone.objects.create(name="Sevilla Sur")
         zone1.save()
@@ -33,9 +30,9 @@ class OfferTestCase(APITestCase):
         portfolio1.zone.add(zone1)
         portfolio1.save()
 
-        artist1 = Artist.objects.create(portfolio=portfolio1, user=user2, phone="888888888",
-                                        photo="www.google.png", iban="DE89 3704 0044 0532 0130 00")
+        artist1 = Artist.objects.create(user=user1_artist1, portfolio=portfolio1, phone='600304999')
         artist1.save()
+
         performance1 = Performance.objects.create(info="info", hours=3, price=200.0, currency="EUR")
         performance1.save()
         payment_package1 = PaymentPackage.objects.create(description="Paymentcription", appliedVAT="0.35",
@@ -51,11 +48,11 @@ class OfferTestCase(APITestCase):
         offer1 = Offer.objects.create(description="DESCRIPTIONOFFER1", status='PENDING', date=date, price="200",currency="EUR", hours=2,
                                       paymentCode='EEE', eventLocation=event_location1, paymentPackage=payment_package1)
         offer1.save()
-        data1 = {"username": "artist", "password": "artist"}
-        self.client.post("/api/login/", data1, format='json')
-
+        data1 = {"username": "artist1", "password": "artist1artist1"}
+        response1 = self.client.post("/api/login/", data1, format='json')
+        print(response1)
+        self.assertEqual(response1.status_code, 200)
         data = {"status": "CONTRACT_MADE"}
-        response = self.client.put('/offer/1/', data, format='json')
-        self.assertEqual(response.status_code, 200)
-        print(response)
-        self.client.logout()
+        response2 = self.client.put('/offer/1/', data, format='json')
+        self.assertEqual(response2.status_code, 200)
+        print(response2)

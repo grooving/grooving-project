@@ -107,11 +107,12 @@ class OfferSerializer(serializers.ModelSerializer):
                                            'NEGOTIATION': 'WITHDRAWN', 'CONTRACT_MADE': 'WITHDRAWN'}
 
             artist_flowstop_transitions={'PENDING': 'REJECTED',
-                                         'NEGOTIATION': 'REJECTED', 'CONTRACT_MADE': 'CANCEL'}
+                                         'NEGOTIATION': 'REJECTED', 'CONTRACT_MADE': 'CANCELED'}
 
             allowed_transition = (normal_transitions.get(status_in_db) == json_status
                                   or artist_flowstop_transitions.get(status_in_db) == json_status
                                   or customer_flowstop_transitions.get(status_in_db) == json_status
+                                  or status_in_db == json_status
                                   )
 
             assert_true(allowed_transition, "Not allowed status transition: " + status_in_db + " to "
@@ -130,7 +131,7 @@ class OfferSerializer(serializers.ModelSerializer):
             print("ESTADO DB ANTES:" + offer_in_db.status)
             offer_in_db.status = json_status
             offer_in_db.save()
-            print("ESTADO DB DESSPUES:" + offer_in_db.status)
+            print("ESTADO DB DESPUES:" + offer_in_db.status)
             return offer_in_db
 
     @staticmethod
