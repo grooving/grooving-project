@@ -53,15 +53,16 @@ class OfferSerializer(serializers.ModelSerializer):
                   'paymentPackage_id', 'eventLocation', 'eventLocation_id')
 
     # Esto sobrescrive una función heredada del serializer.
-    def save(self):
-        if self.initial_data.get('id') is None:
+    def save(self, pk=None):
+        if self.initial_data.get('id') is None and pk is None:
             # creation
             offer = Offer()
             offer = self._service_create(self.initial_data, offer)
         else:
             # edit
-            print("Clave primaria:" + str(self.initial_data.get('id')))
-            offer = Offer.objects.filter(pk=self.initial_data.get('id')).first()
+            id= (self.initia_data, pk)[pk is not None]
+
+            offer = Offer.objects.filter(pk=id).first()
             offer = self._service_update(self.initial_data, offer)
 
         return offer
@@ -88,13 +89,13 @@ class OfferSerializer(serializers.ModelSerializer):
         offer.save()
         return offer
 
-    @staticmethod
-    def _service_update(json: dict, offer_in_db: Offer):
+    def _service_update(self, json: dict, offer_in_db: Offer):
         assert_true(offer_in_db, "No existe una oferta con esa id")
+        offer = self._service_update_status(json, offer_in_db)
 
-        return json
+        return offer
 
-    def _service_update_status(self, json: dict, offer_in_db):
+    def _service_update_status(self, json: dict, offer_in_db: Offer):
         json_status = json.get('status')
         if json_status:
             status_in_db = offer_in_db.status
@@ -134,9 +135,8 @@ class OfferSerializer(serializers.ModelSerializer):
     @staticmethod
     def _service_generate_unique_payment_code():
         random_alphanumeric = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(10))
-        payment_code = 'VALID_'+random_alphanumeric
+        payment_code = random_alphanumeric
         return payment_code
-
 
     def validate(self, data):
         if data.get("description") is None:
