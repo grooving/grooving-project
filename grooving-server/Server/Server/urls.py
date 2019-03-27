@@ -41,7 +41,7 @@ urlpatterns = [
     url(r'^artists/$', ListArtist.as_view({'get': 'list'})),
     path('api/login/', LoginManager.as_view(), name='login'),
     url(r'^offers/$', ListOffers.as_view()),
-
+    url(r'^paymentCode/$', PaymentCode.as_view())
 
 ]
 
