@@ -1,5 +1,4 @@
 """Server URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
 Examples:
@@ -19,6 +18,8 @@ from rest_framework import routers
 from django.conf.urls import url, include
 from login.views import LoginManager
 from portfolio.views import PortfolioManager
+from artist.views import GetPersonalInformationOfArtist
+from customer.views import GetPersonalInformationOfCustomer
 from offer.views import OfferManage, CreateOffer
 from artist.views import ListArtist
 from offers.views import ListOffers
@@ -39,9 +40,11 @@ urlpatterns = [
     url(r'^portfolio/(?P<pk>[0-9]+)/$', PortfolioManager.as_view()),
     url(r'^artist/paymentPackages/(?P<pk>[0-9]+)/$', PaymentPackageByArtist.as_view()),
     url(r'^artist/calendar/(?P<pk>[0-9]+)/$', CalendarByArtist.as_view()),
-    url(r'^artists/$', ListArtist.as_view({'get': 'list'})),
+    url(r'^artists/$', ListArtist.as_view()),
+    url(r'^artist/personalInformation/$', GetPersonalInformationOfArtist.as_view()),
+    url(r'^customer/personalInformation/$', GetPersonalInformationOfCustomer.as_view()),
     path('api/login/', LoginManager.as_view(), name='login'),
     url(r'^offers/$', ListOffers.as_view())
 
-]
 
+]

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Grooving.apps.GroovingConfig',
     'artist.apps.ArtistConfig',
+    'customer.apps.CustomerConfig',
     'django_filters',
     'rest_framework',
     'rest_framework_swagger',
@@ -102,10 +103,10 @@ DATABASES = {
         'NAME': 'grooving',
         'HOST': '127.0.0.1',
         'PORT': '5432',
-        #'USER': 'root',
-        #'PASSWORD': 'root',
-        'USER': 'grooving',
-        'PASSWORD': 'grooving',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        #'USER': 'grooving',
+        #'PASSWORD': 'grooving',
         'TEST': {
             'NAME': 'test_grooving',
         }
