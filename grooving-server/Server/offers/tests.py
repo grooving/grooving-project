@@ -33,7 +33,8 @@ class OfferTestCase(TestCase):
         days = [True] * 366
         calendar1 = Calendar(year=2019, days=days)
         calendar1.id = "44"
-        calendar1.save()
+
+
         user2 = User()
         user2.email = "pepe@pepe.com"
         user2.username = "user2"
@@ -47,6 +48,9 @@ class OfferTestCase(TestCase):
         portfolio1.artisticName = "No me pises"
         portfolio1.id = "4"
         portfolio1.save()
+
+        calendar1.portfolio = portfolio1
+        calendar1.save()
 
         artist1 = Artist()
         artist1.photo = "https://conectandomeconlau.com.co/wp-content/uploads/2018/03/%C2%BFTienes-las-caracteri%CC%81sticas-para-ser-un-Artista.png"
@@ -115,9 +119,6 @@ class OfferTestCase(TestCase):
         customer2.cvv = '203'
         customer2.save()
 
-        calendar2 = Calendar(year=2019, days=days)
-        calendar2.id = "45"
-        calendar2.save()
         user4 = User()
         user4.email = "pepe@pepe.com"
         user4.username = "user4"
@@ -129,6 +130,11 @@ class OfferTestCase(TestCase):
         portfolio2.calendar = calendar1
         portfolio2.artisticName = "Married to college"
         portfolio2.save()
+
+        calendar2 = Calendar(year=2019, days=days)
+        calendar2.id = "45"
+        calendar2.portfolio = portfolio2
+        calendar2.save()
 
         artist2 = Artist()
         artist2.photo = "https://conectandomeconlau.com.co/wp-content/uploads/2018/03/%C2%BFTienes-las-caracteri%CC%81sticas-para-ser-un-Artista.png"
@@ -144,6 +150,7 @@ class OfferTestCase(TestCase):
         paymentPackage2.id = "88"
         paymentPackage2.description = "paymentPackage description"
         paymentPackage2.appliedVAT = "0.07"
+        paymentPackage2.portfolio = portfolio2
         paymentPackage2.save()
         zone2 = Zone()
         zone2.id = "51"
@@ -206,10 +213,6 @@ class OfferTestCase(TestCase):
         customer1.cvv = '203'
         customer1.save()
 
-        days = [True] * 366
-        calendar1 = Calendar(year=2019, days=days)
-        calendar1.id = "44"
-        calendar1.save()
         user2 = User()
         user2.email = "pepe@pepe.com"
         user2.username = "user2"
@@ -217,12 +220,16 @@ class OfferTestCase(TestCase):
         user2.id = "16"
         user2.save()
 
-
         portfolio1 = Portfolio()
-        portfolio1.calendar = calendar1
         portfolio1.artisticName = "No me pises"
         portfolio1.id = "4"
         portfolio1.save()
+
+        days = [True] * 366
+        calendar1 = Calendar(year=2019, days=days)
+        calendar1.id = "44"
+        calendar1.portfolio = portfolio1
+        calendar1.save()
 
         artist1 = Artist()
         artist1.photo = "https://conectandomeconlau.com.co/wp-content/uploads/2018/03/%C2%BFTienes-las-caracteri%CC%81sticas-para-ser-un-Artista.png"
@@ -251,6 +258,7 @@ class OfferTestCase(TestCase):
         eventLocation1.equipment = "Speakers and microphone"
         eventLocation1.description = "THe best event location"
         eventLocation1.zone = zone1
+        eventLocation1.customer = customer1
         eventLocation1.save()
 
         eventLocation1.id = "45"
@@ -293,9 +301,6 @@ class OfferTestCase(TestCase):
         customer2.cvv = '203'
         customer2.save()
 
-        calendar2 = Calendar(year=2019, days=days)
-        calendar2.id = "45"
-        calendar2.save()
         user4 = User()
         user4.email = "pepe@pepe.com"
         user4.username = "user4"
@@ -307,6 +312,11 @@ class OfferTestCase(TestCase):
         portfolio2.calendar = calendar1
         portfolio2.artisticName = "Married to college"
         portfolio2.save()
+
+        calendar2 = Calendar(year=2019, days=days)
+        calendar2.id = "45"
+        calendar2.portfolio = portfolio2
+        calendar2.save()
 
         artist2 = Artist()
         artist2.photo = "https://conectandomeconlau.com.co/wp-content/uploads/2018/03/%C2%BFTienes-las-caracteri%CC%81sticas-para-ser-un-Artista.png"
@@ -322,6 +332,7 @@ class OfferTestCase(TestCase):
         paymentPackage2.id = "88"
         paymentPackage2.description = "paymentPackage description"
         paymentPackage2.appliedVAT = "0.07"
+        paymentPackage2.portfolio = portfolio2
         paymentPackage2.save()
 
         offer2 = Offer()
@@ -374,6 +385,7 @@ class OfferTestCase(TestCase):
         paymentPackage2 = PaymentPackage()
         paymentPackage2.id = "88"
         paymentPackage2.description = "paymentPackage description"
+        paymentPackage2.portfolio = portfolio2
         paymentPackage2.appliedVAT = "0.07"
         paymentPackage2.save()
 
