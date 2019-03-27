@@ -35,7 +35,6 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^offer/$', CreateOffer.as_view()),
     url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
     url(r'^eventlocation/(?P<pk>[0-9]+)/$', EventLocationManager.as_view()),
@@ -54,7 +53,8 @@ urlpatterns = [
     url(r'^zone/$', CreateZone.as_view()),
     url(r'^zone/(?P<pk>[0-9]+)/$', ZoneManager.as_view()),
     path('api/login/', LoginManager.as_view(), name='login'),
-    url(r'^offers/$', ListOffers.as_view())
+    url(r'^offers/$', ListOffers.as_view()),
+    url(r'^paymentCode/$', PaymentCode.as_view())
 
 ]
 
