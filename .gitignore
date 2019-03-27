@@ -7,3 +7,4 @@ grooving-server/Server/venv/
 
 grooving-server/Server/Grooving/migrations/
 venv/
+grooving-server/Server/env/
