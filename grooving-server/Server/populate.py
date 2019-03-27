@@ -521,7 +521,7 @@ def save_data():
                                   eventLocation=event_location1)
     offer1.save()
 
-    offer2 = Offer.objects.create(description='Oferta 2', status='NEGOCIATION', date='2019-08-14 12:00:00', hours=2.5,
+    offer2 = Offer.objects.create(description='Oferta 2', status='NEGOTIATION', date='2019-08-14 12:00:00', hours=2.5,
                                   price='110', currency='EUR', paymentCode='59551262', paymentPackage=paymentPackage1,
                                   eventLocation=event_location1)
     offer2.save()

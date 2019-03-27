@@ -12,6 +12,7 @@ from rest_framework import status
 from django.http import Http404
 from django.core import serializers
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
 
 
 class OfferManage(generics.RetrieveUpdateDestroyAPIView):
@@ -52,16 +53,12 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
     def put(self, request, pk):
         offer = self.get_object(pk)
-        #if len(request.data) == 1 and 'status' in request.data:
-            #partial=True es muy importante, sin ello no funciona la actualización parcial de datos
-        serializer = OfferSerializer(offer, data=request.data, partial=True)
-
-        #else:
-        #    serializer = OfferSerializer(offer, data=request.data)
-        #if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
-        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if len(request.data) == 0:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            serializer = OfferSerializer(offer, data=request.data, partial=True)
+            serializer.save(pk)
+            return Response(status=status.HTTP_200_OK)
 
     def delete(self, request, pk, format=None):
         offer = self.get_object(pk)
@@ -103,7 +100,26 @@ class CreateOffer(generics.CreateAPIView):
             serialized = OfferSerializer(offer)
             return Response(serialized.data, status=status.HTTP_201_CREATED)
 
-    """
+
+class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Offer.objects.all()
+    serializer_class = OfferSerializer
+
+    def get_object(self, pk):
+        try:
+            return Offer.objects.get(pk=pk)
+        except Offer.DoesNotExist:
+            raise Http404
+
+    def get(self, request, *args, **kwargs):
+        offer_id= request.GET.get("offer", None)
+        offer = self.get_object(offer_id)
+        serializer = OfferSerializer(offer)
+        code = serializer.data.get("paymentCode")
+        return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
+
+
+"""
     def post(self, request, *args, **kwargs):
         serializer = OfferSerializer(data=request.data)
         if serializer.is_valid():
