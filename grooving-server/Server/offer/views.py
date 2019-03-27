@@ -12,6 +12,7 @@ from rest_framework import status
 from django.http import Http404
 from django.core import serializers
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
 
 
 class OfferManage(generics.RetrieveUpdateDestroyAPIView):
@@ -103,14 +104,23 @@ class CreateOffer(generics.CreateAPIView):
             serialized = OfferSerializer(offer)
             return Response(serialized.data, status=status.HTTP_201_CREATED)
 
-class PaymentCode():
-    queryset = Offer.Objects.all()
+
+class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Offer.objects.all()
     serializer_class = OfferSerializer
 
-    def get(self, request, *args, **kwargs):
-        offerId= request.GET.get("offer", None)
+    def get_object(self, pk):
+        try:
+            return Offer.objects.get(pk=pk)
+        except Offer.DoesNotExist:
+            raise Http404
 
-        serializer
+    def get(self, request, *args, **kwargs):
+        offer_id= request.GET.get("offer", None)
+        offer = self.get_object(offer_id)
+        serializer = OfferSerializer(offer)
+        code = serializer.data.get("paymentCode")
+        return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
 
     """
     def post(self, request, *args, **kwargs):

@@ -19,7 +19,7 @@ from rest_framework import routers
 from django.conf.urls import url, include
 from login.views import LoginManager
 from portfolio.views import PortfolioManager
-from offer.views import OfferManage, CreateOffer
+from offer.views import OfferManage, CreateOffer, PaymentCode
 from artist.views import ListArtist
 from offers.views import ListOffers
 from paymentPackage.views import PaymentPackageByArtist
