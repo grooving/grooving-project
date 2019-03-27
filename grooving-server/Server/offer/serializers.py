@@ -2,6 +2,9 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from Grooving.models import Offer, PaymentPackage, EventLocation
 from utils.Assertions import assert_true
+from django.db import IntegrityError
+import random
+import string
 
 '''class OfferSerializer(serializers.Serializer):
     class Meta:
@@ -50,17 +53,18 @@ class OfferSerializer(serializers.ModelSerializer):
                   'paymentPackage_id', 'eventLocation', 'eventLocation_id')
 
     # Esto sobrescrive una función heredada del serializer.
-    def save(self):
-        if self.initial_data.get('id') is None:
+    def save(self, pk=None):
+        if self.initial_data.get('id') is None and pk is None:
             # creation
             offer = Offer()
             offer = self._service_create(self.initial_data, offer)
         else:
             # edit
-            print("Clave primaria:" + str(self.initial_data.get('id')))
-            offer = Offer.objects.get(pk=self.initial_data.get('id'))
+            id= (self.initia_data, pk)[pk is not None]
+
+            offer = Offer.objects.filter(pk=id).first()
             offer = self._service_update(self.initial_data, offer)
-        offer.save()
+
         return offer
 
     # Se pondrá service delante de nuestros métodos para no sobrescribir por error métodos del serializer
@@ -82,13 +86,57 @@ class OfferSerializer(serializers.ModelSerializer):
         elif offer.paymentPackage.custom is not None:
             offer.price = json['price']
             offer.currency = offer.paymentPackage.custom.currency
+        offer.save()
         return offer
 
-    @staticmethod
-    def _service_update(json: dict):
-        offer_in_db = Offer.objects.filter(pk=json.id).first()
+    def _service_update(self, json: dict, offer_in_db: Offer):
         assert_true(offer_in_db, "No existe una oferta con esa id")
-        return json
+        offer = self._service_update_status(json, offer_in_db)
+
+        return offer
+
+    def _service_update_status(self, json: dict, offer_in_db: Offer):
+        json_status = json.get('status')
+        if json_status:
+            status_in_db = offer_in_db.status
+            normal_transitions = {'PENDING': 'NEGOTIATION',
+                                  'NEGOTIATION': 'CONTRACT_MADE', 'CONTRACT_MADE': 'PAYMENT_MADE'}
+
+            #TODO: Must be check the login
+            customer_flowstop_transitions={'PENDING': 'WITHDRAWN',
+                                           'NEGOTIATION': 'WITHDRAWN', 'CONTRACT_MADE': 'WITHDRAWN'}
+
+            artist_flowstop_transitions={'PENDING': 'REJECTED',
+                                         'NEGOTIATION': 'REJECTED', 'CONTRACT_MADE': 'CANCEL'}
+
+            allowed_transition = (normal_transitions.get(status_in_db) == json_status
+                                  or artist_flowstop_transitions.get(status_in_db) == json_status
+                                  or customer_flowstop_transitions.get(status_in_db) == json_status
+                                  )
+
+            assert_true(allowed_transition, "Not allowed status transition: " + status_in_db + " to "
+                        + json_status + ".")
+
+            if json_status == "CONTRACT_MADE":
+                while True:
+                    # noinspection PyBroadException
+                    try:
+                        offer_in_db.paymentCode = self._service_generate_unique_payment_code()
+                        offer_in_db.save()
+                        break
+                    except IntegrityError:
+                        continue
+
+            offer_in_db.status = json_status
+            offer_in_db.save()
+
+            return offer_in_db
+
+    @staticmethod
+    def _service_generate_unique_payment_code():
+        random_alphanumeric = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(10))
+        payment_code = random_alphanumeric
+        return payment_code
 
     def validate(self, data):
         if data.get("description") is None:

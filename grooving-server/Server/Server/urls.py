@@ -41,7 +41,9 @@ urlpatterns = [
     url(r'^artist/calendar/(?P<pk>[0-9]+)/$', CalendarByArtist.as_view()),
     url(r'^artists/$', ListArtist.as_view({'get': 'list'})),
     path('api/login/', LoginManager.as_view(), name='login'),
-    url(r'^offers/$', ListOffers.as_view())
+    url(r'^offers/$', ListOffers.as_view()),
+    url(r'paymentCode/', PaymentCode.as_view())
+
 
 ]
 
