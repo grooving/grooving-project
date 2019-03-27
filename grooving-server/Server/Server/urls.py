@@ -24,7 +24,7 @@ from artist.views import ListArtist
 from offers.views import ListOffers
 from paymentPackage.views import PaymentPackageByArtist
 from calendars.views import CalendarByArtist
-from eventLocation.views import EventLocationManager
+from eventLocation.views import EventLocationManager, CreateEventLocation
 from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
@@ -34,6 +34,7 @@ urlpatterns = [
     path('', include(router.urls)),
     url(r'^offer/$', CreateOffer.as_view()),
     url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
+    url(r'^eventlocation/$', CreateEventLocation.as_view()),
     url(r'^eventlocation/(?P<pk>[0-9]+)/$', EventLocationManager.as_view()),
     url(r'^portfolio/(?P<pk>[0-9]+)/$', PortfolioManager.as_view()),
     url(r'^artist/paymentPackages/(?P<pk>[0-9]+)/$', PaymentPackageByArtist.as_view()),
