@@ -32,7 +32,6 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^offer/$', CreateOffer.as_view()),
     url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
     url(r'^eventlocation/(?P<pk>[0-9]+)/$', EventLocationManager.as_view()),

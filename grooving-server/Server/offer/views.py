@@ -71,31 +71,16 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
-    """
-    def post(self, request):
-        serializer = CreateOfferRequest(data=request.data)
-        if serializer.is_valid():
-            serializer.data.status = 'PENDING'
-            if serializer.validated_data.paymentPackage.performance is not None:
-                serializer.validated_data.hours = serializer.validated_data.paymentPackage.performance.hours
-                serializer.validated_data.price = serializer.validated_data.paymentPackage.performance.price
-            elif serializer.validated_data.paymentPackage.fare is not None:
-                serializer.validated_data.price = serializer.validated_data.paymentPackage.fare.price * \
-                                                  serializer.validated_data.hours
-            serializer.validated_data.paymentCode = None
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    """
 
 
 class CreateOffer(generics.CreateAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         serializer = OfferSerializer(data=request.data, partial=True)
-        if serializer.validate(request.data):
+        if serializer.validate(request):
             offer = serializer.save()
             serialized = OfferSerializer(offer)
             return Response(serialized.data, status=status.HTTP_201_CREATED)
@@ -112,26 +97,8 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
             raise Http404
 
     def get(self, request, *args, **kwargs):
-        offer_id= request.GET.get("offer", None)
+        offer_id = request.GET.get("offer", None)
         offer = self.get_object(offer_id)
         serializer = OfferSerializer(offer)
         code = serializer.data.get("paymentCode")
         return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
-
-
-"""
-    def post(self, request, *args, **kwargs):
-        serializer = OfferSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.data.status = 'PENDING'
-            if serializer.validated_data.paymentPackage.performance is not None:
-                serializer.validated_data.hours = serializer.validated_data.paymentPackage.performance.hours
-                serializer.validated_data.price = serializer.validated_data.paymentPackage.performance.price
-            elif serializer.validated_data.paymentPackage.fare is not None:
-                serializer.validated_data.price = serializer.validated_data.paymentPackage.fare.price * \
-                                                  serializer.validated_data.hours
-            serializer.validated_data.paymentCode = None
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    """
