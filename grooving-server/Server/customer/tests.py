@@ -20,21 +20,6 @@ class ShowCustomerInformation(TestCase):
         zone1.parentZone = None
         zone1.save()
 
-        eventLocation1 = EventLocation()
-        eventLocation1.name = "Bar Pepe"
-        eventLocation1.address = "Address"
-        eventLocation1.equipment = "None"
-        eventLocation1.description = "Small place but very famous"
-        eventLocation1.zone = zone1
-        eventLocation1.save()
-
-        eventLocation2 = EventLocation()
-        eventLocation2.name = "Bar Joselito"
-        eventLocation2.address = "Address2"
-        eventLocation2.equipment = "Nothing"
-        eventLocation2.description = "Small place but incredibly nice"
-        eventLocation2.zone = zone1
-
         customer1 = Customer()
         customer1.photo = "https://conectandomeconlau.com.co/wp-content/uploads/2018/03/%C2%BFTienes-las-caracteri%CC%81sticas-para-ser-un-Artista.png"
         customer1.id = "1"
@@ -45,8 +30,24 @@ class ShowCustomerInformation(TestCase):
         customer1.holder = "Luz"
         customer1.expirationDate = datetime.now()
         customer1.cvv = 888
-        customer1.eventLocation = eventLocation1
         customer1.save()
+
+        eventLocation1 = EventLocation()
+        eventLocation1.name = "Bar Pepe"
+        eventLocation1.address = "Address"
+        eventLocation1.equipment = "None"
+        eventLocation1.description = "Small place but very famous"
+        eventLocation1.zone = zone1
+        eventLocation1.customer = customer1
+        eventLocation1.save()
+
+        eventLocation2 = EventLocation()
+        eventLocation2.name = "Bar Joselito"
+        eventLocation2.address = "Address2"
+        eventLocation2.equipment = "Nothing"
+        eventLocation2.description = "Small place but incredibly nice"
+        eventLocation2.zone = zone1
+
 
         self.client.force_login(user1)
         response = self.client.get('/customer/personalInformation/', format='json')
@@ -56,7 +57,7 @@ class ShowCustomerInformation(TestCase):
         item_dict = response.json()
         print(item_dict)
         #We check that only one user is retrieved
-        self.assertTrue(len(item_dict) == 11)
+        self.assertTrue(len(item_dict) == 6)
         print(response)
         self.client.logout()
 

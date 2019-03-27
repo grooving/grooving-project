@@ -52,4 +52,13 @@ class PortfolioSerializer(serializers.ModelSerializer):
         fields = ('artisticName', 'calendar_set', 'artisticGender', 'portfoliomodule_set', 'zone', 'paymentpackage_set')
 
 
+class ShortPortfolioSerializer(serializers.ModelSerializer):
+
+    artisticGender = ArtisticGenderSerializer(read_only=True, many=True)
+
+    class Meta:
+
+        model = Portfolio
+        fields = ('artisticName', 'artisticGender')
+
 

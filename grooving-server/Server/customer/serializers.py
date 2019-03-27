@@ -8,7 +8,7 @@ from eventLocation.serializers import EventLocationSerializer
 class CustomerInfoSerializer(serializers.HyperlinkedModelSerializer):
 
     user = UserSerializer(read_only=True)
-    eventLocation = EventLocationSerializer(read_only=True)
+    eventLocation = EventLocationSerializer(read_only=True, many=True)
 
     class Meta:
         depth = 1
