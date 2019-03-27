@@ -42,14 +42,14 @@ class PortfolioSerializer(serializers.ModelSerializer):
 
     calendar_set = CalendarSerializer(read_only=True, many=True)
     artisticGender = ArtisticGenderSerializer(many=True, read_only=True)
-    portfoliomodule_set = PortfolioModuleSerializer(many=True, read_only=True)
+    portfolioModule_set = PortfolioModuleSerializer(many=True, read_only=True)
     zone = ZoneSerializer(read_only=True, many=True)
-    paymentpackage_set = PaymentPackageSerializer(read_only=True, many=True)
+    paymentPackage_set = PaymentPackageSerializer(read_only=True, many=True)
 
     class Meta:
 
         model = Portfolio
-        fields = ('artisticName', 'calendar_set', 'artisticGender', 'portfoliomodule_set', 'zone', 'paymentpackage_set')
+        fields = ('artisticName', 'banner', 'calendar_set', 'artisticGender', 'portfolioModule_set', 'zone', 'paymentPackage_set')
 
 
 class ShortPortfolioSerializer(serializers.ModelSerializer):
