@@ -39,7 +39,7 @@ class UserAbstract(Actor):
 
 class ArtisticGender(AbstractEntity):
     name = models.CharField(max_length=140)
-    parentGender = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    parentGender = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.name)
@@ -47,7 +47,7 @@ class ArtisticGender(AbstractEntity):
 
 class Zone(AbstractEntity):
     name = models.CharField(max_length=140)
-    parentZone = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    parentZone = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.name)
@@ -55,8 +55,8 @@ class Zone(AbstractEntity):
 
 class Portfolio(AbstractEntity):
     artisticName = models.CharField(blank=True, null=True, max_length=140)
-    artisticGender = models.ManyToManyField(ArtisticGender)
-    zone = models.ManyToManyField(Zone)
+    artisticGender = models.ManyToManyField(ArtisticGender, blank=True)
+    zone = models.ManyToManyField(Zone, blank=True)
 
     def __str__(self):
         return str(self.artisticName)
@@ -151,7 +151,7 @@ class EventLocation(AbstractEntity):
     address = models.CharField(max_length=255)
     equipment = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
+    customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
     zone = models.ForeignKey(Zone, on_delete=models.PROTECT)
 
     def __str__(self):
