@@ -53,16 +53,12 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
     def put(self, request, pk):
         offer = self.get_object(pk)
-        #if len(request.data) == 1 and 'status' in request.data:
-            #partial=True es muy importante, sin ello no funciona la actualización parcial de datos
-        serializer = OfferSerializer(offer, data=request.data, partial=True)
-
-        #else:
-        #    serializer = OfferSerializer(offer, data=request.data)
-        #if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
-        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if len(request.data) == 0:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            serializer = OfferSerializer(offer, data=request.data, partial=True)
+            serializer.save(pk)
+            return Response(status=status.HTTP_200_OK)
 
     def delete(self, request, pk, format=None):
         offer = self.get_object(pk)
@@ -122,7 +118,8 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
         code = serializer.data.get("paymentCode")
         return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
 
-    """
+
+"""
     def post(self, request, *args, **kwargs):
         serializer = OfferSerializer(data=request.data)
         if serializer.is_valid():
