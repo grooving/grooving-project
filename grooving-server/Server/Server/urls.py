@@ -19,12 +19,8 @@ from rest_framework import routers
 from django.conf.urls import url, include
 from login.views import LoginManager
 from portfolio.views import PortfolioManager
-<<<<<<< HEAD
 from offer.views import OfferManage, CreateOffer, PaymentCode
-=======
 from portfolioModule.views import PortfolioModuleManager, CreatePortfolioModule
-from offer.views import OfferManage, CreateOffer
->>>>>>> BACK1-EditPortfolio
 from artist.views import ListArtist
 from offers.views import ListOffers
 from paymentPackage.views import PaymentPackageByArtist, PaymentPackageManager, CreatePaymentPackage
