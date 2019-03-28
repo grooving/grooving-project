@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card tarjeta">
-            <router-link v-bind:to="artistURI"><img v-bind:src="artistImage" onerror="this.src='https://cdn.pixabay.com/photo/2016/02/19/11/36/microphone-1209816_960_720.jpg'" class="card-img-top artistImage" alt="Artist's Image"></router-link>
+            <router-link v-bind:to="artistURI"><img v-bind:src="artistImage" class="card-img-top artistImage" alt="Artist's Image"></router-link>
             <div class="card-body cuerpoTarjeta">
                 <div class="leftContent">
                     <h5 class="card-title artistName">{{ artistName }}</h5>
