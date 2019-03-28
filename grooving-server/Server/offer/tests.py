@@ -1,8 +1,8 @@
-from Grooving.models import Offer, Customer, Artist, Portfolio, User, Calendar, PaymentPackage
+from Grooving.models import Offer,  Artist, Portfolio, User, Calendar, PaymentPackage
 from Grooving.models import EventLocation, Zone, Performance
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
-
+from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
 # Create your tests here.
@@ -50,8 +50,10 @@ class OfferTestCase(APITestCase):
         offer1.save()
         data1 = {"username": "artist1", "password": "artist1artist1"}
         response1 = self.client.post("/api/login/", data1, format='json')
-        print(response1)
+
         self.assertEqual(response1.status_code, 200)
+
+
         data = {"status": "CONTRACT_MADE"}
         response2 = self.client.put('/offer/1/', data, format='json')
         self.assertEqual(response2.status_code, 200)
