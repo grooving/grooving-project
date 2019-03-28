@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from Grooving.models import Offer, PaymentPackage, EventLocation, Customer
+from Grooving.models import Offer, PaymentPackage, EventLocation, Customer, Artist
 from utils.Assertions import assert_true
 from django.db import IntegrityError
 import random
 import string
+from utils.authentication_utils import get_logged_user,get_user_type,is_user_authenticated
 
 '''class OfferSerializer(serializers.Serializer):
     class Meta:
@@ -52,8 +53,8 @@ class OfferSerializer(serializers.ModelSerializer):
         fields = ('id', 'description', 'status', 'date', 'hours', 'price', 'paymentCode', 'paymentPackage',
                   'paymentPackage_id', 'eventLocation', 'eventLocation_id')
 
-    # Esto sobrescrive una función heredada del serializer.
-    def save(self, pk=None):
+    # Esto sobrescribe una función heredada del serializer.
+    def save(self, pk=None,logged_user=None):
         if self.initial_data.get('id') is None and pk is None:
             # creation
             offer = Offer()
@@ -63,7 +64,7 @@ class OfferSerializer(serializers.ModelSerializer):
             id = (self.initial_data, pk)[pk is not None]
 
             offer = Offer.objects.filter(pk=id).first()
-            offer = self._service_update(self.initial_data, offer)
+            offer = self._service_update(self.initial_data, offer,logged_user)
 
         return offer
 
@@ -102,24 +103,32 @@ class OfferSerializer(serializers.ModelSerializer):
         offer.save()
         return offer
 
-    def _service_update(self, json: dict, offer_in_db: Offer):
+    def _service_update(self, json: dict, offer_in_db: Offer, logged_user: User):
         assert_true(offer_in_db, "No existe una oferta con esa id")
-        offer = self._service_update_status(json, offer_in_db)
+        offer = self._service_update_status(json, offer_in_db, logged_user)
 
         return offer
 
-    def _service_update_status(self, json: dict, offer_in_db: Offer):
+    def _service_update_status(self, json: dict, offer_in_db: Offer, logged_user: User):
         json_status = json.get('status')
         if json_status:
             status_in_db = offer_in_db.status
-            normal_transitions = {'PENDING': 'CONTRACT_MADE'}
-
+            normal_transitions = {}
+            artist_flowstop_transitions={}
+            customer_flowstop_transitions={}
             #TODO: Must be check the login
-            customer_flowstop_transitions={'PENDING': 'WITHDRAWN',
-                                           'NEGOTIATION': 'WITHDRAWN', 'CONTRACT_MADE': 'WITHDRAWN'}
+            creator = Customer.objects.filter(user_id=offer_in_db.eventLocation.customer.user_id)
+            if get_user_type(logged_user) == 'Customer' and creator == logged_user:
+                customer_flowstop_transitions = {'PENDING': 'WITHDRAWN', 'NEGOTIATION': 'WITHDRAWN',
+                                                 'CONTRACT_MADE': 'WITHDRAWN'}
 
-            artist_flowstop_transitions={'PENDING': 'REJECTED',
-                                         'NEGOTIATION': 'REJECTED', 'CONTRACT_MADE': 'CANCELED'}
+            artistReceiver = Artist.objects.filter(user_id = offer_in_db.paymentPackage.portfolio.artist.user_id).first()
+            print(artistReceiver)
+            print(logged_user)
+            if get_user_type(logged_user) == 'Artist' and artistReceiver == logged_user:
+                normal_transitions = {'PENDING': 'CONTRACT_MADE'}
+                artist_flowstop_transitions = {'PENDING': 'REJECTED', 'NEGOTIATION': 'REJECTED',
+                                               'CONTRACT_MADE': 'CANCELED'}
 
             allowed_transition = (normal_transitions.get(status_in_db) == json_status
                                   or artist_flowstop_transitions.get(status_in_db) == json_status
