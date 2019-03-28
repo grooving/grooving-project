@@ -1,51 +1,48 @@
 from django.shortcuts import render
 from django.shortcuts import redirect, render
-from Grooving.models import EventLocation
+from Grooving.models import ArtisticGender
 from django.contrib import messages
 from django.db.utils import IntegrityError
 
 from rest_framework.response import Response
 from django.shortcuts import render_to_response
 from rest_framework import generics
-from .serializers import EventLocationSerializer
+from .serializers import ArtisticGenderSerializer
 from rest_framework import status
 from django.http import Http404
-from rest_framework.permissions import IsAuthenticated
-
-# Create your views here.
 
 
-class EventLocationManager(generics.RetrieveUpdateDestroyAPIView):
+class ArtisticGenderManager(generics.RetrieveUpdateDestroyAPIView):
 
-    queryset = EventLocation.objects.all()
-    serializer_class = EventLocationSerializer
+    queryset = ArtisticGender.objects.all()
+    serializer_class = ArtisticGenderSerializer
 
     def get_object(self, pk):
         try:
-            return EventLocation.objects.get(pk=pk)
-        except EventLocation.DoesNotExist:
+            return ArtisticGender.objects.get(pk=pk)
+        except ArtisticGender.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
-        eventLocation = self.get_object(pk)
-        serializer = EventLocationSerializer(eventLocation)
+        portfolio = self.get_object(pk)
+        serializer = ArtisticGenderSerializer(portfolio)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        eventLocation = self.get_object(pk)
-        if len(request.data) == 1:
-            serializer = EventLocationSerializer(eventLocation, data=request.data, partial=True)
+        artisticGender = self.get_object(pk)
+        if len(request.data) == 1 and 'status' in request.data:
+            serializer = ArtisticGenderSerializer(artisticGender, data=request.data, partial=True)
 
         else:
-            serializer = EventLocationSerializer(eventLocation, data=request.data)
+            serializer = ArtisticGenderSerializer(artisticGender, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        eventLocation = self.get_object(pk)
-        eventLocation.delete()
+        artisticGender = self.get_object(pk)
+        artisticGender.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def update(self, request, pk, *args, **kwargs):
@@ -56,15 +53,14 @@ class EventLocationManager(generics.RetrieveUpdateDestroyAPIView):
         self.perform_update(serializer)
 
 
-class CreateEventLocation(generics.CreateAPIView):
-    queryset = EventLocation.objects.all()
-    serializer_class = EventLocationSerializer
-    permission_classes = (IsAuthenticated,)
+class CreateArtisticGender(generics.CreateAPIView):
+    queryset = ArtisticGender.objects.all()
+    serializer_class = ArtisticGenderSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = EventLocationSerializer(data=request.data, partial=True)
-        if serializer.validate(request):
-            eventLocation = serializer.save(request.user.id)
-            serialized = EventLocationSerializer(eventLocation)
+        serializer = ArtisticGenderSerializer(data=request.data, partial=True)
+        if serializer.validate(request.data):
+            serializer.is_valid()
+            artisticGender = serializer.save()
+            serialized = ArtisticGenderSerializer(artisticGender)
             return Response(serialized.data, status=status.HTTP_201_CREATED)
-
