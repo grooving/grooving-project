@@ -19,15 +19,17 @@ from rest_framework import routers
 from django.conf.urls import url, include
 from login.views import LoginManager
 from portfolio.views import PortfolioManager
+from artist.views import GetPersonalInformationOfArtist
+from customer.views import GetPersonalInformationOfCustomer
+from offer.views import OfferManage, CreateOffer, PaymentCode
 from portfolioModule.views import PortfolioModuleManager, CreatePortfolioModule
-from offer.views import OfferManage, CreateOffer
 from artist.views import ListArtist
 from offers.views import ListOffers
 from paymentPackage.views import PaymentPackageByArtist, PaymentPackageManager, CreatePaymentPackage
 from calendars.views import CalendarByArtist, CalendarManager, CreateCalendar
 from artistGender.views import ArtisticGenderManager, CreateArtisticGender
 from zone.views import ZoneManager, CreateZone
-from eventLocation.views import EventLocationManager
+from eventLocation.views import EventLocationManager, CreateEventLocation
 from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
@@ -37,6 +39,7 @@ urlpatterns = [
     path('', include(router.urls)),
     url(r'^offer/$', CreateOffer.as_view()),
     url(r'^offer/(?P<pk>[0-9]+)/$', OfferManage.as_view()),
+    url(r'^eventlocation/$', CreateEventLocation.as_view()),
     url(r'^eventlocation/(?P<pk>[0-9]+)/$', EventLocationManager.as_view()),
     url(r'^portfolio/(?P<pk>[0-9]+)/$', PortfolioManager.as_view()),
     url(r'^portfolioModule/$', CreatePortfolioModule.as_view()),
@@ -45,9 +48,11 @@ urlpatterns = [
     url(r'^paymentPackage/$', CreatePaymentPackage.as_view()),
     url(r'^paymentPackage/(?P<pk>[0-9]+)/$', PaymentPackageManager.as_view()),
     url(r'^artist/calendar/(?P<pk>[0-9]+)/$', CalendarByArtist.as_view()),
+    url(r'^artists/$', ListArtist.as_view()),
+    url(r'^artist/personalInformation/$', GetPersonalInformationOfArtist.as_view()),
+    url(r'^customer/personalInformation/$', GetPersonalInformationOfCustomer.as_view()),
     url(r'^calendar/(?P<pk>[0-9]+)/$', CalendarManager.as_view()),
     url(r'^calendar/$', CreateCalendar.as_view()),
-    url(r'^artists/$', ListArtist.as_view({'get': 'list'})),
     url(r'^artisticGender/$', CreateArtisticGender.as_view()),
     url(r'^artisticGender/(?P<pk>[0-9]+)/$', ArtisticGenderManager.as_view()),
     url(r'^zone/$', CreateZone.as_view()),
@@ -56,5 +61,5 @@ urlpatterns = [
     url(r'^offers/$', ListOffers.as_view()),
     url(r'^paymentCode/$', PaymentCode.as_view())
 
-]
 
+]
