@@ -18,11 +18,20 @@ class GSecurity {
       this._token = token;
       this._photo = '';
       this._id = '';
+      this._firstName = '';
 
     }
 
     getRole(){
         return this._role;
+    }
+
+    getPhoto() {
+        return this._photo;
+    }
+
+    getFirstName() {
+        return this._firstName;
     }
   
     authenticate(username, password){
@@ -41,11 +50,13 @@ class GSecurity {
                     this._role = 'ARTIST';
                     this._id = response.data.artist.id;
                     this._photo = response.data.artist.photo;
+                    this._firstName = response.data.artist.user.first_name;
                 }else{
                     this._username = response.data.customer.user.username;
                     this._role = 'CUSTOMER';
                     this._id = response.data.customer.id;
                     this._photo = response.data.customer.photo;
+                    this._firstName = response.data.customer.user.first_name;
                 }
 
                 this._token = response.headers['x-auth'];
