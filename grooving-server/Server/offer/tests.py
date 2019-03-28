@@ -1,4 +1,4 @@
-from Grooving.models import Offer, Customer, Artist, Portfolio, User, Calendar, PaymentPackage
+from Grooving.models import Offer,  Artist, Portfolio, User, Calendar, PaymentPackage
 from Grooving.models import EventLocation, Zone, Performance
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
