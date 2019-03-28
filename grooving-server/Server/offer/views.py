@@ -122,3 +122,11 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
         serializer = OfferSerializer(offer)
         code = serializer.data.get("paymentCode")
         return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
+
+    def put(self, request, *args, **kwargs):
+        paymentCode = request.data.get("paymentCode")
+        if not paymentCode:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        OfferSerializer.service_made_payment_artist(paymentCode)
+        return Response(status=status.HTTP_200_OK)
