@@ -19,6 +19,8 @@ from rest_framework import routers
 from django.conf.urls import url, include
 from login.views import LoginManager
 from portfolio.views import PortfolioManager
+from artist.views import GetPersonalInformationOfArtist
+from customer.views import GetPersonalInformationOfCustomer
 from offer.views import OfferManage, CreateOffer, PaymentCode
 from portfolioModule.views import PortfolioModuleManager, CreatePortfolioModule
 from artist.views import ListArtist
@@ -46,9 +48,11 @@ urlpatterns = [
     url(r'^paymentPackage/$', CreatePaymentPackage.as_view()),
     url(r'^paymentPackage/(?P<pk>[0-9]+)/$', PaymentPackageManager.as_view()),
     url(r'^artist/calendar/(?P<pk>[0-9]+)/$', CalendarByArtist.as_view()),
+    url(r'^artists/$', ListArtist.as_view()),
+    url(r'^artist/personalInformation/$', GetPersonalInformationOfArtist.as_view()),
+    url(r'^customer/personalInformation/$', GetPersonalInformationOfCustomer.as_view()),
     url(r'^calendar/(?P<pk>[0-9]+)/$', CalendarManager.as_view()),
     url(r'^calendar/$', CreateCalendar.as_view()),
-    url(r'^artists/$', ListArtist.as_view({'get': 'list'})),
     url(r'^artisticGender/$', CreateArtisticGender.as_view()),
     url(r'^artisticGender/(?P<pk>[0-9]+)/$', ArtisticGenderManager.as_view()),
     url(r'^zone/$', CreateZone.as_view()),
@@ -57,5 +61,5 @@ urlpatterns = [
     url(r'^offers/$', ListOffers.as_view()),
     url(r'^paymentCode/$', PaymentCode.as_view())
 
-]
 
+]
