@@ -56,7 +56,6 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         if len(request.data) == 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
-
             offer = self.get_object(pk)
             articustomer = get_logged_user(request)
             user_type = get_user_type(articustomer)
