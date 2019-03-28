@@ -11,11 +11,11 @@ def get_logged_user(request):
             if token_object is not None:
                 user_id = token_object.user_id
                 artist = Artist.objects.filter(user_id=user_id).first()
-                if artist:
+                if artist is not None:
                     return artist
                 else:
                     customer = Customer.objects.filter(user_id=user_id).first()
-                    if customer:
+                    if customer is not None:
                         return customer
 
                     else:
@@ -32,12 +32,12 @@ def is_user_authenticated(user, request):
 
 def get_user_type(user):
     if user:
-        artist = Artist.objects.filter(pk=user.id).first()
-        if artist:
+        artist = Artist.objects.filter(user_id=user.user_id).first()
+        if artist is not None:
             return "Artist"
         else:
-            customer = Customer.objects.filter(pk=user.id).first()
-            if customer:
+            customer = Customer.objects.filter(user_id=user.user_id).first()
+            if customer is not None:
                 return "Customer"
     else:
         return None

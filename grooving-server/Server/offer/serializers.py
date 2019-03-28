@@ -1,35 +1,12 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from rest_framework import serializers
-
 from django.core.exceptions import PermissionDenied
-
 from Grooving.models import Offer, PaymentPackage, EventLocation, Customer, Artist
-
 from utils.Assertions import assert_true
-from utils.authentication_utils import get_user_type
 from django.db import IntegrityError
 import random
 import string
 from utils.authentication_utils import get_logged_user,get_user_type,is_user_authenticated
-
-'''class OfferSerializer(serializers.Serializer):
-    class Meta:
-        model = Offer
-        fields = '__all__'
-
-    def create(self, validated_data):
-        return Offer(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.description = validated_data.get('description', instance.description)
-        instance.status = validated_data.get('status', instance.status)
-        instance.date = validated_data.get('date', instance.date)
-        instance.hours = validated_data.get('hours', instance.hours)
-        instance.paymentCode = validated_data.get('paymentCode', instance.paymentCode)
-        instance.eventLocation_id = validated_data.get('eventLocation_id', instance.eventLocation_id)
-        instance.paymentPackage_id = validated_data.get('paymentPackage_id', instance.paymentPackage_id)
-        return instance
-'''
 
 
 class PaymentPackageSerializer(serializers.ModelSerializer):
@@ -55,7 +32,7 @@ class OfferSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Offer
-        fields = ('id', 'description', 'status', 'date', 'hours', 'price', 'paymentCode', 'paymentPackage',
+        fields = ('id', 'description', 'status', 'date', 'hours', 'price','paymentPackage',
                   'paymentPackage_id', 'eventLocation', 'eventLocation_id')
 
     # Esto sobrescribe una función heredada del serializer.
@@ -128,15 +105,16 @@ class OfferSerializer(serializers.ModelSerializer):
         if json_status:
             status_in_db = offer_in_db.status
             normal_transitions = {}
-            artist_flowstop_transitions={}
-            customer_flowstop_transitions={}
-            #TODO: Must be check the login
-            creator = Customer.objects.filter(user_id=offer_in_db.eventLocation.customer.user_id).first()
+            artist_flowstop_transitions = {}
+            customer_flowstop_transitions = {}
+            # TODO: Must be check the login
+
+            creator = Customer.objects.filter(pk=offer_in_db.eventLocation.customer.id).first()
             if get_user_type(logged_user) == 'Customer' and creator == logged_user:
                 customer_flowstop_transitions = {'PENDING': 'WITHDRAWN',
                                                  'CONTRACT_MADE': 'CANCELED'}
 
-            artistReceiver = Artist.objects.filter(user_id = offer_in_db.paymentPackage.portfolio.artist.user_id).first()
+            artistReceiver = Artist.objects.filter(pk=offer_in_db.paymentPackage.portfolio.artist.id).first()
             print(artistReceiver)
             print(logged_user)
             if get_user_type(logged_user) == 'Artist' and artistReceiver == logged_user:

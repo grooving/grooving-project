@@ -1,43 +1,17 @@
-from django.shortcuts import render
-from django.shortcuts import redirect, render
-from Grooving.models import Offer,User,Customer
-from django.contrib import messages
-from django.db.utils import IntegrityError
-
+from Grooving.models import Offer, Customer
 from django.core.exceptions import PermissionDenied
-from utils.authentication_utils import get_logged_user,get_user_type,is_user_authenticated
+from utils.authentication_utils import get_logged_user,get_user_type
 from rest_framework.response import Response
 from rest_framework import generics
 from .serializers import OfferSerializer
 from rest_framework import status
 from django.http import Http404
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.models import Token
+
 
 class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
-    #permission_classes = (IsAuthenticated,)
-
-    '''def accept_offer(self, request):
-        offer_id = request.GET.get('offer_id')
-        offer = Offer.objects.get(id=offer_id)
-        'artist = Artist.objects.filter(request.user)'
-        'paymentpackage_id = offer.paymentPackage.id'
-        'portfolio = Portfolio.objects.get(pk=paymentpackage_id)'
-        'if request.user.is_authenticated:'
-        if offer.status == 'PENDING':
-                try:
-                    offer.status = 'CONTRACT_MADE'
-                    offer.save()
-                except IntegrityError as e:
-                    return render_to_response({"message": e.message})
-
-        else:
-            messages.add_message(request, messages.ERROR, "The offer is not available to be accepted")
-
-        return redirect('')'''
 
     def get_object(self, pk):
         try:
@@ -49,7 +23,6 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         offer = self.get_object(pk)
         serializer = OfferSerializer(offer)
         return Response(serializer.data)
-
 
     def put(self, request, pk):
 
@@ -71,7 +44,6 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
                     event_location = offer.eventLocation
                     customer_id = event_location.customer_id
                     customer_creator = Customer.objects.filter(pk=customer_id).first()
-
 
                     if articustomer.user_id == customer_creator.user_id:
                         serializer = OfferSerializer(offer, data=request.data, partial=True)
@@ -96,7 +68,6 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 class CreateOffer(generics.CreateAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
-    #permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         serializer = OfferSerializer(data=request.data, partial=True)
