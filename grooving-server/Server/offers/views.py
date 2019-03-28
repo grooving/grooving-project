@@ -1,9 +1,8 @@
 from Grooving.models import Offer, Artist, Customer
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from rest_framework import generics
 from .serializers import ListOfferSerializer
 from utils.authentication_utils import get_user_type, get_logged_user, is_user_authenticated
-from rest_framework.response import Response
 
 
 class ListOffers(generics.ListAPIView):
@@ -16,10 +15,17 @@ class ListOffers(generics.ListAPIView):
         user_type = get_user_type(user)
 
         if user_type == 'Artist':
-            artist = Artist.objects.get(user_id=user.user_id)
-            queryset = Offer.objects.filter(paymentPackage__portfolio__artist=artist)
-#            serializer = ListOfferSerializer(queryset, many=True)
-            return queryset
+            try:
+                artist = Artist.objects.get(user_id=user.user_id)
+                queryset = Offer.objects.filter(paymentPackage__portfolio__artist=artist)
+                return queryset
+            except ObjectDoesNotExist:
+                try:
+                    customer = Customer.objects.get(user_id=user.user_id)
+                    queryset = Offer.objects.filter(eventLocation__customer=customer)
+                    return queryset
+                except ObjectDoesNotExist:
+                    raise PermissionDenied("No tienes autorización para entrar aquí")
         else:
             if user_type == 'Customer':
                 customer = Customer.objects.get(user_id=user.user_id)

@@ -152,7 +152,7 @@ class OfferTestCase(TestCase):
         days = [True] * 366
 
         user2_artist1 = User.objects.create(username='artist1', password=make_password('artist1'),
-                                            first_name='Bunny', last_name='Fufuu',
+                                            first_name='Bunny', last_name='Pato',
                                             email='artist1@gmail.com')
         user2_artist1.save()
 
@@ -210,7 +210,7 @@ class OfferTestCase(TestCase):
                                             email='artist2@gmail.com')
         user4_artist2.save()
 
-        portfolio2 = Portfolio.objects.create(artisticName="Juanartist")
+        portfolio2 = Portfolio.objects.create(artisticName="Juanito")
         portfolio2.zone.add(zone1)
         portfolio2.save()
 
