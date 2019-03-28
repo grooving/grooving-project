@@ -67,6 +67,19 @@ class OfferSerializer(serializers.ModelSerializer):
 
         return offer
 
+    @staticmethod
+    def service_made_payment_artist(paymentCode):
+        offer = Offer.objects.filter(paymentCode=paymentCode).first()
+        assert_true(offer, 'La oferta no existe')
+        assert_true(offer.status == 'CONTRACT_MADE', 'Posiblemente el pago ya se ha hecho')
+
+        offer.status = 'PAYMENT_MADE'
+        #try:
+            #TODO: Pago por braintree
+        #except:
+            #offer.status == 'CONTRACT_MADE'
+        offer.save()
+
     # Se pondrá service delante de nuestros métodos para no sobrescribir por error métodos del serializer
     @staticmethod
     def _service_create(json: dict, offer: Offer):
@@ -99,8 +112,7 @@ class OfferSerializer(serializers.ModelSerializer):
         json_status = json.get('status')
         if json_status:
             status_in_db = offer_in_db.status
-            normal_transitions = {'PENDING': 'CONTRACT_MADE',
-                                   'CONTRACT_MADE': 'PAYMENT_MADE'}
+            normal_transitions = {'PENDING': 'CONTRACT_MADE'}
 
             #TODO: Must be check the login
             customer_flowstop_transitions={'PENDING': 'WITHDRAWN',
