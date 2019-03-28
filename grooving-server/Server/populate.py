@@ -5,7 +5,7 @@ import string
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'Server.settings')
 django.setup()
 from Grooving.models import ArtisticGender, Portfolio, Artist, Zone, PortfolioModule, Calendar, PaymentPackage, \
-    Performance, Fare, Custom, Offer, Customer, EventLocation, SystemConfiguration
+    Performance, Fare, Custom, Offer, Customer, EventLocation, SystemConfiguration, User
 
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
@@ -290,15 +290,15 @@ def save_data():
 
     # Artists
 
-    artist1 = Artist.objects.create(user=user1_artist1, portfolio=portfolio1, phone='600304999', photo='https://pixabay.com/es/photos/micr%C3%B3fono-ni%C3%B1o-estudio-gritar-1209816/')
+    artist1 = Artist.objects.create(user=user1_artist1, portfolio=portfolio1, phone='600304999', photo='https://cdn.pixabay.com/photo/2016/02/19/11/36/microphone-1209816_1280.jpg')
     artist1.save()
     artist2 = Artist.objects.create(user=user2_artist2, portfolio=portfolio2, phone='695099812', photo='https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/20953179_10155798140312625_5517808811547907373_n.jpg?_nc_cat=108&_nc_ht=scontent-mad1-1.xx&oh=78561ec93ba4604a3c5a570cbe101b40&oe=5D4D1ED1')
     artist2.save()
-    artist3 = Artist.objects.create(user=user3_artist3, portfolio=portfolio3, phone='695990241', photo='https://pixabay.com/es/photos/micr%C3%B3fono-ni%C3%B1o-estudio-gritar-1209816/')
+    artist3 = Artist.objects.create(user=user3_artist3, portfolio=portfolio3, phone='695990241', photo='https://cdn.pixabay.com/photo/2016/02/19/11/36/microphone-1209816_1280.jpg')
     artist3.save()
-    artist4 = Artist.objects.create(user=user4_artist4, portfolio=portfolio4, phone='610750391', photo='https://pixabay.com/es/photos/micr%C3%B3fono-ni%C3%B1o-estudio-gritar-1209816/')
+    artist4 = Artist.objects.create(user=user4_artist4, portfolio=portfolio4, phone='610750391', photo='https://cdn.pixabay.com/photo/2016/02/19/11/36/microphone-1209816_1280.jpg')
     artist4.save()
-    artist5 = Artist.objects.create(user=user5_artist5, portfolio=portfolio5, phone='675181175', photo='https://pixabay.com/es/photos/micr%C3%B3fono-ni%C3%B1o-estudio-gritar-1209816/')
+    artist5 = Artist.objects.create(user=user5_artist5, portfolio=portfolio5, phone='675181175', photo='https://cdn.pixabay.com/photo/2016/02/19/11/36/microphone-1209816_1280.jpg')
     artist5.save()
     artist6 = Artist.objects.create(user=user6_artist6, portfolio=portfolio6, phone='673049277', photo='https://unplatillodesal.files.wordpress.com/2017/12/pablo-delgado_a-2.jpg')
     artist6.save()
@@ -365,7 +365,7 @@ def save_data():
     performance2_paymentPackage4.save()
 
     paymentPackage4_performance2 = PaymentPackage.objects.create(description='Performance Payment Package Type from From the noise',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio2,
                                                                 performance=performance2_paymentPackage4)
     paymentPackage4_performance2.save()
 
@@ -373,7 +373,7 @@ def save_data():
     fare2_paymentPackage5.save()
 
     paymentPackage5_fare2 = PaymentPackage.objects.create(description='Fare Payment Package Type from From the noise',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio2,
                                                                 fare=fare2_paymentPackage5)
     paymentPackage5_fare2.save()
 
@@ -381,7 +381,7 @@ def save_data():
     custom2_paymentPackage6.save()
 
     paymentPackage6_custom2 = PaymentPackage.objects.create(description='Custom Payment Package Type from From the noise',
-                                                          appliedVAT=21, portfolio=portfolio1,
+                                                          appliedVAT=21, portfolio=portfolio2,
                                                           custom=custom2_paymentPackage6)
     paymentPackage6_custom2.save()
 
@@ -392,7 +392,7 @@ def save_data():
     performance3_paymentPackage7.save()
 
     paymentPackage7_performance3 = PaymentPackage.objects.create(description='Performance Payment Package Type from Los saraos',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio3,
                                                                 performance=performance3_paymentPackage7)
     paymentPackage7_performance3.save()
 
@@ -400,7 +400,7 @@ def save_data():
     fare3_paymentPackage8.save()
 
     paymentPackage8_fare3 = PaymentPackage.objects.create(description='Fare Payment Package Type from Los saraos',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio3,
                                                                 fare=fare3_paymentPackage8)
     paymentPackage8_fare3.save()
 
@@ -408,7 +408,7 @@ def save_data():
     custom3_paymentPackage9.save()
 
     paymentPackage9_custom3 = PaymentPackage.objects.create(description='Custom Payment Package Type from Los saraos',
-                                                          appliedVAT=21, portfolio=portfolio1,
+                                                          appliedVAT=21, portfolio=portfolio3,
                                                           custom=custom3_paymentPackage9)
     paymentPackage9_custom3.save()
 
@@ -419,7 +419,7 @@ def save_data():
     performance4_paymentPackage10.save()
 
     paymentPackage10_performance4 = PaymentPackage.objects.create(description='Performance Payment Package Type from Ana DJ',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio4,
                                                                 performance=performance4_paymentPackage10)
     paymentPackage10_performance4.save()
 
@@ -427,7 +427,7 @@ def save_data():
     fare4_paymentPackage11.save()
 
     paymentPackage11_fare3 = PaymentPackage.objects.create(description='Fare Payment Package Type from Ana DJ',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio4,
                                                                 fare=fare4_paymentPackage11)
     paymentPackage11_fare3.save()
 
@@ -435,7 +435,7 @@ def save_data():
     custom4_paymentPackage12.save()
 
     paymentPackage12_custom4 = PaymentPackage.objects.create(description='Custom Payment Package Type from Ana DJ',
-                                                          appliedVAT=21, portfolio=portfolio1,
+                                                          appliedVAT=21, portfolio=portfolio4,
                                                           custom=custom4_paymentPackage12)
     paymentPackage12_custom4.save()
 
@@ -446,7 +446,7 @@ def save_data():
     performance5_paymentPackage13.save()
 
     paymentPackage13_performance5 = PaymentPackage.objects.create(description='Performance Payment Package Type from Pasando olimpicamente',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio5,
                                                                 performance=performance5_paymentPackage13)
     paymentPackage13_performance5.save()
 
@@ -454,7 +454,7 @@ def save_data():
     fare5_paymentPackage14.save()
 
     paymentPackage14_fare5 = PaymentPackage.objects.create(description='Fare Payment Package Type from Pasando olimpicamente',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio5,
                                                                 fare=fare5_paymentPackage14)
     paymentPackage14_fare5.save()
 
@@ -462,7 +462,7 @@ def save_data():
     custom5_paymentPackage15.save()
 
     paymentPackage15_custom5 = PaymentPackage.objects.create(description='Custom Payment Package Type from Pasando olimpicamente',
-                                                          appliedVAT=21, portfolio=portfolio1,
+                                                          appliedVAT=21, portfolio=portfolio5,
                                                           custom=custom5_paymentPackage15)
     paymentPackage15_custom5.save()
 
@@ -473,7 +473,7 @@ def save_data():
     performance6_paymentPackage16.save()
 
     paymentPackage16_performance6 = PaymentPackage.objects.create(description='Performance Payment Package Type from Una chirigota con clase',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio6,
                                                                 performance=performance6_paymentPackage16)
     paymentPackage16_performance6.save()
 
@@ -481,7 +481,7 @@ def save_data():
     fare6_paymentPackage17.save()
 
     paymentPackage17_fare6 = PaymentPackage.objects.create(description='Fare Payment Package Type from Una chirigota con clase',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio6,
                                                                 fare=fare6_paymentPackage17)
     paymentPackage17_fare6.save()
 
@@ -489,7 +489,7 @@ def save_data():
     custom6_paymentPackage18.save()
 
     paymentPackage18_custom6 = PaymentPackage.objects.create(description='Custom Payment Package Type from Una chirigota con clase',
-                                                          appliedVAT=21, portfolio=portfolio1,
+                                                          appliedVAT=21, portfolio=portfolio6,
                                                           custom=custom6_paymentPackage18)
     paymentPackage18_custom6.save()
 
@@ -500,7 +500,7 @@ def save_data():
     performance7_paymentPackage19.save()
 
     paymentPackage20_performance7 = PaymentPackage.objects.create(description='Performance Payment Package Type from Batracio',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio7,
                                                                 performance=performance7_paymentPackage19)
     paymentPackage20_performance7.save()
 
@@ -508,7 +508,7 @@ def save_data():
     fare7_paymentPackage20.save()
 
     paymentPackage20_fare7 = PaymentPackage.objects.create(description='Fare Payment Package Type from Batracio',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio7,
                                                                 fare=fare7_paymentPackage20)
     paymentPackage20_fare7.save()
 
@@ -516,7 +516,7 @@ def save_data():
     custom7_paymentPackage21.save()
 
     paymentPackage21_custom7 = PaymentPackage.objects.create(description='Custom Payment Package Type from Batracio',
-                                                          appliedVAT=21, portfolio=portfolio1,
+                                                          appliedVAT=21, portfolio=portfolio7,
                                                           custom=custom7_paymentPackage21)
     paymentPackage21_custom7.save()
 
@@ -527,7 +527,7 @@ def save_data():
     performance8_paymentPackage22.save()
 
     paymentPackage22_performance8 = PaymentPackage.objects.create(description='Performance Payment Package Type from Medictum',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio8,
                                                                 performance=performance8_paymentPackage22)
     paymentPackage22_performance8.save()
 
@@ -535,7 +535,7 @@ def save_data():
     fare8_paymentPackage23.save()
 
     paymentPackage23_fare8 = PaymentPackage.objects.create(description='Fare Payment Package Type from Medictum',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio8,
                                                                 fare=fare8_paymentPackage23)
     paymentPackage23_fare8.save()
 
@@ -543,7 +543,7 @@ def save_data():
     custom8_paymentPackage24.save()
 
     paymentPackage24_custom8 = PaymentPackage.objects.create(description='Custom Payment Package Type from Medictum',
-                                                          appliedVAT=21, portfolio=portfolio1,
+                                                          appliedVAT=21, portfolio=portfolio8,
                                                           custom=custom8_paymentPackage24)
     paymentPackage24_custom8.save()
 
@@ -554,7 +554,7 @@ def save_data():
     performance9_paymentPackage25.save()
 
     paymentPackage25_performance9 = PaymentPackage.objects.create(description='Performance Payment Package Type from Waterdogs',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio9,
                                                                 performance=performance9_paymentPackage25)
     paymentPackage25_performance9.save()
 
@@ -562,7 +562,7 @@ def save_data():
     fare9_paymentPackage26.save()
 
     paymentPackage26_fare9 = PaymentPackage.objects.create(description='Fare Payment Package Type from Waterdogs',
-                                                                appliedVAT=21, portfolio=portfolio1,
+                                                                appliedVAT=21, portfolio=portfolio9,
                                                                 fare=fare9_paymentPackage26)
     paymentPackage26_fare9.save()
 
@@ -570,7 +570,7 @@ def save_data():
     custom9_paymentPackage27.save()
 
     paymentPackage27_custom9 = PaymentPackage.objects.create(description='Custom Payment Package Type from Waterdogs',
-                                                          appliedVAT=21, portfolio=portfolio1,
+                                                          appliedVAT=21, portfolio=portfolio9,
                                                           custom=custom9_paymentPackage27)
     paymentPackage27_custom9.save()
 
