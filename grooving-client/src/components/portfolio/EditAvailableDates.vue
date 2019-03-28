@@ -40,17 +40,21 @@ var yesterday = new Date();
 yesterday.setDate(yesterday.getDate()-1);
 
 var availableDates = []
-availableDates.push(new Date(2019, 2, 29));
+/*availableDates.push(new Date(2019, 2, 29));
 availableDates.push(new Date(2019, 2, 30));
-availableDates.push(new Date(2019, 2, 28));
-
-
-
+availableDates.push(new Date(2019, 2, 28));*/
 
 export default {
     name: "Calendar",
     props: {
-
+        availableDates: {
+            type: Array,
+            default: [
+                new Date(2019, 2, 29),
+                new Date(2019, 2, 30),
+                new Date(2019, 2, 28)
+            ],
+        }
     },
     components: {
         vuejsDatepicker
@@ -62,7 +66,7 @@ export default {
                 to: yesterday
             },
             highlighted: {
-                dates: availableDates
+                dates: this.availableDates
             },
 
             toggleAddURL: true
@@ -74,7 +78,7 @@ export default {
             var fecha = document.getElementById("inputFecha").value;
             var fecha2 = new Date(fecha)
             var fecha3 =new Date(fecha2.getFullYear(), fecha2.getMonth(), fecha2.getDate());
-            availableDates.push(fecha3);
+            this.availableDates.push(fecha3);
         },
         changeToggle: function(event) {
             if(this.toggleAddURL==false){
@@ -85,9 +89,9 @@ export default {
             }
         },
         deleteDate: function(event){
-            //alert(availableDates);
+            //alert(this.availableDates);
             //alert(event);
-            var collection = availableDates,
+            var collection = this.availableDates,
                 d = new Date(event.getFullYear(), event.getMonth(), event.getDate()),
                 idx;
 
@@ -98,7 +102,7 @@ export default {
             if(idx!=-1){
                 var confirmar = confirm("Are you sure you wanna delete this date?");
                 if(confirmar == true){
-                    availableDates.splice(idx, 1);
+                    this.availableDates.splice(idx, 1);
                 }
                 
             }
