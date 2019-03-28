@@ -65,7 +65,7 @@ class Portfolio(AbstractEntity):
 
 class Calendar(AbstractEntity):
     year = models.IntegerField(validators=[MinValueValidator(2019), MaxValueValidator(3000)])
-    days = ArrayField(models.BooleanField(default=False), size=366)
+    days = ArrayField(models.CharField(max_length=10))
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -116,9 +116,9 @@ class PaymentPackage(AbstractEntity):
     description = models.TextField(blank=True, null=True)
     appliedVAT = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.0'))])
     portfolio = models.ForeignKey(Portfolio, on_delete=models.PROTECT)
-    performance = models.OneToOneField(Performance,blank=True, null=True, on_delete=models.SET_NULL)
-    fare = models.OneToOneField(Fare,blank=True, null=True, on_delete=models.SET_NULL)
-    custom = models.OneToOneField(Custom,blank=True, null=True, on_delete=models.SET_NULL)
+    performance = models.OneToOneField(Performance, null=True, on_delete=models.SET_NULL)
+    fare = models.OneToOneField(Fare, null=True, on_delete=models.SET_NULL)
+    custom = models.OneToOneField(Custom, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return str(self.description) + ' - ' + str(self.appliedVAT)
