@@ -31,6 +31,7 @@ import FiltersSideMenu from '@/components/menus/FiltersSideMenu.vue';
 import FiltersModalMenu from '@/components/menus/FiltersModalMenu.vue';
 import ArtistCard from '@/components/ArtistCard.vue';
 import GAxios from '@/utils/GAxios.js';
+import endpoints from '@/utils/endpoints.js';
 
 export default {
   name: 'ArtistList',
@@ -122,7 +123,7 @@ export default {
 
     beforeMount: function(){
 
-      GAxios.get('artists/')
+      GAxios.get(endpoints.artists)
       .then(response => {
         var artists = response.data.results;
         console.log(artists)
