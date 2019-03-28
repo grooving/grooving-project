@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="right-div right-text">
-                        <img class="card-img-top foto" :src="userIcon">
+                        <router-link to="personalInfo"><img class="card-img-top foto" :src="userIcon"></router-link>
                         <h3 class="fotoText">{{userName}}</h3>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="row container">
                         <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="enableOfferButtons()" class="btn btn-primary cancelButton" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">CANCEL</span></a></div>
-                        <div class="right-div right-text2"><router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></router-link></div>
+                        <div class="right-div right-text2"><router-link v-bind:to="offerURI" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></router-link></div>
                     </div>
                 </div>
                 <div v-if="offerStatus === 'pending' || offerStatus === 'accepted'" class="row container" v-bind:id="buttonsId()">
@@ -81,13 +81,18 @@
                 default: '#'
             },
             userName: {
-                tyoe: String,
+                type: String,
                 default: '#'
             },
             offerStatus: {
                 type: String,
                 default: 'pending',
+            },
+            offerURI: {
+                type: String,
+                default: 'offers'
             }
+
         },
 
         methods: {

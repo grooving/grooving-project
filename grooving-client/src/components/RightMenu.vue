@@ -12,7 +12,7 @@
                     <b-dropdown-divider class="divider"/>
                 </li>
                 <li class="nav-item section" v-if="gsecurity.hasRole('ARTIST')">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebar">My Portfolio</a>
+                    <router-link class="nav-link" to="showPortfolio" data-toggle="collapse" data-target="#sidebar">My Portfolio</router-link>
                     <b-dropdown-divider class="divider"/>
                 </li>
                 

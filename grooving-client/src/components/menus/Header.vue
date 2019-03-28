@@ -74,7 +74,7 @@ export default {
         menu_links: [
           {text: "Top Artists", link: "artist_search", selected: true, requiedRoles: []},
           {text: "My Offers", link: "offers", selected: false, requiedRoles: ['CUSTOMER', 'ARTIST']},
-          {text: "QR Scan", link: "QR Scan", selected: false, requiedRoles: ['ARTIST']},
+          {text: "QR Scan", link: "receivePayment", selected: false, requiedRoles: ['ARTIST']},
           {text: "FAQs", link: "#", selected: false, requiedRoles: []}
         ],
         showSearchMenu: false,
