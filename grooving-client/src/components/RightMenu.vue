@@ -8,11 +8,11 @@
          <h2>Hello, <span v-if="gsecurity.hasRole('ARTIST')">ROSALÍA</span><span v-else>Pug</span></h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
                 <li class="nav-item section">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebar">My Account</a>
+                    <router-link class="nav-link" to="personalInfo" data-toggle="collapse" data-target="#sidebar">My Account</router-link>
                     <b-dropdown-divider class="divider"/>
                 </li>
                 <li class="nav-item section" v-if="gsecurity.hasRole('ARTIST')">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebar">My Portfolio</a>
+                    <router-link class="nav-link" to="showPortfolio" data-toggle="collapse" data-target="#sidebar">My Portfolio</router-link>
                     <b-dropdown-divider class="divider"/>
                 </li>
                 
