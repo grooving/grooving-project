@@ -70,7 +70,7 @@ def save_data():
 
     # Portfolios with his modules
 
-    portfolio1 = Portfolio.objects.create(artisticName='Carlos DJ', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
+    portfolio1 = Portfolio.objects.create(artisticName='Carlos DJ', banner='https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/35102315_2087290411483519_2489347308001427456_n.jpg?_nc_cat=102&_nc_ht=scontent-mad1-1.xx&oh=17bd225fe7420b4380ae0b5406c75fec&oe=5D05E1A6')
     portfolio1.artisticGender.add(artistic_gender2)
     portfolio1.zone.add(zone1)
     portfolio1.save()
