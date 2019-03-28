@@ -64,7 +64,6 @@ class Portfolio(AbstractEntity):
 
 
 class Calendar(AbstractEntity):
-    year = models.IntegerField(validators=[MinValueValidator(2019), MaxValueValidator(3000)])
     days = ArrayField(models.CharField(max_length=10))
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
