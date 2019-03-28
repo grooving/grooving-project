@@ -51,8 +51,9 @@ class OfferTestCase(APITestCase):
         data1 = {"username": "artist1", "password": "artist1artist1"}
         response1 = self.client.post("/api/login/", data1, format='json')
 
+        token = response1.find('x-auth')
         self.assertEqual(response1.status_code, 200)
-
+        print(token)
 
         data = {"status": "CONTRACT_MADE"}
         response2 = self.client.put('/offer/1/', data, format='json')

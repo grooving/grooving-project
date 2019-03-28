@@ -11,6 +11,7 @@ from rest_framework import generics
 from .serializers import OfferSerializer
 from rest_framework import status
 from django.http import Http404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 
 class OfferManage(generics.RetrieveUpdateDestroyAPIView):
@@ -59,7 +60,6 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
             offer = self.get_object(pk)
             articustomer = get_logged_user(request)
             user_type = get_user_type(articustomer)
-
             if user_type == "Artist":
                 if articustomer.user_id == offer.paymentPackage.portfolio.artist.user_id:
                     serializer = OfferSerializer(offer, data=request.data, partial=True)
