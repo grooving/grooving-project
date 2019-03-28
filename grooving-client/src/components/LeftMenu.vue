@@ -15,8 +15,9 @@
                     data-target="#sidebarleft" >My Offers</router-link>
                     <b-dropdown-divider class="divider"/>
                 </li>
+                
                 <li v-if="gsecurity.hasRole('ARTIST')" class="nav-item section">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#sidebarleft">QR Scan</a>
+                    <router-link class="nav-link" to="receivePayment" data-toggle="collapse" data-target="#sidebarleft">QR Scan</router-link>
                     <b-dropdown-divider class="divider"/>
                 </li>
                 
