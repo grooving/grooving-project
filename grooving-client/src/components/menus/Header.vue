@@ -31,8 +31,7 @@
           <li v-if="gsecurity.isAuthenticated()" class="nav-item mx-2 right-float vertical-center" >
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" @click="sideMenus()">
               <a class="nav-link vertical-center" href="#">
-                <img v-if="gsecurity.hasRole('ARTIST')" v-bind:src="artistImage" class="profileImage" alt="Profile Image">
-                <img v-else v-bind:src="customerImage" class="profileImage" alt="Profile Image">
+                <img v-bind:src="userPhoto" class="profileImage" alt="Profile Image">
               </a>
             </button>
           </li>
@@ -86,6 +85,7 @@ export default {
         },
         gsecurity: GSecurity,
         loginDisabled: false,
+        userPhoto: '',
     }
   },
 
@@ -134,6 +134,10 @@ export default {
       type: String,
       default: 'https://img.europapress.es/fotoweb/fotonoticia_20181107115306_1920.jpg'
     },
+  },
+
+  beforeUpdate: function() {
+    this.userPhoto = this.gsecurity.getPhoto();
   },
 
   mounted: function() {
