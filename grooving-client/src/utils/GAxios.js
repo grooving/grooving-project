@@ -5,7 +5,8 @@ const CORS_HEADERS = {
     'Access-Control-Allow-Origin': "*",
     'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Allow-Methods': "DELETE, GET, OPTIONS, PATCH, POST, PUT",
-    'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-auth",   
+    'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-auth",
+
 }
 
 export default axios.create({
