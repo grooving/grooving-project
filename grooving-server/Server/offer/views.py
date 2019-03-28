@@ -56,14 +56,13 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
         if len(request.data) == 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
-
             offer = self.get_object(pk)
             articustomer = get_logged_user(request)
             user_type = get_user_type(articustomer)
             if user_type == "Artist":
                 if articustomer.user_id == offer.paymentPackage.portfolio.artist.user_id:
                     serializer = OfferSerializer(offer, data=request.data, partial=True)
-                    serializer.save(pk)
+                    serializer.save(pk,logged_user=articustomer)
                     return Response(status=status.HTTP_200_OK)
                 else:
                     raise PermissionDenied("The offer is not for yourself")
@@ -74,7 +73,7 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
                     if articustomer.user_id == customer_creator.user_id:
                         serializer = OfferSerializer(offer, data=request.data, partial=True)
-                        serializer.save(pk)
+                        serializer.save(pk,logged_user=articustomer)
                         return Response(status=status.HTTP_200_OK)
                     else:
                         return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -49,13 +49,15 @@ class OfferTestCase(APITestCase):
                                       paymentCode='EEE', eventLocation=event_location1, paymentPackage=payment_package1)
         offer1.save()
         data1 = {"username": "artist1", "password": "artist1artist1"}
-        response1 = self.client.post("/api/login/", data1, format='json')
+        response = self.client.post("/api/login/", data1, format='json')
 
-        token = response1.find('x-auth')
-        self.assertEqual(response1.status_code, 200)
-        print(token)
+        token_num = response.get('x-auth')
+        token = Token.objects.all().filter(pk=token_num).first()
+        print(token.key)
+        self.assertEqual(response.status_code, 200)
 
         data = {"status": "CONTRACT_MADE"}
-        response2 = self.client.put('/offer/1/', data, format='json')
-        self.assertEqual(response2.status_code, 200)
-        print(response2)
+
+        response1 = self.client.put('/offer/{}/'.format(offer1.id), data, format='json',  HTTP_AUTHORIZATION='Token '+token.key)
+        self.assertEqual(response1.status_code, 200)
+        print(response1)
