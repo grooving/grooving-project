@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from Grooving.models import Offer, PaymentPackage, EventLocation, Customer
+from django.core.exceptions import PermissionDenied
 from utils.Assertions import assert_true
+from utils.authentication_utils import get_user_type
 from django.db import IntegrityError
 import random
 import string
@@ -68,11 +70,20 @@ class OfferSerializer(serializers.ModelSerializer):
         return offer
 
     @staticmethod
-    def service_made_payment_artist(paymentCode):
+    def service_made_payment_artist(paymentCode,user_logged):
+        user_type = get_user_type(user_logged)
+        print(user_type)
+        if not None and user_type != "Artist":
+            print("meh")
+            raise PermissionDenied("Only an artist can get the payment")
+
         offer = Offer.objects.filter(paymentCode=paymentCode).first()
         assert_true(offer, 'La oferta no existe')
-        assert_true(offer.status == 'CONTRACT_MADE', 'Posiblemente el pago ya se ha hecho')
-
+        if offer.paymentPackage.portfolio.artist.id != user_logged.id:
+            print("yeah")
+            raise PermissionDenied("You are not the artist who was hired.")
+        assert_true(offer.status == 'CONTRACT_MADE', 'Posiblemente el pago ya se ha hecho o no se puede realizar ya')
+        
         offer.status = 'PAYMENT_MADE'
         #try:
             #TODO: Pago por braintree
