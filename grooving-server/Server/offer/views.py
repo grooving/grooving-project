@@ -62,7 +62,7 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
             if user_type == "Artist":
                 if articustomer.user_id == offer.paymentPackage.portfolio.artist.user_id:
                     serializer = OfferSerializer(offer, data=request.data, partial=True)
-                    serializer.save(pk)
+                    serializer.save(pk,logged_user=articustomer)
                     return Response(status=status.HTTP_200_OK)
                 else:
                     raise PermissionDenied("The offer is not for yourself")
@@ -73,11 +73,10 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
                     if articustomer.user_id == customer_creator.user_id:
                         serializer = OfferSerializer(offer, data=request.data, partial=True)
-                        serializer.save(pk)
+                        serializer.save(pk,logged_user=articustomer)
                         return Response(status=status.HTTP_200_OK)
                     else:
                         return Response(status=status.HTTP_400_BAD_REQUEST)
-
 
     def delete(self, request, pk, format=None):
         offer = self.get_object(pk)
@@ -116,16 +115,25 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
             raise Http404
 
     def get(self, request, *args, **kwargs):
+        user = get_logged_user(request)
+        user_type = get_user_type(user)
+        print(user_type)
+        if not user_type or user_type != "Customer":
+            print("Meh")
+            raise PermissionDenied("Only customers can call this.")
         offer_id = request.GET.get("offer", None)
         offer = self.get_object(offer_id)
+        if not offer.eventLocation.customer.id == user.id:
+            print("yeah")
+            raise PermissionDenied("You are a customer, but you are not the owner of this offer")
         serializer = OfferSerializer(offer)
         code = serializer.data.get("paymentCode")
         return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs):
-        paymentCode = request.data.get("paymentCode")
-        if not paymentCode:
+        payment_code = request.data.get("paymentCode")
+        if not payment_code:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        OfferSerializer.service_made_payment_artist(paymentCode)
+        OfferSerializer.service_made_payment_artist(payment_code, get_logged_user(request))
         return Response(status=status.HTTP_200_OK)

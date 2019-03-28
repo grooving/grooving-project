@@ -6,25 +6,23 @@ from .serializers import ArtistInfoSerializer
 from django.core.exceptions import PermissionDenied
 from Grooving.models import Artist, ArtisticGender
 from rest_framework import viewsets
-from utils.Assertions import assert_true
+from utils.authentication_utils import get_user_type, get_logged_user, is_user_authenticated
 from .serializers import ListArtistSerializer
 from rest_framework.response import Response
 
 
-class GetPersonalInformationOfArtist(generics.RetrieveUpdateDestroyAPIView):
+class GetPersonalInformationOfArtist(generics.ListAPIView):
 
     serializer_class = ArtistInfoSerializer
 
-    def get(self, name):
+    def get(self, request, *args, **kwargs):
 
-        if self.request.user.is_authenticated:
-            loggeduser = self.request.user
-            try:
-                queryset = Artist.objects.get(user=loggeduser)
-                serializer = ArtistInfoSerializer(queryset)
-                return Response(serializer.data)
-            except ObjectDoesNotExist:
-                raise PermissionDenied()
+        user = get_logged_user(self.request)
+        user_type = get_user_type(user)
+        if user_type == 'Artist':
+            artist = Artist.objects.get(user_id=user.user_id)
+            serializer = ArtistInfoSerializer(artist)
+            return Response(serializer.data)
         else:
             raise PermissionDenied()
 
