@@ -87,38 +87,68 @@ def save_data():
     zone4 = Zone.objects.create(name='Madrid')
     zone4.save()
 
-
-    # Portfolios
+    # Portfolios with his modules
 
     portfolio1 = Portfolio.objects.create(artisticName='Carlos DJ', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio1.artisticGender.add(artistic_gender2)
     portfolio1.zone.add(zone1)
     portfolio1.save()
 
+    portfolio1_module1 = PortfolioModule.objects.create(type='PHOTO', portfolio=portfolio1, description='It was a great festival')
+    portfolio1_module1.save()
+
+    portfolio1_module1 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio1, description='Video with Kill Clown', link='https://www.youtube.com/watch?v=BDhUtaS4GT8')
+    portfolio1_module1.save()
+
+    # ----
+
     portfolio2 = Portfolio.objects.create(artisticName='From the noise', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio2.artisticGender.add(artistic_gender4)
     portfolio2.zone.add(zone1)
     portfolio2.save()
+
+    portfolio2_module1 = PortfolioModule.objects.create(type='SOCIAL', portfolio=portfolio2, link='https://www.facebook.com/fromthenoise/')
+    portfolio2_module1.save()
+
+    portfolio2_module2 = PortfolioModule.objects.create(type='SOCIAL', portfolio=portfolio2, link='https://www.facebook.com/batraciosvq/')
+    portfolio2_module2.save()
+
+    portfolio2_module3 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio2, link='https://www.youtube.com/watch?v=CEaJ-COP9Rs')
+    portfolio2_module3.save()
+
+    portfolio2_module4 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio2, link='https://www.youtube.com/watch?v=g43nbmB1cD8')
+    portfolio2_module4.save()
+
+
+    # ----
 
     portfolio3 = Portfolio.objects.create(artisticName='Los saraos', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio3.artisticGender.add(artistic_gender5)
     portfolio3.zone.add(zone1)
     portfolio3.save()
 
+    # ----
+
     portfolio4 = Portfolio.objects.create(artisticName='Ana DJ', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio4.zone.add(zone2)
     portfolio4.artisticGender.add(artistic_gender2)
     portfolio4.save()
+
+    # ----
 
     portfolio5 = Portfolio.objects.create(artisticName='Pasando olimpicamente', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio5.artisticGender.add(artistic_gender8)
     portfolio5.zone.add(zone2)
     portfolio5.save()
 
+    # ----
+
     portfolio6 = Portfolio.objects.create(artisticName='Una chirigota sin clase', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio6.artisticGender.add(artistic_gender8)
     portfolio6.zone.add(zone1)
     portfolio6.save()
+
+    # ----
 
     portfolio7 = Portfolio.objects.create(artisticName='Batracio', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio7.artisticGender.add(artistic_gender3)
@@ -126,32 +156,66 @@ def save_data():
     portfolio7.zone.add(zone1)
     portfolio7.save()
 
+    portfolio7_module1 = PortfolioModule.objects.create(type='PHOTO', portfolio=portfolio7, description='Group photo',
+                                                        link='https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/22089933_1594772467232483_3080874756432701823_n.jpg?_nc_cat=106&_nc_ht=scontent-mad1-1.xx&oh=def5d818429407165ba36763b4d352d6&oe=5D41A03B')
+    portfolio7_module1.save()
+
+
+    portfolio7_module2 = PortfolioModule.objects.create(type='SOCIAL', portfolio=portfolio7, description='Canal de Youtube',
+                                                        link='https://www.youtube.com/channel/UC_SLV3MDv1LMdrg3hBITsTQ')
+    portfolio7_module2.save()
+
+    # ----
+
     portfolio8 = Portfolio.objects.create(artisticName='Medictum', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio8.artisticGender.add(artistic_gender3)
     portfolio8.artisticGender.add(artistic_gender4)
     portfolio8.zone.add(zone1)
     portfolio8.save()
 
+    portfolio8_module1 = PortfolioModule.objects.create(type='PHOTO', portfolio=portfolio8, description='New disc!!!',
+                                                        link='http://medictum.es/wp-content/uploads/2016/09/portadaweb.jpg')
+    portfolio8_module1.save()
+
+    portfolio8_module2 = PortfolioModule.objects.create(type='MEMBER', portfolio=portfolio8, description='Antonio Medina',
+                                                        link='http://medictum.es/wp-content/uploads/2017/03/p2-team-image-1.jpg')
+    portfolio8_module2.save()
+
+    portfolio8_module3 = PortfolioModule.objects.create(type='MEMBER', portfolio=portfolio8, description='Manuel Medina',
+                                                        link='http://medictum.es/wp-content/uploads/2017/03/p2-team-image-2.jpg')
+    portfolio8_module3.save()
+
+    portfolio8_module4 = PortfolioModule.objects.create(type='MEMBER', portfolio=portfolio8, description='Rafael Córdoba',
+                                                        link='http://medictum.es/wp-content/uploads/2017/03/p2-team-image-3.jpg')
+    portfolio8_module4.save()
+
+    portfolio8_module5 = PortfolioModule.objects.create(type='MEMBER', portfolio=portfolio8, description='Pablo Pérez',
+                                                        link='http://medictum.es/wp-content/uploads/2017/03/p2-team-image-4.jpg')
+    portfolio8_module5.save()
+
+    portfolio8_module6 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio8, description='Medictum - El país de las pesadillas',
+                                                        link='https://www.youtube.com/watch?v=EdUFDOM4lrU')
+    portfolio8_module6.save()
+
+    portfolio8_module7 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio8, description='Medictum - Sala Palo Palo',
+                                                        link='https://www.youtube.com/watch?v=bgqfkpxH5h0')
+    portfolio8_module7.save()
+
+    portfolio8_module8 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio8, description='Medictum - Última oportunidad',
+                                                        link='https://www.youtube.com/watch?v=fYzhR6g9J-4')
+    portfolio8_module8.save()
+
+    portfolio8_module9 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio8, description='Medictum - Última oportunidad',
+                                                        link='https://www.youtube.com/watch?v=9wSTyCbDicE')
+    portfolio8_module9.save()
+
+    # ----
+
     portfolio9 = Portfolio.objects.create(artisticName='Waterdogs', banner='https://cdn.pixabay.com/photo/2016/02/15/12/54/banner-1201119_1280.jpg')
     portfolio9.artisticGender.add(artistic_gender3)
     portfolio9.artisticGender.add(artistic_gender4)
     portfolio9.zone.add(zone2)
     portfolio9.save()
-
-    # Porfolio modules
-
-    portfolio1_module1 = PortfolioModule.objects.create(type='DESCRIPTION', portfolio=portfolio1, description='It was a great festival')
-    portfolio1_module1.save()
-
-    portfolio1_module1 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio1, description='Video with Kill Clown', link='https://www.youtube.com/watch?v=BDhUtaS4GT8')
-    portfolio1_module1.save()
-
-    portfolio2_module1 = PortfolioModule.objects.create(type='SOCIAL', portfolio=portfolio2, link='https://www.facebook.com/fromthenoise/')
-    portfolio2_module1.save()
-
-    portfolio2_module2 = PortfolioModule.objects.create(type='VIDEO', portfolio=portfolio2, link='https://www.youtube.com/watch?v=CEaJ-COP9Rs')
-    portfolio2_module2.save()
-
 
     # Calendar
 
@@ -203,7 +267,7 @@ def save_data():
     user6_artist6.save()
     user7_artist7 = User.objects.create(username='artist7', password=make_password('artist7artist7'), first_name='Domingo', last_name='Muñoz Daza', email='dmunnoz96@gmail.com')
     user7_artist7.save()
-    user8_artist8 = User.objects.create(username='artist8', password=make_password('artist8artist8'), first_name='Rafael', last_name='Castillo Lobato', email='contacto@medictum.es')
+    user8_artist8 = User.objects.create(username='artist8', password=make_password('artist8artist8'), first_name='Rafael', last_name='Córdoba', email='contacto@medictum.es')
     user8_artist8.save()
     user9_artist9 = User.objects.create(username='artist9', password=make_password('artist9artist9'), first_name='José Luis', last_name='Salvador Lauret', email='joseluis.salvador@gmail.com')
     user9_artist9.save()
@@ -226,23 +290,23 @@ def save_data():
 
     # Artists
 
-    artist1 = Artist.objects.create(user=user1_artist1, portfolio=portfolio1, phone='600304999')
+    artist1 = Artist.objects.create(user=user1_artist1, portfolio=portfolio1, phone='600304999', photo='https://pixabay.com/es/photos/micr%C3%B3fono-ni%C3%B1o-estudio-gritar-1209816/')
     artist1.save()
-    artist2 = Artist.objects.create(user=user2_artist2, portfolio=portfolio2, phone='695099812')
+    artist2 = Artist.objects.create(user=user2_artist2, portfolio=portfolio2, phone='695099812', photo='https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/20953179_10155798140312625_5517808811547907373_n.jpg?_nc_cat=108&_nc_ht=scontent-mad1-1.xx&oh=78561ec93ba4604a3c5a570cbe101b40&oe=5D4D1ED1')
     artist2.save()
-    artist3 = Artist.objects.create(user=user3_artist3, portfolio=portfolio3, phone='695990241')
+    artist3 = Artist.objects.create(user=user3_artist3, portfolio=portfolio3, phone='695990241', photo='https://pixabay.com/es/photos/micr%C3%B3fono-ni%C3%B1o-estudio-gritar-1209816/')
     artist3.save()
-    artist4 = Artist.objects.create(user=user4_artist4, portfolio=portfolio4, phone='610750391')
+    artist4 = Artist.objects.create(user=user4_artist4, portfolio=portfolio4, phone='610750391', photo='https://pixabay.com/es/photos/micr%C3%B3fono-ni%C3%B1o-estudio-gritar-1209816/')
     artist4.save()
-    artist5 = Artist.objects.create(user=user5_artist5, portfolio=portfolio5, phone='675181175')
+    artist5 = Artist.objects.create(user=user5_artist5, portfolio=portfolio5, phone='675181175', photo='https://pixabay.com/es/photos/micr%C3%B3fono-ni%C3%B1o-estudio-gritar-1209816/')
     artist5.save()
-    artist6 = Artist.objects.create(user=user6_artist6, portfolio=portfolio6, phone='673049277')
+    artist6 = Artist.objects.create(user=user6_artist6, portfolio=portfolio6, phone='673049277', photo='https://unplatillodesal.files.wordpress.com/2017/12/pablo-delgado_a-2.jpg')
     artist6.save()
-    artist7 = Artist.objects.create(user=user7_artist7, portfolio=portfolio7, phone='664196105')
+    artist7 = Artist.objects.create(user=user7_artist7, portfolio=portfolio7, phone='664196105', photo='https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/50732294_2114221071976992_2173326934371467264_o.jpg?_nc_cat=100&_nc_ht=scontent-mad1-1.xx&oh=dacf068903a3703434b52cfade783470&oe=5D09C938')
     artist7.save()
-    artist8 = Artist.objects.create(user=user8_artist8, portfolio=portfolio8, phone='664596466')
+    artist8 = Artist.objects.create(user=user8_artist8, portfolio=portfolio8, phone='664596466', photo='http://medictum.es/wp-content/uploads/2017/03/p2-team-image-3.jpg')
     artist8.save()
-    artist9 = Artist.objects.create(user=user9_artist9, portfolio=portfolio9, phone='679739257')
+    artist9 = Artist.objects.create(user=user9_artist9, portfolio=portfolio9, phone='679739257', photo='https://media.licdn.com/dms/image/C4E03AQFAONXIX44h6w/profile-displayphoto-shrink_800_800/0?e=1559174400&v=beta&t=eEhhR1sr9-p1fr1tREXmlXV6WAzPvNlFDHhlV8SNwRY')
     artist9.save()
 
     # Customers with credit card
@@ -430,7 +494,6 @@ def save_data():
     paymentPackage18_custom6.save()
 
     # ----
-
 
     performance7_paymentPackage19 = Performance.objects.create(info='Performance Payment Type from Batracio',
                                                               hours=1.5, price=50)
