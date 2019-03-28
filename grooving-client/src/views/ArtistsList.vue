@@ -9,8 +9,8 @@
       <div id="results" :class="{'col-lg-8 col-xl-10' : showFilters}" class="col-12">
         <h1 class="titleView">Top Artists</h1>
         <div class="row">
-          <div v-for="artist in datos_prueba" :key="artist.artistURI" class="tarjeta col-12 col-md-6 col-xl-4">
-            <ArtistCard :artistImage="artist.artistImage" :artistName="artist.artistName" />
+          <div v-for="artist in datos" :key="artist.artistURI" class="tarjeta col-12 col-md-6 col-xl-4">
+            <ArtistCard :artistImage="artist.artistImage" :artistName="artist.artistName" :artistGenres="artist.artistGenres" />
           </div>
         </div>
       </div>
@@ -30,6 +30,7 @@
 import FiltersSideMenu from '@/components/menus/FiltersSideMenu.vue';
 import FiltersModalMenu from '@/components/menus/FiltersModalMenu.vue';
 import ArtistCard from '@/components/ArtistCard.vue';
+import GAxios from '@/utils/GAxios.js';
 
 export default {
   name: 'ArtistList',
@@ -91,6 +92,7 @@ export default {
           }     
         ], 
         showFilterSelectionModal: false,
+        datos: Array(),
       }
     },
     methods: {
@@ -116,6 +118,32 @@ export default {
         type: Boolean,
         default: true
       }
+    },
+
+    beforeMount: function(){
+
+      GAxios.get('artists/')
+      .then(response => {
+        var artists = response.data.results;
+        console.log(artists)
+
+        for(var i = 0; i < artists.length; i++){
+          var genres = Array();
+
+          for(var g = 0; g < artists[i].portfolio.artisticGender.length; g++){
+            genres.push(artists[i].portfolio.artisticGender[g].name);
+          }
+
+          this.datos.push({
+            artistURI: '#', 
+            artistImage: artists[i].photo,
+            artistName: artists[i].portfolio.artisticName,
+            artistGenres: genres,
+            hireURI: '#'
+          });
+        }
+      });
+
     }
 }
 
