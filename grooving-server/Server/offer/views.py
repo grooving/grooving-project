@@ -69,7 +69,9 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
             else:
                 if user_type == "Customer":
                     event_location = offer.eventLocation
-                    customer_creator = Customer.objects.filter(eventLocation_id=event_location.id)
+                    customer_id = event_location.customer_id
+                    customer_creator = Customer.objects.filter(pk=customer_id).first()
+
 
                     if articustomer.user_id == customer_creator.user_id:
                         serializer = OfferSerializer(offer, data=request.data, partial=True)

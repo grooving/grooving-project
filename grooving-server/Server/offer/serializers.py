@@ -131,18 +131,19 @@ class OfferSerializer(serializers.ModelSerializer):
             artist_flowstop_transitions={}
             customer_flowstop_transitions={}
             #TODO: Must be check the login
-            creator = Customer.objects.filter(user_id=offer_in_db.eventLocation.customer.user_id)
+            creator = Customer.objects.filter(user_id=offer_in_db.eventLocation.customer.user_id).first()
             if get_user_type(logged_user) == 'Customer' and creator == logged_user:
-                customer_flowstop_transitions = {'PENDING': 'WITHDRAWN', 'NEGOTIATION': 'WITHDRAWN',
-                                                 'CONTRACT_MADE': 'WITHDRAWN'}
+                customer_flowstop_transitions = {'PENDING': 'WITHDRAWN',
+                                                 'CONTRACT_MADE': 'CANCELED'}
 
             artistReceiver = Artist.objects.filter(user_id = offer_in_db.paymentPackage.portfolio.artist.user_id).first()
             print(artistReceiver)
             print(logged_user)
             if get_user_type(logged_user) == 'Artist' and artistReceiver == logged_user:
                 normal_transitions = {'PENDING': 'CONTRACT_MADE'}
-                artist_flowstop_transitions = {'PENDING': 'REJECTED', 'NEGOTIATION': 'REJECTED',
+                artist_flowstop_transitions = {'PENDING': 'REJECTED',
                                                'CONTRACT_MADE': 'CANCELED'}
+
 
             allowed_transition = (normal_transitions.get(status_in_db) == json_status
                                   or artist_flowstop_transitions.get(status_in_db) == json_status
