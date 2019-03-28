@@ -30,12 +30,14 @@
                     </div>
                     <div class="row container">
                         <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="enableOfferButtons()" class="btn btn-primary cancelButton" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">CANCEL</span></a></div>
-                        <div class="right-div right-text2"><router-link v-bind:to="offerURI" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></router-link></div>
+                        <div v-if="offerStatus === 'pending' && gsecurity.hasRole('ARTIST')" class="right-div right-text2"><router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="rejectOffer()"><span class="continueText">CONFIRM</span></router-link></div>
+                        <div v-if="offerStatus === 'pending' && gsecurity.hasRole('CUSTOMER')" class="right-div right-text2"><router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="withdrawnOffer()"><span class="continueText">CONFIRM</span></router-link></div>
+                        <div v-if="offerStatus === 'accepted'" class="right-div right-text2"><router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="cancelOffer()"><span class="continueText">CONFIRM</span></router-link></div>
                     </div>
                 </div>
                 <div v-if="offerStatus === 'pending' || offerStatus === 'accepted'" class="row container" v-bind:id="buttonsId()">
                     <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="disableOfferButtons()" class="btn btn-primary rejectButton" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">REJECT</span></a></div>
-                    <div class="right-div right-text2"><router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">ACCEPT</span></router-link></div>
+                    <div v-if="offerStatus === 'pending' && gsecurity.hasRole('ARTIST')" class="right-div right-text2"><router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">ACCEPT</span></router-link></div>
                 </div>
                 <div v-else class="row container" v-bind:id="buttonsId()">
                     <div class="right-div right-text2"><a v-bind:href="hashtag()" class="btn btn-primary rejectButton"><span class="continueText">REJECT</span></a></div>
@@ -48,8 +50,18 @@
 
 <script>
 
+    import GAxios from '../utils/GAxios.js'
+    import GSecurity from '@/security/GSecurity.js';
+
     export default {
         name: 'Offer',
+
+        data: function() {
+            return {
+                gsecurity: GSecurity,
+                gaxios: GAxios,
+            }
+        },
         
         props: {
             offerID: {
@@ -112,7 +124,17 @@
             enableOfferButtons() {
                 document.getElementById(this.buttonsId()).style.display='inline-block';
                 return false;
-            }
+            },
+
+            rejectOffer() {
+
+            },
+            cancelOffer() {
+
+            },
+            withdrawnOffer() {
+
+            },
         }
     }   
 
