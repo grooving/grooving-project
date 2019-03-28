@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from Grooving.models import Offer, PaymentPackage, EventLocation
+from Grooving.models import Offer, PaymentPackage, EventLocation, Customer
 from utils.Assertions import assert_true
 from django.db import IntegrityError
 import random
@@ -60,7 +60,7 @@ class OfferSerializer(serializers.ModelSerializer):
             offer = self._service_create(self.initial_data, offer)
         else:
             # edit
-            id= (self.initial_data, pk)[pk is not None]
+            id = (self.initial_data, pk)[pk is not None]
 
             offer = Offer.objects.filter(pk=id).first()
             offer = self._service_update(self.initial_data, offer)
@@ -140,15 +140,33 @@ class OfferSerializer(serializers.ModelSerializer):
         payment_code = random_alphanumeric
         return payment_code
 
-    def validate(self, data):
-        if data.get("description") is None:
+    def validate(self, request):
+        customer = Customer.objects.filter(user_id=request.user.id).first()
+        if customer is None:
+            raise serializers.ValidationError("user isn't authorized")
+        json = request.data
+        if json.get("description") is None:
             raise serializers.ValidationError("description field not provided")
-        if data.get("date") is None:
+        if json.get("date") is None:
             raise serializers.ValidationError("date field not provided")
-        if data.get("paymentPackage_id") is None:
+        if json.get("paymentPackage_id") is None:
             raise serializers.ValidationError("paymentPackage_id field not provided")
-        if data.get("eventLocation_id") is None:
+        paymentPackage = PaymentPackage.objects.filter(pk=json.get("paymentPackage_id")).first()
+        if paymentPackage is None:
+            raise serializers.ValidationError("paymentPackage doesn't exist")
+        elif paymentPackage.fare is not None:
+            if json.get("hours") is None:
+                raise serializers.ValidationError("hours field not provided")
+        elif paymentPackage.custom is not None:
+            if json.get("price") is None:
+                raise serializers.ValidationError("price field not provided")
+        if json.get("eventLocation_id") is None:
             raise serializers.ValidationError("eventLocation_id field not provided")
+        eventLocation = EventLocation.objects.filter(pk=request.data.get("eventLocation_id")).first()
+        if eventLocation is None:
+            raise serializers.ValidationError("eventLocation doesn't exist")
+        elif eventLocation.customer != customer:
+            raise serializers.ValidationError("can't reference this eventLocation")
         return True
 
 
