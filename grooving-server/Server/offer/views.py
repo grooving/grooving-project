@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from utils.authentication_utils import get_logged_user,get_user_type
 from rest_framework.response import Response
 from rest_framework import generics
-from .serializers import OfferSerializer
+from .serializers import OfferSerializer,OfferCodeSerializer
 from rest_framework import status
 from django.http import Http404
 from rest_framework.permissions import IsAuthenticated
@@ -111,33 +111,30 @@ class CreateOffer(generics.CreateAPIView):
 
 class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
     queryset = Offer.objects.all()
-    serializer_class = OfferSerializer
+    serializer_class = OfferCodeSerializer
 
-    def get_object(self, pk=None):
-        if pk is None:
-            pk = self.kwargs['pk']
+    def pepe(self, cosa=None):
+        if cosa is None:
+            cosa = self.kwargs['pk']
         try:
-            return Offer.objects.get(pk=pk)
+            return Offer.objects.get(pk=cosa)
         except Offer.DoesNotExist:
             raise Http404
 
     def get(self, request, *args, **kwargs):
         user = get_logged_user(request)
         user_type = get_user_type(user)
-        print(user_type)
         if not user_type or user_type != "Customer":
-            print("Meh")
             raise PermissionDenied("Only customers can call this.")
         offer_id = request.GET.get("offer", None)
-        offer = self.get_object(offer_id)
+        offer = self.pepe(offer_id)
         if not offer.eventLocation.customer.id == user.id:
-            print("yeah")
             raise PermissionDenied("You are a customer, but you are not the owner of this offer")
-        serializer = OfferSerializer(offer)
+        serializer = OfferCodeSerializer(offer)
         code = serializer.data.get("paymentCode")
         return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
 
-    def put(self, request, *args, **kwargs):
+    def put(self, request,pk, *args, **kwargs):
         payment_code = request.data.get("paymentCode")
         if not payment_code:
             return Response(status=status.HTTP_400_BAD_REQUEST)
