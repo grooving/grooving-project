@@ -1,14 +1,7 @@
-from django.shortcuts import render
-from django.shortcuts import redirect, render
 from Grooving.models import Portfolio, Artist
-from django.contrib import messages
-from django.db.utils import IntegrityError
-
-
 from django.core.exceptions import PermissionDenied
-from utils.authentication_utils import get_logged_user,get_user_type,is_user_authenticated
+from utils.authentication_utils import get_logged_user
 from rest_framework.response import Response
-from django.shortcuts import render_to_response
 from rest_framework import generics
 from .serializers import PortfolioSerializer
 from rest_framework import status
