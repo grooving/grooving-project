@@ -60,7 +60,7 @@ urlpatterns = [
     path('api/login/', LoginManager.as_view(), name='login'),
     url(r'^offers/$', ListOffers.as_view()),
     url(r'^paymentCode/$', PaymentCode.as_view()),
-    url(r'^paymentCode/(?P<pk>[0-9]+)/$', PaymentCode.as_view()),
+    url(r'^paymentCode/(?P<pk>[\w{}.-]{1,40})/$', PaymentCode.as_view()),
 
 
 ]
