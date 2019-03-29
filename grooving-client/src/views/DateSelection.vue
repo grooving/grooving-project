@@ -16,8 +16,8 @@
             </div>
         </div>
         <div class="calendarButton">
-          <div class="calendar"><Calendar :availableDates="this.datos[0].availableDates"/></div>
-          <div class="continueButtonDiv"><router-link v-bind:to="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
+          <div class="calendar"><Calendar @datePickerDate="calendarSelected" :availableDates="this.datos[0].availableDates"/></div>
+          <div class="continueButtonDiv"><div @click="dateSelected()" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></div></div>
         </div>
     </div>
 </div>
@@ -30,7 +30,7 @@ import GSecurity from '@/security/GSecurity.js';
 import endpoints from '@/utils/endpoints.js';
 
 export default {
-  name: 'dateSelection',
+  name: 'DateSelection',
 
   components: {
     Calendar,
@@ -40,6 +40,7 @@ export default {
       return {
           gsecurity: GSecurity,
           datos: Array(),
+          fecha: '',
       }
   },
 
@@ -105,6 +106,14 @@ export default {
             }
 
             return res;
+        },
+
+        dateSelected() {
+            this.$emit('dateSelected', this.fecha);
+        },
+
+        calendarSelected(){
+            this.fecha = arguments[0];
         }
     }
 }

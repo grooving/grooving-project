@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="paymentSelect">
-          <div class="paymentOptions"><PaymentOptions/></div>
+          <div class="paymentOptions"><PaymentOptions @paymentOptionSelected="paymentSelected()"/></div>
         </div>
     </div>
 </div>
@@ -30,7 +30,7 @@
 import PaymentOptions from '@/components/PaymentOptions.vue'
 
 export default {
-  name: 'paymentSelector',
+  name: 'PaymentSelector',
   components: {
     PaymentOptions
   },
@@ -80,6 +80,10 @@ export default {
             }
 
             return res;
+        },
+
+        paymentSelected(){
+            this.$emit('paymentSelected');
         }
     }
 }

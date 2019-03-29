@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="evDiv">
-          <div class="eventData"><EventData/></div>
+          <div class="eventData"><EventData @eventDataSelected="eventData" /></div>
         </div>
     </div>
     </div>
@@ -27,7 +27,7 @@
 import EventData from '@/components/EventData.vue'
 
 export default {
-  name: 'eventData',
+  name: 'EventInput',
   components: {
     EventData
   },
@@ -77,6 +77,10 @@ export default {
             }
 
             return res;
+        },
+
+        eventData() {
+            this.$emit('eventData', arguments[0]);
         }
     }
 }

@@ -2,10 +2,10 @@
     <div class="content">
         <div class="paymentOptions">
             <p>Choose between</p>
-            <div class="continueButtonDiv"><router-link v-bind:to="continueURI" class="btn btn-primary continueButton"><span class="continueText">PAYPAL</span></router-link></div>
+            <div class="continueButtonDiv"><div @click="paymentOptionSelected()" class="btn btn-primary continueButton"><span class="continueText">PAYPAL</span></div @click="paymentOptionSelected()"></div>
             <br>
-            <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
-            class="btn btn-primary continueButton"><span class="continueText">CREDIT CARD</span></router-link></div>
+            <div class="continueButtonDiv"><div
+            class="btn btn-primary continueButton"><span class="continueText">CREDIT CARD</span></div></div>
         </div>
     </div>
 </template>
@@ -21,6 +21,11 @@ export default {
     },
     components: {
     },
+    methods: {
+        paymentOptionSelected(){
+            this.$emit('paymentOptionSelected');
+        }
+    }
 }
 </script>
 

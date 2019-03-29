@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="addDiv">
-          <div class="addressData"><AddressData/></div>
+          <div class="addressData"><AddressData @addressDataSelected="addressSelected" /></div>
         </div>
     </div>
     </div>
@@ -27,7 +27,7 @@
 import AddressData from '@/components/AddressData.vue'
 
 export default {
-  name: 'addressData',
+  name: 'AddressInput',
   components: {
     AddressData
   },
@@ -77,6 +77,10 @@ export default {
             }
 
             return res;
+        },
+
+        addressSelected() {
+            this.$emit('addressSelected', arguments[0], arguments[1], arguments[2])
         }
     }
 }

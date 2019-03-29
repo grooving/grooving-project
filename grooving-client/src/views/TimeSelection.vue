@@ -17,7 +17,7 @@
         </div>
         <div class="sliderButton">
           <div class="slider"><DoubleSlider/></div>
-          <div class="continueButtonDiv"><router-link v-bind:to="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
+          <div class="continueButtonDiv"><div @click="timeSelected()" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></div @click="timeSelected()"></div>
         </div>
     </div>
 </div>
@@ -27,7 +27,7 @@
 import DoubleSlider from '@/components/DoubleSlider.vue'
 
 export default {
-  name: 'timeSelection',
+  name: 'TimeSelection',
   components: {
     DoubleSlider
   },
@@ -73,6 +73,10 @@ export default {
             }
 
             return res;
+        },
+
+        timeSelected() {
+            this.$emit('timeSelected');
         }
     }
 }

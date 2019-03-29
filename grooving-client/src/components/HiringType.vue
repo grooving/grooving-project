@@ -15,8 +15,8 @@
 
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
       <div class="bodies">{{performanceDescription}}  
-           <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
-            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
+           <div class="continueButtonDiv"><div @click="selectType"
+            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></div></div>
       </div>  
     </div>
   </div>
@@ -31,7 +31,7 @@
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
       <div class="bodies">{{fareDescription}} 
-           <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
+           <div class="continueButtonDiv"><router-link v-bind:to="'#'" 
             class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
       </div>
     </div>
@@ -47,7 +47,7 @@
     </div>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
       <div class="bodies">{{customDescription}}
-           <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
+           <div class="continueButtonDiv"><router-link v-bind:to="'#'" 
             class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
       </div>
     </div>
@@ -58,7 +58,7 @@
 
 <script>
 export default {
-  name: 'SentOfferNotif',
+  name: 'HiringType',
   props: {
         performanceDescription: {
             type: String,
@@ -107,6 +107,10 @@ export default {
             }
 
             return res;
+        },
+
+        selectType() {
+            this.$parent.$emit('hiring' , '');
         }
     }
 

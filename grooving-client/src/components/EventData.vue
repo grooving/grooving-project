@@ -7,15 +7,15 @@
                     placeholder="Information about your event" rows="7"></textarea>
             </div>  
         </div>
-        <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
-            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
+        <div class="continueButtonDiv"><div @click="eventDataSelected()"
+            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></div></div>
     </form>
     </div>
 </template>
 
 <script>
 export default {
-    name: "eveData",
+    name: "EventData",
     props: {
         location: {
             type: String,
@@ -28,6 +28,11 @@ export default {
     },
     components: {
     },
+    methods: {
+        eventDataSelected(){
+            this.$emit('eventDataSelected', this.location);
+        }
+    }
 }
 </script>
 

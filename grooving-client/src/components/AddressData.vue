@@ -16,8 +16,8 @@
                 <input :value="street" type="text" class="form-control" placeholder="Street">
             </div>  
         </div>
-        <div class="continueButtonDiv"><router-link v-bind:to="continueURI" 
-            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
+        <div class="continueButtonDiv"><div @click="addressDataSelected()" 
+            class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></div></div>
 
     </form>
     </div>
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    name: "addressData",
+    name: "AddressData",
     props: {
         location: {
             type: String,
@@ -46,6 +46,12 @@ export default {
     },
     components: {
     },
+
+    methods: {
+        addressDataSelected(){
+            this.$emit('addressDataSelected', this.location, this.zipcode, this.street);
+        }
+    }
 }
 </script>
 

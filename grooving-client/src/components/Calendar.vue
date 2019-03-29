@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div><vuejs-datepicker v-model="model.date" :disabledDates="disabledDates"  :full-month-name="true" :inline="true"></vuejs-datepicker></div>
+        <div><vuejs-datepicker @input="datePickerDate" :value="model.date" v-model="model.date" :disabledDates="disabledDates"  :full-month-name="true" :inline="true"></vuejs-datepicker></div>
     </div>
 </template>
 
@@ -29,6 +29,14 @@ export default {
 
     components: {
         vuejsDatepicker
+    },
+
+    methods:{
+        datePickerDate(){
+            var fecha = this.model.date.getFullYear() + '-' + (this.model.date.getMonth()+1) + '-' + this.model.date.getDate();
+
+            this.$emit('datePickerDate', fecha);
+        }
     },
 
     created: function() {
