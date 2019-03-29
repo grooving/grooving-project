@@ -8,7 +8,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         depth = 1
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email')
+        fields = ('first_name', 'last_name')
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 1
         model = Customer
-        fields = ('user', 'holder','photo')
+        fields = ('user', 'holder', 'photo')
 
 
 class EventLocationSerializer(serializers.ModelSerializer):
