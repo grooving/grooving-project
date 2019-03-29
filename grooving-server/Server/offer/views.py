@@ -113,11 +113,13 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferCodeSerializer
 
-    def pepe(self, cosa=None):
-        if cosa is None:
-            cosa = self.kwargs['pk']
+    def get_object(self):
+        queryset=self.filter_queryset(self.get_queryset())
         try:
-            return Offer.objects.get(pk=cosa)
+            obj=queryset.get(pk=self.request.user.offer_id)
+            self.check_object_permissions(self.request,obj)
+            return obj
+
         except Offer.DoesNotExist:
             raise Http404
 
@@ -134,7 +136,9 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
         code = serializer.data.get("paymentCode")
         return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
 
-    def put(self, request,pk, *args, **kwargs):
+    def put(self, request, pk=None, *args, **kwargs):
+        if pk is None:
+            pk = self.kwargs['pk']
         payment_code = request.data.get("paymentCode")
         if not payment_code:
             return Response(status=status.HTTP_400_BAD_REQUEST)
