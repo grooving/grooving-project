@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ArtistInfo :artistBanner="portfolioBanner" :artistName="portfolioName"/>
+    <ArtistInfo :artistBanner="portfolioBanner" :artistName="portfolioName" :artistGenres="portfolioGenres" />
     <ImageCarousel class="imageCarousel" />
     <VideoCarousel class="videoCarousel" :videosInfo="d_portfolioVideos" :key="updateVideosKey"/>
     <AvailableDates class="availableDates"/>
@@ -47,6 +47,14 @@ export default {
     portfolioVideos: {
       type: Array,
       default: function() {return []}
+    },
+    portfolioVideos: {
+      type: Array,
+      default: function() {return []}
+    },
+    portfolioGenres: {
+      type: Array,
+      default: function() {return[]}
     }
   },
 
@@ -75,7 +83,15 @@ export default {
           this.d_portfolioBanner = portfolio.banner;
           this.d_portfolioName = portfolio.artisticName;
           var media = portfolio.portfoliomodule_set;
+<<<<<<< HEAD
+=======
+          var genres = portfolio.artisticGender;
+>>>>>>> 51b9717581864a0636bd98db8d1c480e90cc59bd
 
+          for(var i = 0; i < genres.length; i++){
+            var genre = genres[i];
+            this.portfolioGenres.push(genre['name']);
+          }
           var imgCounter = 0;
           var vidCounter = 0;
 
