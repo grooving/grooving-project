@@ -9,10 +9,15 @@
 
 <script>
 
+
+
 import ArtistInfo from '@/components/portfolio/ArtistInfo.vue';
 import ImageCarousel from '@/components/portfolio/ImageCarousel.vue';
 import VideoCarousel from '@/components/portfolio/VideoCarousel.vue';
 import AvailableDates from '@/components/portfolio/AvailableDates.vue';
+import GAxios from '@/utils/GAxios.js';
+import endpoints from '@/utils/endpoints.js';
+import GSecurity from '@/security/GSecurity.js';
 
 
 export default {
@@ -25,7 +30,8 @@ export default {
   },
 
   data: function(){
-    return {
+    gsecurity:undefined
+    /*return {
         image_data:[
           {id: 0, imageURL: "https://i.ytimg.com/vi/IFr3GnboNRU/maxresdefault.jpg"},
           {id: 1, imageURL: "https://timedotcom.files.wordpress.com/2018/10/charli-xcx-1999-credit-andrew-thomas-huang.jpg?quality=85"},
@@ -43,8 +49,23 @@ export default {
           {id: 3, videoURL: "https://www.youtube.com/watch?v=KP0r5LSbWL4"}
 
         ]
-      }
+      }*/
   },
+  
+  beforeMount: function(){
+    
+    var authorizedGAxios = GAxios;
+    alert(endpoints.portfolio+this.$route.params['artistId']+"/");
+    authorizedGAxios.get(endpoints.portfolio+this.$route.params['artistId']+"/")
+      .then(response => {
+        console.log(response);
+        
+
+
+                
+    });
+  }
+
 }
 </script>
 

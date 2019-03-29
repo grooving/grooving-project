@@ -3,6 +3,7 @@ export default{
     login: '/api/login/',
     offers: '/offers/',
     customerPersonalInformation: '/customer/personalInformation/',
-    artistPersonalInformation: '/artist/personalInformation/'
+    artistPersonalInformation: '/artist/personalInformation/',
+    portfolio: '/portfolio/'
     
 }

@@ -92,7 +92,7 @@ export default new Router({
       component: AcceptedOffer
     },
     {
-      path: '/showPortfolio',
+      path: '/showPortfolio/:artistId',
       name: 'showPortfolio',
       component: Portfolio
     },
