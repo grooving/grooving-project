@@ -22,7 +22,7 @@ class ArtistGenderTestCase(APITestCase):
         zone1 = Zone.objects.create(name="Sevilla Sur")
         zone1.save()
 
-        artisticGender = ArtisticGender.create(name="Rock")
+        artisticGender = ArtisticGender.objects.create(name="Rock")
         artisticGender.save()
 
         portfolio1 = Portfolio.objects.create(artisticName="Juanartist")
@@ -42,7 +42,7 @@ class ArtistGenderTestCase(APITestCase):
         calendar1 = Calendar.objects.create(days=days, portfolio=portfolio1)
         calendar1.save()
 
-        portfolioModule1 = PortfolioModule.objects.create(type="PHOTO", link="http//www.link.com", description="Description", portfolio=portfolio1.id)
+        portfolioModule1 = PortfolioModule.objects.create(type="PHOTO", link="http://www.link.com", description="Description", portfolio=portfolio1)
         portfolioModule1.save()
 
         data1 = {"username": "artist1", "password": "artist1artist1"}
@@ -53,7 +53,7 @@ class ArtistGenderTestCase(APITestCase):
         print(token.key)
         self.assertEqual(response.status_code, 200)
 
-        data = {"id": "" + portfolioModule1.id, "type": "DESCRIPTION", "link": "http//www.link2.com"}
+        data = {"id": "" + str(portfolioModule1.id), "type": "DESCRIPTION", "link": "http://www.link2.com"}
 
         response1 = self.client.put('/portfolioModule/{}/'.format(portfolioModule1.id), data, format='json',
                                     HTTP_AUTHORIZATION='Token '+token.key)

@@ -10,7 +10,9 @@ class PortfolioTestCase(APITestCase):
 
     def test_manage_portfolio_artist(self):
 
+
         print("TEST_MANAGE_OFFER_CUSTOMER\n\n")
+
 
         days = ['2019-06-02', '2019-08-02', '2019-10-15', '2019-11-02']
         date = datetime.datetime(2020,2,7,8,49,56,81433, pytz.UTC)
