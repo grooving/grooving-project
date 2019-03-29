@@ -4,6 +4,7 @@ from django.core.exceptions import PermissionDenied
 from Grooving.models import Offer, PaymentPackage, EventLocation, Customer, Artist
 from utils.Assertions import assert_true
 from django.db import IntegrityError
+from decimal import Decimal
 import random
 import string
 import datetime
@@ -38,7 +39,7 @@ class OfferSerializer(serializers.ModelSerializer):
                   'paymentPackage_id', 'eventLocation', 'eventLocation_id')
 
     # Esto sobrescribe una función heredada del serializer.
-    def save(self, pk=None,logged_user=None):
+    def save(self, pk=None, logged_user=None):
         if self.initial_data.get('id') is None and pk is None:
             # creation
             offer = Offer()
@@ -48,22 +49,19 @@ class OfferSerializer(serializers.ModelSerializer):
             id = (self.initial_data, pk)[pk is not None]
 
             offer = Offer.objects.filter(pk=id).first()
-            offer = self._service_update(self.initial_data, offer,logged_user)
+            offer = self._service_update(self.initial_data, offer, logged_user)
 
         return offer
 
     @staticmethod
     def service_made_payment_artist(paymentCode,user_logged):
         user_type = get_user_type(user_logged)
-        print(user_type)
         if not None and user_type != "Artist":
-            print("meh")
             raise PermissionDenied("Only an artist can get the payment")
 
         offer = Offer.objects.filter(paymentCode=paymentCode).first()
         assert_true(offer, 'La oferta no existe')
         if offer.paymentPackage.portfolio.artist.id != user_logged.id:
-            print("yeah")
             raise PermissionDenied("You are not the artist who was hired.")
         assert_true(offer.status == 'CONTRACT_MADE', 'Posiblemente el pago ya se ha hecho o no se puede realizar ya')
         
@@ -88,12 +86,16 @@ class OfferSerializer(serializers.ModelSerializer):
             offer.price = offer.paymentPackage.performance.price
             offer.currency = offer.paymentPackage.performance.currency
         elif offer.paymentPackage.fare is not None:
-            offer.price = offer.paymentPackage.fare.priceHour * json['hours']
+            offer.price = offer.paymentPackage.fare.priceHour * Decimal(json['hours'])
             offer.currency = offer.paymentPackage.fare.currency
         elif offer.paymentPackage.custom is not None:
             offer.price = json['price']
             offer.currency = offer.paymentPackage.custom.currency
         offer.save()
+        dateInDB = Offer.objects.filter(pk=offer.id).first().date
+        if dateInDB < timezone.now():
+            offer.delete()
+            assert_true(False, "Date must be in future.")
         return offer
 
     def _service_update(self, json: dict, offer_in_db: Offer, logged_user: User):

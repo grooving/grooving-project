@@ -63,6 +63,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'utils.Error500Middelware.Erro500Middleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,7 +71,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'utils.Error500Middelware.Erro500Middleware',
     'utils.CorsMiddleware.CorsMiddleware',
 
     #whitenoise middleware for static files. #http://sayhelloworld.co/using-white-noise-to-server-django-static-files-on-heroku/
