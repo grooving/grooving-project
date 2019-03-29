@@ -19,14 +19,18 @@ class CalendarByArtist(generics.RetrieveUpdateDestroyAPIView):
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 
-    def get_object(self, pk):
+    def get_object(self, pk=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         try:
             portfolio = Artist.objects.get(id=pk).portfolio
             return Calendar.objects.get(portfolio=portfolio)
         except Calendar.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
+    def get(self, request, pk=None, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         portfolio = Artist.objects.get(id=pk).portfolio
         calendar = Calendar.objects.filter(portfolio=portfolio)
         serializer = CalendarSerializer(calendar, many=True)
