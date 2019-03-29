@@ -99,7 +99,7 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 class CreateOffer(generics.CreateAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         serializer = OfferSerializer(data=request.data, partial=True)
