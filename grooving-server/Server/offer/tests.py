@@ -105,6 +105,8 @@ class OfferTestCase(APITestCase):
 
         response6 = self.client.get('/paymentCode/?offer={}'.format(offer1.id),
                                     HTTP_AUTHORIZATION='Token ' + token2.key)
+
+        print(response)
         self.assertEqual(response6.status_code, 200)
 
         offer1.status = "CANCELED"

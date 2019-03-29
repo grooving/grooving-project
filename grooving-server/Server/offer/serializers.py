@@ -24,6 +24,17 @@ class EventLocationSerializer(serializers.ModelSerializer):
         fields = ('id', 'address', 'equipment', 'description')
 
 
+
+
+
+class OfferCodeSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Offer
+        fields = ('id', 'description', 'status', 'date', 'hours', 'price','paymentPackage',
+                  'paymentPackage_id', 'eventLocation', 'eventLocation_id','paymentCode')
+
 class OfferSerializer(serializers.ModelSerializer):
 
     paymentPackage = PaymentPackageSerializer(read_only=True)

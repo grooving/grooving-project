@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from utils.authentication_utils import get_logged_user,get_user_type
 from rest_framework.response import Response
 from rest_framework import generics
-from .serializers import OfferSerializer
+from .serializers import OfferSerializer,OfferCodeSerializer
 from rest_framework import status
 from django.http import Http404
 from rest_framework.permissions import IsAuthenticated
@@ -113,9 +113,7 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
 
-    def get_object(self, pk=None):
-        if pk is None:
-            pk = self.kwargs['pk']
+    def get_object(self, pk):
         try:
             return Offer.objects.get(pk=pk)
         except Offer.DoesNotExist:
@@ -124,16 +122,13 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
     def get(self, request, *args, **kwargs):
         user = get_logged_user(request)
         user_type = get_user_type(user)
-        print(user_type)
         if not user_type or user_type != "Customer":
-            print("Meh")
             raise PermissionDenied("Only customers can call this.")
         offer_id = request.GET.get("offer", None)
         offer = self.get_object(offer_id)
         if not offer.eventLocation.customer.id == user.id:
-            print("yeah")
             raise PermissionDenied("You are a customer, but you are not the owner of this offer")
-        serializer = OfferSerializer(offer)
+        serializer = OfferCodeSerializer(offer)
         code = serializer.data.get("paymentCode")
         return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
 
