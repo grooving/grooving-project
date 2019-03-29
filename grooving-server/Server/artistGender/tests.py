@@ -1,7 +1,7 @@
-'''
+
 from django.test import TestCase
 
-from Grooving.models import Portfolio, PortfolioModule, ArtisticGender, MoneyField, Customer, CreditCardField, Artist, Portfolio, User, Calendar,PaymentPackage,EventLocation,Zone
+from Grooving.models import Portfolio, PortfolioModule, ArtisticGender,Customer, Artist, Portfolio, User, Calendar,PaymentPackage,EventLocation,Zone
 from datetime import datetime
 from rest_framework.test import APITestCase
 # Create your tests here.
@@ -11,19 +11,14 @@ class PortfolioTestCase(TestCase):
 
     def test_show_portfolio(self):
 
-        credit_card1 = CreditCardField('Pedro Rodriguez', datetime.now(), '1234567890123456', '203')
-        user1 = User()
+        ''' user1 = User()
         user1.username = "pedro"
         user1.id = "42"
         user1.email = "pedro@pedro.com"
         user1.password = "pedro"
         user1.save()
 
-        days = [True] * 366
-        print(days)
-        calendar1 = Calendar(year=2019, days=days)
-        calendar1.id = "44"
-        calendar1.save()
+
 
         user2 = User()
         user2.email = "juan@juan.com"
@@ -38,7 +33,7 @@ class PortfolioTestCase(TestCase):
         artist1.iban = "AD1400080001001234567890"
         artist1.phone = "999999999"
         artist1.paypalAccount = "user=artistpay,password=artistpay"
-        artist1.user_id = "43"
+        artist1.user = user1
 
         artisticGender1 = ArtisticGender()
         artisticGender1.name = "Rock"
@@ -46,7 +41,7 @@ class PortfolioTestCase(TestCase):
 
         artisticGender2 = ArtisticGender()
         artisticGender2.name = "Blues"
-        artisticGender2.parentGender = id
+        artisticGender2.parentGender = artisticGender1
         artisticGender2.save()
 
         portfolio1 = Portfolio()
@@ -54,18 +49,24 @@ class PortfolioTestCase(TestCase):
         portfolio1.artisticName = "Juanartist"
         portfolio1.save()
 
+        days = ['2019-06-02', '2019-08-02']
+        print(days)
+        calendar1 = Calendar(days=days, portfolio=portfolio1)
+        calendar1.id = "44"
+        calendar1.save()
+
         portfolioModule1 = PortfolioModule()
         portfolioModule1.type = "PHOTO"
         portfolioModule1.link = "https://conectandomeconlau.com.co/wp-content/uploads/2018/03/%C2%BFTienes-las-caracteri%CC%81sticas-para-ser-un-Artista.png"
         portfolioModule1.description = "Modulo Photo"
-        portfolioModule1.portfolio = "24"
+        portfolioModule1.portfolio = portfolio1
         portfolioModule1.save()
 
         portfolioModule2 = PortfolioModule()
         portfolioModule2.type = 'VIDEO'
         portfolioModule2.link = "https://conectandomeconlau.com.co/wp-content/uploads/2018/03/%C2%BFTienes-las-caracteri%CC%81sticas-para-ser-un-Artista.png"
         portfolioModule2.description = "Modulo Video"
-        portfolioModule2.portfolio = "24"
+        portfolioModule2.portfolio = portfolio1
         portfolioModule2.save()
 
 
@@ -73,7 +74,7 @@ class PortfolioTestCase(TestCase):
         paymentPackage.id = "87"
         paymentPackage.description = "paymentPackage description"
         paymentPackage.appliedVAT = "0.07"
-        paymentPackage.portfolio = "24"
+        paymentPackage.portfolio = portfolio1
         paymentPackage.save()
 
         zone1 = Zone()
@@ -81,11 +82,11 @@ class PortfolioTestCase(TestCase):
         zone1.name = "Sevilla Sur"
         zone1.save()
 
-        artist1.portfolio = "24"
+        artist1.portfolio = portfolio1
         artist1.save()
 
         self.client.login(username='artist', password='artist')
         response = self.client.get('/portfolio/24', format='json')
         self.assertEqual(response.status_code, 200)
-        '''#print(response)
-
+        #print(response)
+    '''

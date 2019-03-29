@@ -7,7 +7,7 @@ class CalendarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Calendar
-        fields = 'days'
+        fields = ('days',)
 
 
 class ArtisticGenderSerializer(serializers.ModelSerializer):
