@@ -14,17 +14,23 @@ class PortfolioModuleManager(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PortfolioModuleSerializer
 
     def get_object(self, pk):
+        if pk is None:
+            pk = self.kwargs['pk']
         try:
             return PortfolioModule.objects.get(pk=pk)
         except PortfolioModule.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         portfolioModule = PortfolioModule.objects.get(pk=pk)
         serializer = PortfolioModuleSerializer(portfolioModule)
         return Response(serializer.data)
 
     def put(self, request, pk):
+        if pk is None:
+            pk = self.kwargs['pk']
         portfolioModule = self.get_object(pk=pk)
         loggedUser = get_logged_user(request)
         artist = Artist.objects.filter(portfolio=portfolioModule.portfolio).first()
@@ -39,6 +45,8 @@ class PortfolioModuleManager(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied("The artisticGender is not for yourself")
 
     def delete(self, request, pk, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         portfolioModule = self.get_object(pk=pk)
         portfolioModule.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
