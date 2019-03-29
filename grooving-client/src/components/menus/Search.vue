@@ -33,11 +33,12 @@
     },
     methods: {
       close() {
+        this.$emit('changeQuery', this.searchQuery);
         this.$emit('closeSearch');
       },
       search() {
           this.close();
-          this.$router.push({ path: '/artist_search', query: { query : this.searchQuery } });
+          
       }
     },
   };

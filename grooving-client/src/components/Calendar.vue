@@ -1,35 +1,50 @@
 <template>
     <div>
-        <div><vuejs-datepicker v-model="model.date" :disabledDates="disabledFn" :full-month-name="true" :inline="true"></vuejs-datepicker></div>
+        <div><vuejs-datepicker v-model="model.date" :disabledDates="disabledDates"  :full-month-name="true" :inline="true"></vuejs-datepicker></div>
     </div>
 </template>
 
 <script>
+
+var yesterday = new Date();
+yesterday.setDate(yesterday.getDate()-1);
+
 export default {
     name: "Calendar",
-    props: {
-    },
-    components: {
-        vuejsDatepicker
-    },
+
     data () {
         return {
             model: {
-                date: ""
+                date: "",
             },
-            disabledFn: {
-                customPredictor (date) {
-                    if (date.getTime() <= new Date(Date.now() - 8640000)) {
-                        return true;
-                    }
-
-                    if (date.getDate() % 7 === 0) {
-                        return true;
-                    }
-                }
-            },
+            currentDate: new Date(),
+            disabledDates: {},
         }
     },
+
+    props: {
+        availableDates: Array,
+        stringToDates: Array,
+    },
+
+    components: {
+        vuejsDatepicker
+    },
+
+    created: function() {
+        var res = Array();
+
+        for (var i = 0; i < this.availableDates.length; i++) { 
+            res.push(new Date(this.availableDates[i]));
+        }
+
+        this.stringToDates = res;
+
+        this.disabledDates = {
+            to: yesterday,
+            dates: this.stringToDates,
+        }
+    }
 }
 </script>
 

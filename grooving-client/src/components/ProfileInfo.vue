@@ -6,39 +6,45 @@
                     <h5 class="card-title" style="font-weight:bold;font-size:30px;">Profile</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Basic info of your Grooving account, like your name and email.</h6>
                     <div style="width:100%;margin-top:25px;">
-                        <p class="card-text" style="font-weight:bold;display:inline-block;">FULL NAME</p>
-                        <p class="card-text" style="float:right;">John Pug (Pug)</p>
+                        <p class="card-text" style="font-weight:bold;display:inline-block;">NAME</p>
+                        <p class="card-text" style="float:right;">{{name}}</p>
+                    </div>
+                    <hr style="margin-top:0px;margin-bottom:0px;"/>
+                    <div style="width:100%;margin-top:25px;">
+                        <p class="card-text" style="font-weight:bold;display:inline-block;">SURNAMES</p>
+                        <p class="card-text" style="float:right;">{{surnames}}</p>
                     </div>
                     <hr style="margin-top:0px;margin-bottom:0px;"/>
                     <div style="width:100%;margin-top:16px;">
                         <p class="card-text" style="font-weight:bold;display:inline-block;">EMAIL</p>
-                        <p class="card-text" style="float:right;">johnpug@pugsftw.com</p>
+                        <p class="card-text" style="float:right;">{{email}}</p>
                     </div>
                     <hr style="margin-top:0px;margin-bottom:0px;"/>
                     <div style="width:100%;margin-top:16px;">
-                        <p class="card-text" style="font-weight:bold;display:inline-block;">PASSWORD</p>
-                        <p class="card-text" style="float:right;">&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;</p>
+                        <p class="card-text" style="font-weight:bold;display:inline-block;">PHONE</p>
+                        <p class="card-text" style="float:right;">{{phoneNumber}}</p>
                     </div>
+                    <!--
                     <hr style="margin-top:0px;margin-bottom:0px;"/>
                     <div style="width:100%;margin-top:16px;">
                         <p class="card-text" style="font-weight:bold;display:inline-block;">COUNTRY</p>
-                        <p class="card-text" style="float:right;">Spain</p>
+                        <p class="card-text" style="float:right;">{{userCountry}}</p>
                     </div>
                     <hr style="margin-top:0px;margin-bottom:0px;"/>
                     <div style="width:100%;margin-top:16px;">
                         <p class="card-text" style="font-weight:bold;display:inline-block;">BIRTH DATE</p>
-                        <p class="card-text" style="float:right;">09/09/2000</p>
+                        <p class="card-text" style="float:right;">{{userBirthday}}</p>
                     </div>
                     <hr style="margin-top:0px;margin-bottom:0px;"/>
                     <div style="width:100%;margin-top:16px;">
                         <p class="card-text" style="font-weight:bold;display:inline-block;">STATE</p>
-                        <p class="card-text" style="float:right;">Andalucia</p>
+                        <p class="card-text" style="float:right;">{{userState}}</p>
                     </div>
                     <hr style="margin-top:0px;margin-bottom:0px;"/>
                     <div style="width:100%;margin-top:16px;margin-bottom:0px;">
                         <p class="card-text" style="font-weight:bold;display:inline-block;">CITY</p>
-                        <p class="card-text" style="float:right;">Sevilla</p>
-                    </div>
+                        <p class="card-text" style="float:right;">{{userCity}}</p>
+                    </div>-->
                 </div>  
             </div>
         </form>
@@ -49,6 +55,35 @@
 export default {
     name: "profileInfo",
     props: {
+        name: {
+            type: String,
+            //default: 'John'
+        },
+        surnames: {
+            type: String,
+            //default: 'Pug Retriever'
+        },
+        email: {
+            type: String,
+            //default: 'johnpug@pugsftw.com'
+        },
+        phoneNumber: {
+            type: String,
+            //default: '633017787'
+        },
+        userBirthday: {
+            type: String,
+            default: '09/09/2000'
+        },
+        userState: {
+            type: String,
+            default: 'Andalucia'
+        },
+        userCity: {
+            type: String,
+            default: 'Pilas'
+        },
+
         location: {
             type: String,
             default: 'Monday night party at the campus.'
