@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ArtistInfo />
-    <ImageCarousel class="imageCarousel" :photosInfo="image_data" />
-    <VideoCarousel class="videoCarousel" :videosInfo="video_data"/>
-    <AvailableDates class="availableDates" />
+    <ArtistInfo :artistBanner="portfolioBanner" :artistName="portfolioName"/>
+    <ImageCarousel class="imageCarousel" />
+    <VideoCarousel class="videoCarousel" :videosInfo="portfolioVideos"/>
+    <AvailableDates class="availableDates"/>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ import GAxios from '@/utils/GAxios.js';
 import endpoints from '@/utils/endpoints.js';
 import GSecurity from '@/security/GSecurity.js';
 
+var portfolioDays = [];
 
 export default {
   name: 'Portfolio',
@@ -27,6 +28,28 @@ export default {
     ImageCarousel,
     VideoCarousel,
     AvailableDates,
+  },  
+  props: {
+    portfolioBanner: {
+      type: String
+    },
+    portfolioIcon: {
+      type: String
+    },
+    portfolioName: {
+      type: String
+    },
+    portfolioBiography: {
+      type: String
+    },
+    portfolioImages: {
+      type: Array,
+      default: function() {return []}
+    },
+    portfolioVideos: {
+      type: Array,
+      default: function() {return []}
+    }
   },
 
   data: function(){
@@ -55,10 +78,31 @@ export default {
   beforeMount: function(){
     
     var authorizedGAxios = GAxios;
-    alert(endpoints.portfolio+this.$route.params['artistId']+"/");
     authorizedGAxios.get(endpoints.portfolio+this.$route.params['artistId']+"/")
       .then(response => {
         console.log(response);
+          var portfolio = response.data;
+          this.portfolioBanner=portfolio.banner;
+          this.portfolioName = portfolio.artisticName;
+          var media = portfolio.portfoliomodule_set;
+          //alert(media[0]['link']);
+          
+
+          var imgCounter = 0;
+          var vidCounter = 0;
+          for(var i = 0; i < media.length; i++){
+            var elementMedia = media[i];
+            if(elementMedia['type']=='VIDEO'){
+              this.portfolioVideos.push({id:vidCounter, videoURL:elementMedia['link']});
+              vidCounter = vidCounter+1;
+            }
+            if(elementMedia['type']=='PHOTO'){
+              this.portfolioImages.push(elementMedia['link'])
+            }
+          }
+
+          console.log(this.portfolioVideos);
+
         
 
 
