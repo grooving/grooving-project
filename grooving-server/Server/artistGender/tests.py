@@ -22,8 +22,8 @@ class ArtistGenderTestCase(APITestCase):
         zone1 = Zone.objects.create(name="Sevilla Sur")
         zone1.save()
 
-        artisticGender = ArtisticGender.create(name="Rock")
-        artisticGender.save()
+        artisticgender = ArtisticGender.objects.create(name="Rock")
+        artisticgender.save()
 
         portfolio1 = Portfolio.objects.create(artisticName="Juanartist")
         portfolio1.zone.add(zone1)
@@ -50,11 +50,11 @@ class ArtistGenderTestCase(APITestCase):
         print(token.key)
         self.assertEqual(response.status_code, 200)
 
-        data = {"id": "" + artisticGender.id, "name": "Blues", "portfolio_set": "" + [portfolio1.id]}
+        data = {"id": "1", "name": "Blues", "portfolio_set": "[1]"}
 
-        response1 = self.client.put('/artisticGender/{}/'.format(artisticGender.id), data, format='json',
+        response1 = self.client.put("/artisticGender/{}/".format(artisticgender.id), data, format='json',
                                     HTTP_AUTHORIZATION='Token '+token.key)
         self.assertEqual(response1.status_code, 200)
 
         print(response1)
-        print(ArtisticGender.objects.filter(pk=artisticGender.id).first())
+        print(ArtisticGender.objects.filter(pk=artisticgender.id).first())

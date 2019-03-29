@@ -17,6 +17,7 @@ class PortfolioTestCase(TestCase):
         user1.email = "pedro@pedro.com"
         user1.password = "pedro"
         user1.save()
+        
 
         days = [True] * 366
         print(days)
