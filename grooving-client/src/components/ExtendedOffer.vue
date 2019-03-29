@@ -6,7 +6,7 @@
                 <div class="leftContent">
                     <div class="details">
                     <p class="card-text"><span style="font-weight: bold;">Date: </span>{{ date }}</p>
-                    <p class="card-text"><span style="font-weight: bold;">Duration: </span>{{ startingHour }}h - {{ endingHour }}h</p>
+                    <p class="card-text"><span style="font-weight: bold;">Duration: </span>{{ startingHour }} {{ endingHour }}h</p>
                     <p class="card-text"><span style="font-weight: bold;">Price: </span>${{ price }}</p>
                     <p class="card-text"><span style="font-weight: bold;">Address: </span>{{ address }}</p>
                     </div>
@@ -19,17 +19,25 @@
             </div>
             <div class="bothButtons">
                 <div class="cancelButtonDiv"><router-link v-bind:to="cancelURI" class="btn btn-primary cancelButton"><span class="continueText">CANCEL</span></router-link></div>
-                <div class="confirmButtonDiv"><router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></router-link></div>
+                <div class="confirmButtonDiv"><router-link @click="accept()" v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></router-link></div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import endpoints from '@/utils/endpoints.js';
+    import GAxios from '../utils/GAxios.js'
+    import GSecurity from '@/security/GSecurity.js';
 
     export default {
         name: 'extendedOffer',
-        
+        data() {
+            return {
+                gsecurity: GSecurity,
+                gaxios: GAxios,
+            }
+        },
         props: {
             offerID: {
                 type: Number,
@@ -41,7 +49,7 @@
             },
             startingHour: {
                 type: String,
-                default: '19:30',
+                default: '',
             },
             endingHour: {
                 type: String,
@@ -65,9 +73,23 @@
             },
             confirmURI: {
                 type: String,
-                default: 'acceptedOffer'
+                default: '/acceptedOffer/'
             }
         },
+        methods: {
+            accept() {
+                var authorizedGAxios = GAxios;
+                var GAxiosToken = this.gsecurity.getToken();
+                authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
+
+                authorizedGAxios.put(endpoints.offerDetails + '1/')
+                .then(response => {
+                console.log(response);
+                }).catch(ex => {
+                    console.log(ex);
+                });
+            }
+        }
     }   
 
 </script>

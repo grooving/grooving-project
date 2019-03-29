@@ -20,9 +20,11 @@ export default {
   name: 'AcceptedNotif',
   props: {
 
-  }
+  },
+  routes: [{
+    path: '/:offerId',
+  }],
 }
-
 
 </script>
 
