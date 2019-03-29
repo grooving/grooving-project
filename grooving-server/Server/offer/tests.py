@@ -10,7 +10,7 @@ class OfferTestCase(APITestCase):
 
     def test_manage_offer_artist(self):
 
-        print("TEST_MANAGE_OFFER_CUSTOMER\n\n")
+        print("TEST_MANAGE_OFFER_CUSTOMER\n")
 
         days = ['2019-06-02', '2019-08-02', '2019-10-15', '2019-11-02']
         date = datetime.datetime(2020,2,7,8,49,56,81433, pytz.UTC)
@@ -132,10 +132,10 @@ class OfferTestCase(APITestCase):
         print("\n\nPASSED\n\n")
 
     def test_create_offer_customer(self):
-        print("TEST_CREATE_OFFER_CUSTOMER\n\n")
+        print("TEST_CREATE_OFFER_CUSTOMER\n")
 
         # Populate database
-        print("Populating database...\n\n")
+        print("Populating database...\n")
 
         user1 = User.objects.create(username='artist1', password=make_password('artist1artist1'),
                                                   first_name='Cdds', last_name='Pedro',
@@ -191,7 +191,7 @@ class OfferTestCase(APITestCase):
         payment_package3.save()
 
         # Start test
-        print("Launching test...\n\n")
+        print("Launching test...\n")
 
         loginBody = {"username": "customer1", "password": "customer1customer1"}
         response = self.client.post("/api/login/", loginBody, format='json')
@@ -241,5 +241,36 @@ class OfferTestCase(APITestCase):
         self.assertEqual(customOfferResponse.status_code, 201)
         print("--Custom offer:\n" + str(customOfferResponse.content))
 
-        print("\n\nPASSED\n\n")
+        badRequestBody = {
+            "description": "This is a description",
+            "date": "2019-05-10T10:00:00",
+            "hours": 2.5,
+            "price": 10.0,
+            "currency": "EUR",
+            "paymentPackage_id": payment_package3.id,
+            "eventLocation_id": event_location.id
+        }
+
+        badRequestResponse = self.client.post('/offer/', badRequestBody, format='json',
+                                              HTTP_AUTHORIZATION='Token ' + token.key)
+
+        self.assertEqual(badRequestResponse.status_code, 400)
+        print("--Bad request expected:\n" + str(badRequestResponse.content))
+
+        nonAuthenticatedBody = {
+            "description": "This is a description",
+            "date": "2019-05-10T10:00:00",
+            "hours": 2.5,
+            "price": 100.0,
+            "currency": "EUR",
+            "paymentPackage_id": payment_package3.id,
+            "eventLocation_id": event_location.id
+        }
+
+        nonAuthenticatedResponse = self.client.post('/offer/', nonAuthenticatedBody, format='json')
+
+        self.assertEqual(nonAuthenticatedResponse.status_code, 401)
+        print("--User non authenticated:\n" + str(nonAuthenticatedResponse.content))
+
+        print("\nPASSED\n")
 

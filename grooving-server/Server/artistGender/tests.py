@@ -50,9 +50,9 @@ class ArtistGenderTestCase(APITestCase):
         print(token.key)
         self.assertEqual(response.status_code, 200)
 
-        data = {"id": "1", "name": "Blues", "portfolio_set": "[1]"}
+        data = {"id": "" + str(artisticgender.id), "name": "Blues", "portfolio_set": [str(portfolio1.id)]}
 
-        response1 = self.client.put("/artisticGender/{}/".format(artisticgender.id), data, format='json',
+        response1 = self.client.put('/artisticGender/{}/'.format(artisticgender.id), data, format='json',
                                     HTTP_AUTHORIZATION='Token '+token.key)
         self.assertEqual(response1.status_code, 200)
 
