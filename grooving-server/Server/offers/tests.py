@@ -11,7 +11,7 @@ from rest_framework.test import APITestCase
 
 class OfferTestCase(TestCase):
 
-    def test_list_artist_offers(self):
+    '''def test_list_artist_offers(self):
         user1_customer = User.objects.create(username='customer1', password=make_password('customer1'),
                                              first_name='Bunny', last_name='Fufuu',
                                              email='customer1@gmail.com')
@@ -309,7 +309,7 @@ class OfferTestCase(TestCase):
         print(len(item_dict['results']))
         self.assertTrue(len(item_dict['results']) == 0)
         print(response2)
-
+'''
     def test_list_anonymous(self):
 
         response = self.client.get('/offers/', format='json')
