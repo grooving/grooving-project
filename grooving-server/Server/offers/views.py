@@ -2,7 +2,7 @@ from Grooving.models import Offer, Artist, Customer
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from rest_framework import generics
 from .serializers import ListOfferSerializer
-from utils.authentication_utils import get_user_type, get_logged_user, is_user_authenticated
+from utils.authentication_utils import get_user_type, get_logged_user
 
 
 class ListOffers(generics.ListAPIView):
@@ -33,5 +33,5 @@ class ListOffers(generics.ListAPIView):
 #                serializer = ListOfferSerializer(queryset, many=True)
                 return queryset
             else:
-                #There are no offers matching the users; therefore, they have no offers linked to them. An empty list is given
+                # There are no offers matching the users; therefore, they have no offers linked to them. An empty list is given
                 raise PermissionDenied("No tienes autorización para entrar aquí")

@@ -21,8 +21,29 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 
     def get(self, request, pk, format=None):
         offer = self.get_object(pk)
-        serializer = OfferSerializer(offer)
-        return Response(serializer.data)
+        articustomer = get_logged_user(request)
+        user_type = get_user_type(articustomer)
+        if user_type == "Artist":
+            if articustomer.user_id == offer.paymentPackage.portfolio.artist.user_id:
+                offer = self.get_object(pk)
+                serializer = OfferSerializer(offer)
+                return Response(serializer.data)
+            else:
+                raise PermissionDenied
+        else:
+            if user_type == "Customer":
+                event_location = offer.eventLocation
+                customer_id = event_location.customer_id
+                customer_creator = Customer.objects.filter(pk=customer_id).first()
+
+                if articustomer.user_id == customer_creator.user_id:
+                    offer = self.get_object(pk)
+                    serializer = OfferSerializer(offer)
+                    return Response(serializer.data)
+                else:
+                    raise PermissionDenied
+            else:
+                raise PermissionDenied
 
     def put(self, request, pk):
 

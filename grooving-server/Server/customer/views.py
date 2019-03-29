@@ -7,7 +7,7 @@ from utils.authentication_utils import get_user_type, get_logged_user, is_user_a
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class GetPersonalInformationOfCustomer(generics.RetrieveUpdateDestroyAPIView):
+class GetPersonalInformationOfCustomer(generics.ListAPIView):
 
     serializer_class = CustomerInfoSerializer
 

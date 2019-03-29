@@ -8,6 +8,7 @@ from django.utils import timezone
 
 # Create your models here.
 
+
 class AbstractEntity(models.Model):
     creationMoment = models.DateTimeField(auto_now_add=True)
     lastModification = models.DateTimeField(auto_now=True)
@@ -121,7 +122,8 @@ class PaymentPackage(AbstractEntity):
 
 
 class SystemConfiguration(AbstractEntity):
-    minimumPrice = models.DecimalField(default=0.0, max_digits=20, decimal_places=2, validators=[MinValueValidator(Decimal('0.0'))])
+    minimumPrice = models.DecimalField(default=0.0, max_digits=20, decimal_places=2,
+                                       validators=[MinValueValidator(Decimal('0.0'))])
     currency = models.CharField(default='EUR', max_length=3)
     paypalTax = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.0'))])
     creditCardTax = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(Decimal('0.0'))])
@@ -155,7 +157,7 @@ class EventLocation(AbstractEntity):
         return str(self.name)
 
 
-OfferStatusField =(
+OfferStatusField = (
     ('PENDING', "PENDING"),
     ('NEGOTIATION', "NEGOTIATION"),
     ('CONTRACT_MADE', "CONTRACT_MADE"),
@@ -169,7 +171,8 @@ class Offer(AbstractEntity):
     description = models.TextField(default='Description', max_length=255)
     status = models.CharField(max_length=20, choices=OfferStatusField)
     date = models.DateTimeField(default=timezone.now)
-    hours = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2, validators=[MinValueValidator(Decimal('0.5'))])
+    hours = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2,
+                                validators=[MinValueValidator(Decimal('0.5'))])
     price = models.DecimalField(max_digits=20, decimal_places=2, validators=[MinValueValidator(Decimal('0.0'))])
     currency = models.CharField(default='EUR', max_length=3)
     paymentCode = models.CharField(max_length=140, unique=True, null=True, blank=True)
