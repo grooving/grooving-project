@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div>{{ availableDates }}</div>
         <div><vuejs-datepicker v-model="model.date" :disabledDates="disabledDates"  :full-month-name="true" :inline="true"></vuejs-datepicker></div>
     </div>
 </template>
