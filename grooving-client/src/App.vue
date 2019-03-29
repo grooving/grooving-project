@@ -29,7 +29,7 @@ export default {
     Header, RightMenu, LeftMenu, Footer
   },
 
-  mounted() {
+  beforeCreate() {
     GSecurity.obtainSavedCredentials();
     if(!this.$gsecurity.isAuthenticated()) {
       //this.$router.push({path: "/"});   

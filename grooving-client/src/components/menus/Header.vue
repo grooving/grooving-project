@@ -31,7 +31,7 @@
           <li v-if="gsecurity.isAuthenticated()" class="nav-item mx-2 right-float vertical-center" >
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" @click="sideMenus()">
               <a class="nav-link vertical-center" href="#">
-                <img v-if="userPhoto == null || userPhoto == ''" src="@/assets/defaultPhoto.png" class="profileImage" alt="Profile Image">
+                <img v-if="userPhoto == null || userPhoto == '' || userPhoto == 'null'" src="@/assets/defaultPhoto.png" class="profileImage" alt="Profile Image">
                 <img v-else v-bind:src="userPhoto" class="profileImage" alt="Profile Image">
               </a>
             </button>
