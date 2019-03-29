@@ -5,11 +5,31 @@
     <div class="container-fluid" style="padding-top: 20px">
       <div class="container">
           <div id="results" class="col-12 col-lg-9 col-xl-10 results">
+            <span v-if="selectedTab == 0">
             <div class="row">
-              <div v-for="oferta in datos_prueba" :key="oferta.offerID" class="tarjeta col-12 col-md-6 col-xl-6">
-                <Offer :offerID="oferta.offerID" :confirmURI="oferta.confirmURI" :date="oferta.date" :price="oferta.price" :place="oferta.place" :userIcon="oferta.userIcon" :userName="oferta.userName"  />
+              <div v-for="oferta in pending" :key="oferta.offerID" class="tarjeta col-12 col-md-6 col-xl-6">
+                <Offer :offerID="oferta.offerID" :confirmURI="oferta.confirmURI" :date="oferta.date" :price="oferta.price" 
+                  :place="oferta.place" :userIcon="oferta.userIcon" :userName="oferta.userName"  :offerStatus="oferta.offerStatus"/>
               </div>
             </div>
+            </span>
+            <span v-if="selectedTab == 1">
+            <div class="row">
+              <div v-for="oferta in accepted" :key="oferta.offerID" class="tarjeta col-12 col-md-6 col-xl-6">
+                <Offer :offerID="oferta.offerID" :confirmURI="oferta.confirmURI" :date="oferta.date" :price="oferta.price" 
+                  :place="oferta.place" :userIcon="oferta.userIcon" :userName="oferta.userName"  :offerStatus="oferta.offerStatus"/>
+              </div>
+            </div>
+            </span>
+            <span v-if="selectedTab == 2">
+            <div class="row">
+              <div v-for="oferta in rejected" :key="oferta.offerID" class="tarjeta col-12 col-md-6 col-xl-6">
+                <Offer :offerID="oferta.offerID" :confirmURI="oferta.confirmURI" :date="oferta.date" :price="oferta.price" 
+                  :place="oferta.place" :userIcon="oferta.userIcon" :userName="oferta.userName"  :offerStatus="oferta.offerStatus"/>
+              </div>
+            </div>
+            </span>
+            
           </div>
         </div>
       </div>
@@ -20,6 +40,11 @@
 
 import Offer from '@/components/Offer.vue';
 import TabbedSubMenu from '@/components/menus/TabbedSubMenu.vue';
+import GAxios from '@/utils/GAxios.js';
+import endpoints from '@/utils/endpoints.js';
+import GSecurity from '@/security/GSecurity.js';
+
+var acceptURI = '/offerDetails/';
 
 export default {
   name: 'OffersList',
@@ -30,7 +55,10 @@ export default {
 
   data: function(){
     return {
-
+        gsecurity: GSecurity,
+        pending: Array(),
+        accepted: Array(),
+        rejected: Array(),
         datos_prueba:[
           {
             offerID:  1, 
@@ -93,6 +121,64 @@ export default {
         this.selectedTab = status;
       }
     },
+     beforeMount: function(){
+      var authorizedGAxios = GAxios;
+      var GAxiosToken = this.gsecurity.getToken();
+      authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
+
+      authorizedGAxios.get(endpoints.offers)
+      .then(response => {
+        console.log('ok1')
+        var offers = response.data.results;
+        
+        for(var i = 0; i < offers.length; i++){
+          if(offers[i].status == 'PENDING') {
+          this.pending.push({
+            offerID: offers[i].id,
+            offerStatus: offers[i].status,
+            date: offers[i].date,
+            place: offers[i].eventLocation.zone.name,
+            userName: offers[i].eventLocation.customer.user.first_name,
+            userIcon: offers[i].eventLocation.customer.photo,
+            price: offers[i].price,
+            confirmURI: acceptURI + offers[i].id,
+            // rejectURI: rejectURI + offers[i].id,
+          });
+        }}
+        for(var i = 0; i < offers.length; i++){
+          if(offers[i].status == 'REJECTED') {
+          this.rejected.push({
+            offerID: offers[i].id,
+            offerStatus: offers[i].status,
+            date: offers[i].date,
+            place: offers[i].eventLocation.zone.name,
+            userName: offers[i].eventLocation.customer.user.first_name,
+            userIcon: offers[i].eventLocation.customer.photo,
+            price: offers[i].price,
+            confirmURI: acceptURI + offers[i].id,
+            // rejectURI: rejectURI + offers[i].id,
+          });
+        }}
+        for(var i = 0; i < offers.length; i++){
+          if(offers[i].status == 'CONTRACT_MADE') {
+          this.accepted.push({
+            offerID: offers[i].id,
+            offerStatus: offers[i].status,
+            date: offers[i].date,
+            place: offers[i].eventLocation.zone.name,
+            userName: offers[i].eventLocation.customer.user.first_name,
+            userIcon: offers[i].eventLocation.customer.photo,
+            price: offers[i].price,
+            confirmURI: acceptURI + offers[i].id,
+            // rejectURI: rejectURI + offers[i].id,
+          });
+        }}
+      }).catch(ex => {
+          console.log(ex);
+      });
+
+    },
+    
 }
 </script>
 

@@ -31,7 +31,8 @@
           <li v-if="gsecurity.isAuthenticated()" class="nav-item mx-2 right-float vertical-center" >
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" @click="sideMenus()">
               <a class="nav-link vertical-center" href="#">
-                <img v-bind:src="userPhoto" class="profileImage" alt="Profile Image">
+                <img v-if="userPhoto == null || userPhoto == ''" src="@/assets/defaultPhoto.png" class="profileImage" alt="Profile Image">
+                <img v-else v-bind:src="userPhoto" class="profileImage" alt="Profile Image">
               </a>
             </button>
           </li>
@@ -45,7 +46,7 @@
                 </b-form-group>
 
                 <b-form-group>
-                  <b-form-input class="loginInput" v-model="input.password" type="password" size="sm" placeholder="Password" id="ddown-form-passwd"></b-form-input>
+                  <b-form-input class="loginInput" v-on:keydown.enter="login()" v-model="input.password" type="password" size="sm" placeholder="Password" id="ddown-form-passwd"></b-form-input>
                 </b-form-group>
                 <b-button class="continueButton" variant="primary" size="sm" v-on:click="login()">SIGN IN</b-button>
               </b-dropdown-form>
@@ -130,19 +131,8 @@ export default {
     }
   },
 
-  props: {
-    customerImage: {
-      type: String,
-      default: 'http://i65.tinypic.com/35mpp1h.jpg'
-    },
-    artistImage: {
-      type: String,
-      default: 'https://img.europapress.es/fotoweb/fotonoticia_20181107115306_1920.jpg'
-    },
-  },
-
   beforeUpdate: function() {
-    this.userPhoto = this.gsecurity.getPhoto();
+      this.userPhoto = this.gsecurity.getPhoto();
   },
 
   mounted: function() {

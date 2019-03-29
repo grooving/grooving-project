@@ -1,4 +1,6 @@
 export default{
-    login: '/api/login/',
     artists: '/artists/',
+    login: '/api/login/',
+    offers: '/offers/',
+    
 }

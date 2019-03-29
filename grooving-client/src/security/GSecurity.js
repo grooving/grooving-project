@@ -33,6 +33,10 @@ class GSecurity {
     getFirstName() {
         return this._firstName;
     }
+
+    getToken() {
+        return this._token;
+    }
   
     authenticate(username, password){
 

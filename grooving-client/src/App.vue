@@ -30,7 +30,7 @@ export default {
 
   mounted() {
     if(!this.$gsecurity.isAuthenticated()) {
-      this.$router.push({path: "/"});   
+      //this.$router.push({path: "/"});   
     }
   },
 }
