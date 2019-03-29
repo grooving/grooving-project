@@ -2,9 +2,9 @@
     <div class="content">
         <div class="paymentOptions">
             <p>Choose between</p>
-            <div class="continueButtonDiv"><div @click="paymentOptionSelected()" class="btn btn-primary continueButton"><span class="continueText">PAYPAL</span></div @click="paymentOptionSelected()"></div>
+            <div class="continueButtonDiv"><div  class="btn btn-primary continueButton"><span class="continueText">PAYPAL</span></div @click="paymentOptionSelected()"></div>
             <br>
-            <div class="continueButtonDiv"><div
+            <div class="continueButtonDiv"><div @click="paymentOptionSelected()"
             class="btn btn-primary continueButton"><span class="continueText">CREDIT CARD</span></div></div>
         </div>
     </div>

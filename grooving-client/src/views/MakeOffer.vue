@@ -75,9 +75,18 @@ export default {
             authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
             console.log(GAxiosToken)
             //Creamos EventLocation
-            authorizedGAxios.post(endpoints.offer)
+            authorizedGAxios.post(endpoints.offer,{        
+    
+                "description": this.description,
+	            "date": this.fecha+'T12:00:00',
+                "hours": this.duracion,
+	            "paymentPackage_id": 1,
+	            "eventLocation_id": 1
+
+            })
             .then(response => {
-                console.log(response);
+               var offerId = response.data.id;
+               this.nextStep();
             }).catch(ex => {
                 console.log(ex);
             });

@@ -32,7 +32,7 @@
                 <input :value="cvv" maxlength="3" type="text" class="form-control" placeholder="CVV">
             </div>
         </div>
-        <router-link v-bind:to="continueURI" 
+        <router-link v-bind:to="'/offers'" 
             class="btn btn-primary continueButton"><span class="continueText">SUBMIT</span></router-link>
 
     </form>
