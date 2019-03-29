@@ -128,7 +128,6 @@ export default {
 
       authorizedGAxios.get(endpoints.offers)
       .then(response => {
-        console.log('ok1')
         var offers = response.data.results;
         
         for(var i = 0; i < offers.length; i++){

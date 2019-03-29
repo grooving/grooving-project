@@ -5,6 +5,7 @@ export default{
     login: '/api/login/',
     offer: '/offer/',
     offers: '/offers/',
+    offer: '/offer/',
     customerPersonalInformation: '/customer/personalInformation/',
     artistPersonalInformation: '/artist/personalInformation/',
     portfolio: '/portfolio/'

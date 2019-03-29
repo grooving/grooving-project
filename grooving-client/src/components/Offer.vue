@@ -26,7 +26,7 @@
                 <div class="collapse" v-bind:id="noHashtag()">
                     <div class="form-group">
                         <label for="rejectionReason">Please, confirm your rejection:</label>
-                        <textarea class="form-control" id="rejectionReason" rows="3" placeholder="You can explain the reason why you are rejecting this offer. It will be shown to the person that contacted you."></textarea>
+                        <textarea style="resize: none;" class="form-control" id="rejectionReason" rows="4" placeholder="You can explain the reason why you are rejecting this offer. It will be shown to the person that contacted you."></textarea>
                     </div>
                     <div class="row container">
                         <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="enableOfferButtons()" class="btn btn-primary cancelButton" 
@@ -39,7 +39,7 @@
                             <button class="btn btn-primary confirmButton" v-on:click="cancelOffer"><span class="continueText">CONFIRM</span></button></div>
                     </div>
                 </div>
-                <div v-if="offerStatus === 'PENDING'" class="row container" v-bind:id="buttonsId()">
+                <div v-if="offerStatus === 'PENDING' && gsecurity.hasRole('ARTIST')" class="row container" v-bind:id="buttonsId()">
                     <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="disableOfferButtons()" class="btn btn-primary rejectButton" 
                         data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">REJECT</span></a></div>
                     <div v-if="offerStatus === 'PENDING' && gsecurity.hasRole('ARTIST')" class="right-div right-text2">

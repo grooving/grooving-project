@@ -19,10 +19,10 @@
 export default {
   name: 'AcceptedNotif',
   props: {
+      
+  },
 
-  }
 }
-
 
 </script>
 
