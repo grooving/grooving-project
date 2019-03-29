@@ -5,7 +5,7 @@
          <p>
         <div class="navContent">
 
-         <h2>Hello, <span v-if="gsecurity.hasRole('ARTIST')">ROSALÍA</span><span v-else>Pug</span></h2>
+         <h2>Hello, <span>{{ userFirstName }}</span></h2>
             <ul class="navbar-nav mr-auto p-2 col align-self-center justify-content-center">
                 <li class="nav-item section">
                     <router-link class="nav-link" to="personalInfo" data-toggle="collapse" data-target="#sidebar">My Account</router-link>
@@ -33,21 +33,25 @@
 import GSecurity from '@/security/GSecurity.js';
 
 export default {
-  name: 'RightMenu',
+    name: 'RightMenu',
     props: {
         blur: Boolean,
     },
     data: function(){
         return{
             gsecurity: GSecurity,
+            userFirstName: '',
         }
     },
     methods: {
-    logout() {
-      this.gsecurity.deauthenticate();
-      this.$router.push({ path: "/" });
-    }
-  },
+        logout() {
+        this.gsecurity.deauthenticate();
+        this.$router.push({ path: "/" });
+        }
+    },
+    beforeUpdate: function() {
+        this.userFirstName = this.gsecurity.getFirstName();
+    },
 }
 
 $(window).bind('scroll', function () {

@@ -1,3 +1,6 @@
+import endpoints from '../utils/endpoints.js';
+import GAxios from '../utils/GAxios.js'
+
 const ROLES = ['ANONYMOUS', 'ARTIST', 'CUSTOMER'];
 const CUSTOMER_ACCOUNT_CREDENTIALS = 'pug';
 const ARTIST_ACCOUNT_CREDENTIALS = 'rosalia';
@@ -9,36 +12,63 @@ class GSecurity {
       this._username = username;
       
       if (role != undefined && ROLES.includes(role.toUpperCase())){
-        this._role = role;
+        this._role = role.toUpperCase();
       }
 
       this._token = token;
+      this._photo = '';
+      this._id = '';
+      this._firstName = '';
 
     }
 
     getRole(){
         return this._role;
     }
+
+    getPhoto() {
+        return this._photo;
+    }
+
+    getFirstName() {
+        return this._firstName;
+    }
   
     authenticate(username, password){
-      // Finish with API
-      if(username === password){
-          if(username == CUSTOMER_ACCOUNT_CREDENTIALS){
-              this._username = username;
-              this._token = 'ABC';
-              this._role = 'CUSTOMER';
-          }else if (username == ARTIST_ACCOUNT_CREDENTIALS){
-              this._username = username;
-              this._token = 'ABC';
-              this._role = 'ARTIST';
-          }else{
-              return false
-          }
 
-          return true;
-      }
+        var res = false;
 
-      return false;
+        GAxios.post(endpoints.login, {
+            "username": username,
+            "password": password
+          }).then(response => {
+
+            console.log(response)
+        
+                if(response.data.artist != undefined){
+                    this._username = response.data.artist.user.username;
+                    this._role = 'ARTIST';
+                    this._id = response.data.artist.id;
+                    this._photo = response.data.artist.photo;
+                    this._firstName = response.data.artist.user.first_name;
+                }else{
+                    this._username = response.data.customer.user.username;
+                    this._role = 'CUSTOMER';
+                    this._id = response.data.customer.id;
+                    this._photo = response.data.customer.photo;
+                    this._firstName = response.data.customer.user.first_name;
+                }
+
+                this._token = response.headers['x-auth'];
+
+                res = true;
+
+              }).catch(ex => {
+                console.log(ex);
+                res = false;
+              });
+
+        return res;
     }
 
     deauthenticate(){
@@ -52,7 +82,7 @@ class GSecurity {
     }
 
     isAnonymous(){
-        return this._token != undefined && this._token.length == 0;
+        return this._token != undefined && this._token.length <= 0;
     }
     
     hasRole(role){
@@ -65,7 +95,7 @@ class GSecurity {
     }
 
     setRole(role){
-
+        console.log('Debug only... Remove this method')
         if(role != undefined && ROLES.includes(role.toUpperCase())){
             this._role = role;
             return true;
@@ -77,6 +107,4 @@ class GSecurity {
   }
   
   const instance = new GSecurity();
-
-  console.log('hola');
   export default instance;

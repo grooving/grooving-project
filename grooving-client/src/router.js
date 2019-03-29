@@ -17,6 +17,7 @@ import SentOffer from './views/SentOffer.vue'
 import ReceivePayment from './views/ReceivePayment.vue'
 import PaymentConfirmation from './views/PaymentConfirmation.vue'
 import PersonalInfo from './views/PersonalInfo.vue'
+import ErrorView from './views/ErrorView.vue'
 
 Vue.use(Router)
 
@@ -115,5 +116,10 @@ export default new Router({
       name: 'personalInfo',
       component: PersonalInfo
     },
+    {
+      path: '/error',
+      name: 'error',
+      component: ErrorView
+    }
   ]
 })

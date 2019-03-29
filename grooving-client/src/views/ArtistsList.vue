@@ -9,8 +9,8 @@
       <div id="results" :class="{'col-lg-8 col-xl-10' : showFilters}" class="col-12">
         <h1 class="titleView">Top Artists</h1>
         <div class="row">
-          <div v-for="artist in datos_prueba" :key="artist.artistURI" class="tarjeta col-12 col-md-6 col-xl-4">
-            <ArtistCard :artistImage="artist.artistImage" :artistName="artist.artistName" />
+          <div v-for="artist in datos" :key="artist.artistURI" class="tarjeta col-12 col-md-6 col-xl-4">
+            <ArtistCard :artistImage="artist.artistImage" :artistName="artist.artistName" :artistGenres="artist.artistGenres" :artistURI="artist.artistURI" :hireURI="artist.hireURI" />
           </div>
         </div>
       </div>
@@ -30,6 +30,11 @@
 import FiltersSideMenu from '@/components/menus/FiltersSideMenu.vue';
 import FiltersModalMenu from '@/components/menus/FiltersModalMenu.vue';
 import ArtistCard from '@/components/ArtistCard.vue';
+import GAxios from '@/utils/GAxios.js';
+import endpoints from '@/utils/endpoints.js';
+
+var showPortfolioBaseURI = '/showPortfolio/';
+var hiringBaseURI = '/hiringType/';
 
 export default {
   name: 'ArtistList',
@@ -44,53 +49,9 @@ export default {
         filter_parameters: [
             {id: 0, text: "Genre", selected: false},
             {id: 1, text: "Artist Name", selected: true}
-        ],
-
-        datos_prueba:[
-          {
-            artistURI: '#', 
-            artistImage: 'https://img.europapress.es/fotoweb/fotonoticia_20181107115306_1920.jpg',
-            artistName: 'ROSALÍA',
-            artistGenres: ['Pop', 'Flamenco'],
-            hireURI: '#'
-          },
-          {
-            artistURI: '#', 
-            artistImage: 'https://4c79id2ej5i11apui01ll2wc-wpengine.netdna-ssl.com/wp-content/uploads/2018/09/Charli-XCX-Gallery-1.jpg',
-            artistName: 'Charli XCX',
-            artistGenres: ['Pop', 'Flamenco'],
-            hireURI: '#'
-          },
-          {
-            artistURI: '#', 
-            artistImage: 'https://sound-images.s3.amazonaws.com/images/2016/lorde.jpg',
-            artistName: 'Lorde',
-            artistGenres: ['Pop', 'Flamenco'],
-            hireURI: '#'
-          },
-          {
-            artistURI: '#', 
-            artistImage: 'https://images.clarin.com/2019/01/15/b970GiEQU_1256x620__1.jpg',
-            artistName: 'Shawn Mendes',
-            artistGenres: ['Pop', 'Flamenco'],
-            hireURI: '#'
-          },
-          {
-            artistURI: '#', 
-            artistImage: 'https://abitofpopmusic.files.wordpress.com/2014/10/marina-the-diamonds-froot.jpg?w=560&h=300',
-            artistName: 'MARINA',
-            artistGenres: ['Pop', 'Flamenco'],
-            hireURI: '#'
-          },
-          {
-            artistURI: '#', 
-            artistImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Lana_Del_Rey_at_KROQ_Weenie_Roast_2017_%28cropped%29.jpg/250px-Lana_Del_Rey_at_KROQ_Weenie_Roast_2017_%28cropped%29.jpg',
-            artistName: 'Lana',
-            artistGenres: ['Pop', 'Flamenco'],
-            hireURI: '#'
-          }     
         ], 
         showFilterSelectionModal: false,
+        datos: Array(),
       }
     },
     methods: {
@@ -116,6 +77,33 @@ export default {
         type: Boolean,
         default: true
       }
+    },
+
+    beforeMount: function(){
+
+      GAxios.get(endpoints.artists)
+      .then(response => {
+        var artists = response.data.results;
+        console.log(artists)
+        for(var i = 0; i < artists.length; i++){
+          var genres = Array();
+
+          for(var g = 0; g < artists[i].portfolio.artisticGender.length; g++){
+            genres.push(artists[i].portfolio.artisticGender[g].name);
+          }
+
+          this.datos.push({
+            artistURI: showPortfolioBaseURI + artists[i].id, 
+            artistImage: artists[i].photo,
+            artistName: artists[i].portfolio.artisticName,
+            artistGenres: genres,
+            hireURI: hiringBaseURI + artists[i].id,
+          });
+        }
+      }).catch(ex => {
+          console.log(ex);
+      });
+
     }
 }
 
