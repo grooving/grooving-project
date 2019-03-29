@@ -4,14 +4,15 @@ from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
-
-
+import datetime
+import pytz
 class OfferTestCase(APITestCase):
 
     def test_manage_offer_artist(self):
 
-        days = [True] * 366
-        date = timezone.now()
+        days = ['2019-06-02', '2019-08-02', '2019-10-15', '2019-11-02']
+        date = datetime.datetime(2020,2,7,8,49,56,81433, pytz.UTC)
+
         user1_artist1 = User.objects.create(username='artist1', password=make_password('artist1artist1'),
                                             first_name='Cdds', last_name='Pedro',
                                             email='artist1@gmail.com')
@@ -47,7 +48,7 @@ class OfferTestCase(APITestCase):
 
         payment_package1.save()
 
-        calendar1 = Calendar.objects.create(year=2019, days=days, portfolio=portfolio1)
+        calendar1 = Calendar.objects.create(days=days, portfolio=portfolio1)
         calendar1.save()
 
         offer1 = Offer.objects.create(description="DESCRIPTIONOFFER1", status='PENDING', date=date, price="200",

@@ -6,6 +6,8 @@ from utils.Assertions import assert_true
 from django.db import IntegrityError
 import random
 import string
+import datetime
+from django.utils import timezone
 from utils.authentication_utils import get_logged_user,get_user_type,is_user_authenticated
 
 
@@ -95,7 +97,11 @@ class OfferSerializer(serializers.ModelSerializer):
         return offer
 
     def _service_update(self, json: dict, offer_in_db: Offer, logged_user: User):
-        assert_true(offer_in_db, "No existe una oferta con esa id")
+        assert_true(offer_in_db, "This offer does not exist")
+        print(offer_in_db.date)
+        now = timezone.now()
+
+        assert_true(offer_in_db.date > now,"The offer ocurred in the past")
         offer = self._service_update_status(json, offer_in_db, logged_user)
 
         return offer
