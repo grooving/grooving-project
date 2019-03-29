@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="calendarButton">
-          <div class="calendar"><Calendar/></div>
+          <div class="calendar"><Calendar :availableDates="this.datos[0].availableDates"/></div>
           <div class="continueButtonDiv"><router-link v-bind:to="continueURI" class="btn btn-primary continueButton"><span class="continueText">CONTINUE</span></router-link></div>
         </div>
     </div>
@@ -24,13 +24,45 @@
 </template>
 
 <script>
-import Calendar from '@/components/Calendar.vue'
+import Calendar from '@/components/Calendar.vue';
+import GAxios from '@/utils/GAxios.js';
+import GSecurity from '@/security/GSecurity.js';
+import endpoints from '@/utils/endpoints.js';
 
 export default {
   name: 'dateSelection',
+
   components: {
-    Calendar
+    Calendar,
   },
+
+  data: function() {
+      return {
+          gsecurity: GSecurity,
+          datos: Array(),
+      }
+  },
+
+  beforeMount: function() {
+      var authorizedGAxios = GAxios;
+      var GAxiosToken = this.gsecurity.getToken();
+      authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
+
+      authorizedGAxios.get('/artist' + endpoints.calendar + this.$route.params['artistId'] + '/')
+        .then(response => {
+            var calendar = response.data;
+            console.log(calendar[0].days)
+
+            this.datos.push({
+                availableDates: calendar[0].days,
+            })
+
+        }).catch(ex => {
+            console.log(ex);
+        });
+
+  },
+
   props: {
         artistURI: {
             type: String,
