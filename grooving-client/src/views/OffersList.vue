@@ -6,7 +6,7 @@
       <div class="container">
           <div id="results" class="col-12 col-lg-9 col-xl-10 results">
             <div class="row">
-              <div v-for="oferta in datos_prueba" :key="oferta.offerID" class="tarjeta col-12 col-md-6 col-xl-6">
+              <div v-for="oferta in datos" :key="oferta.offerID" class="tarjeta col-12 col-md-6 col-xl-6">
                 <Offer :offerID="oferta.offerID" :confirmURI="oferta.confirmURI" :date="oferta.date" :price="oferta.price" :place="oferta.place" :userIcon="oferta.userIcon" :userName="oferta.userName"  />
               </div>
             </div>
@@ -20,6 +20,11 @@
 
 import Offer from '@/components/Offer.vue';
 import TabbedSubMenu from '@/components/menus/TabbedSubMenu.vue';
+import GAxios from '@/utils/GAxios.js';
+import endpoints from '@/utils/endpoints.js';
+import GSecurity from '@/security/GSecurity.js';
+
+var acceptURI = '/offerDetails/';
 
 export default {
   name: 'OffersList',
@@ -30,7 +35,8 @@ export default {
 
   data: function(){
     return {
-
+        gsecurity: GSecurity,
+        datos: Array(),
         datos_prueba:[
           {
             offerID:  1, 
@@ -93,6 +99,34 @@ export default {
         this.selectedTab = status;
       }
     },
+     beforeMount: function(){
+      var authorizedGAxios = GAxios;
+      var GAxiosToken = this.gsecurity.getToken();
+      authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
+
+      authorizedGAxios.get(endpoints.offers)
+      .then(response => {
+        console.log('ok1')
+        var offers = response.data.results;
+        
+        for(var i = 0; i < offers.length; i++){
+          this.datos.push({
+            date: offers[i].date,
+            place: offers[i].eventLocation.zone.name,
+            customer_id: offers[i].customer_id,
+            // userName: offers[i].customer.name,
+            // userIcon: offers[i].customer.image,
+            // price: offers[i].price,
+            confirmURI: acceptURI + offers[i].id,
+            // rejectURI: rejectURI + offers[i].id,
+          });
+        }
+      }).catch(ex => {
+          console.log('Fuck');
+      });
+
+    },
+    
 }
 </script>
 
