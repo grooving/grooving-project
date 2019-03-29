@@ -67,9 +67,6 @@ class Calendar(AbstractEntity):
     days = ArrayField(models.CharField(max_length=10))
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return str(self.year)
-
 
 class Artist(UserAbstract):
     portfolio = models.OneToOneField(Portfolio, on_delete=models.CASCADE)
