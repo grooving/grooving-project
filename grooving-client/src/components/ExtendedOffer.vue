@@ -79,7 +79,6 @@
         },
         methods: {
             accept() {
-                alert('Hi')
                 var authorizedGAxios = GAxios;
                 var GAxiosToken = this.gsecurity.getToken();
                 authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
@@ -89,6 +88,7 @@
                 {
                     "status": "REJECTED",
                 })
+                this.$router.push({path: '/offers/'})
                     .then(response => {
                         console.log(response);
                 }).catch(ex => {
@@ -97,7 +97,6 @@
                 },
             },
     }   
-
 </script>
 
 <style scoped>
