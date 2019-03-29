@@ -140,7 +140,7 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
         if pk is None:
             pk = self.kwargs['pk']
         try:
-            offer1 = Offer.objects.filter(paymentCode=pk)
+            offer1 = Offer.objects.filter(paymentCode=pk).first()
             offer1.status = "PAYMENT_MADE"
             offer1.save()
 
