@@ -111,13 +111,13 @@ class CreateOffer(generics.CreateAPIView):
 
 class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
     queryset = Offer.objects.all()
-    serializer_class = OfferSerializer
+    serializer_class = OfferCodeSerializer
 
-    def get_object(self, pk=None):
-        if pk is None:
-            pk = self.kwargs['pk']
+    def pepe(self, cosa=None):
+        if cosa is None:
+            cosa = self.kwargs['pk']
         try:
-            return Offer.objects.get(pk=pk)
+            return Offer.objects.get(pk=cosa)
         except Offer.DoesNotExist:
             raise Http404
 
@@ -127,7 +127,7 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
         if not user_type or user_type != "Customer":
             raise PermissionDenied("Only customers can call this.")
         offer_id = request.GET.get("offer", None)
-        offer = self.get_object(offer_id)
+        offer = self.pepe(offer_id)
         if not offer.eventLocation.customer.id == user.id:
             raise PermissionDenied("You are a customer, but you are not the owner of this offer")
         serializer = OfferCodeSerializer(offer)
