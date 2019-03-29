@@ -32,11 +32,11 @@
                         <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="enableOfferButtons()" class="btn btn-primary cancelButton" 
                             data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">CANCEL</span></a></div>
                         <div v-if="offerStatus === 'PENDING' && gsecurity.hasRole('ARTIST')" class="right-div right-text2">
-                            <router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="rejectOffer()"><span class="continueText">CONFIRM</span></router-link></div>
+                            <button class="btn btn-primary confirmButton" v-on:click="rejectOffer"><span class="continueText">CONFIRM</span></button></div>
                         <div v-if="offerStatus === 'PENDING' && gsecurity.hasRole('CUSTOMER')" class="right-div right-text2">
-                            <router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="withdrawnOffer()"><span class="continueText">CONFIRM</span></router-link></div>
+                            <button class="btn btn-primary confirmButton" v-on:click="withdrawnOffer"><span class="continueText">CONFIRM</span></button></div>
                         <div v-if="offerStatus === 'CONTRACT_MADE'" class="right-div right-text2">
-                            <router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="cancelOffer()"><span class="continueText">CONFIRM</span></router-link></div>
+                            <button class="btn btn-primary confirmButton" v-on:click="cancelOffer"><span class="continueText">CONFIRM</span></button></div>
                     </div>
                 </div>
                 <div v-if="offerStatus === 'PENDING'" class="row container" v-bind:id="buttonsId()">
@@ -58,6 +58,7 @@
 
     import GAxios from '../utils/GAxios.js'
     import GSecurity from '@/security/GSecurity.js';
+    import endpoints from '@/utils/endpoints.js';
 
     export default {
         name: 'Offer',
@@ -79,8 +80,8 @@
                 default: 'March 19, 2019',
             },
             price: {
-                type: Number,
-                default: 61.00
+                type: String,
+                default: '61.00'
             },
             place: {
                 type: String,
@@ -133,13 +134,47 @@
             },
 
             rejectOffer() {
+                var authorizedGAxios = GAxios;
+                var GAxiosToken = this.gsecurity.getToken();
+                authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
+
+                authorizedGAxios.put(endpoints.offer + this.offerID + '/', {
+                    "status": "REJECTED",
+                }).then(response => {
+                    console.log(response);
+                    window.location.reload();
+                }).catch(ex => {
+                    console.log(ex);
+                })
 
             },
             cancelOffer() {
+                var authorizedGAxios = GAxios;
+                var GAxiosToken = this.gsecurity.getToken();
+                authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
 
+                authorizedGAxios.put(endpoints.offer + this.offerID + '/', {
+                    "status": "CANCELED",
+                }).then(response => {
+                    console.log(response);
+                    window.location.reload();
+                }).catch(ex => {
+                    console.log(ex);
+                })
             },
             withdrawnOffer() {
+                var authorizedGAxios = GAxios;
+                var GAxiosToken = this.gsecurity.getToken();
+                authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
 
+                authorizedGAxios.put(endpoints.offer + this.offerID + '/', {
+                    "status": "WITHDRAWN",
+                }).then(response => {
+                    console.log(response);
+                    window.location.reload();
+                }).catch(ex => {
+                    console.log(ex);
+                })
             },
         }
     }   
