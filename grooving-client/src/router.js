@@ -57,7 +57,7 @@ export default new Router({
       component: TimeSelection
     },
     {
-      path: '/offerDetails',
+      path: '/offerDetails/:offerId',
       name: 'offerDetails',
       component: OfferDetails
     },
@@ -87,7 +87,7 @@ export default new Router({
       component: Payment
     },
     {
-      path: '/acceptedOffer',
+      path: '/acceptedOffer/:offerId',
       name: 'acceptedOffer',
       component: AcceptedOffer
     },

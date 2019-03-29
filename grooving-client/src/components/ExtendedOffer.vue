@@ -19,7 +19,7 @@
             </div>
             <div class="bothButtons">
                 <div class="cancelButtonDiv"><router-link v-bind:to="cancelURI" class="btn btn-primary cancelButton"><span class="continueText">CANCEL</span></router-link></div>
-                <div class="confirmButtonDiv"><router-link @click="accept()" v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></router-link></div>
+                <div class="confirmButtonDiv"><div @click="accept()" class="btn btn-primary confirmButton"><span class="continueText">CONFIRM</span></div></div>
             </div>
         </div>
     </div>
@@ -36,6 +36,7 @@
             return {
                 gsecurity: GSecurity,
                 gaxios: GAxios,
+                id: Number,
             }
         },
         props: {
@@ -78,18 +79,21 @@
         },
         methods: {
             accept() {
+                alert('Hi');
                 var authorizedGAxios = GAxios;
                 var GAxiosToken = this.gsecurity.getToken();
                 authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
-
-                authorizedGAxios.put(endpoints.offerDetails + '1/')
-                .then(response => {
-                console.log(response);
+                console.log(this.$route.params['offerId'] + ' Hi');
+                
+                authorizedGAxios.put(endpoints.offer + this.$route.params['offerId'] + '/')
+                    .then(response => {
+                        console.log('Bye')
+                        console.log(response);
                 }).catch(ex => {
                     console.log(ex);
                 });
-            }
-        }
+                },
+            },
     }   
 
 </script>
