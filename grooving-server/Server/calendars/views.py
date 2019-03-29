@@ -38,19 +38,19 @@ class CalendarManager(generics.RetrieveUpdateDestroyAPIView):
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 
-    def get_object(self, request, pk):
+    def get_object(self, pk):
         try:
             return Calendar.objects.get(pk=pk)
         except Calendar.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
-        calendar = self.get_object(request=request, pk=pk)
+        calendar = self.get_object(self.kwargs['pk'])
         serializer = CalendarSerializer(calendar)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        calendar = self.get_object(request=request, pk=pk)
+        calendar = self.get_object(self.kwargs['pk'])
         loggedUser = get_logged_user(request)
         artist = Artist.objects.filter(portfolio=calendar.portfolio).first()
         if loggedUser is not None and loggedUser.id == artist.id:
@@ -65,7 +65,7 @@ class CalendarManager(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied("The artisticGender is not for yourself")
 
     def delete(self, request, pk, format=None):
-        calendar = self.get_object(request=request, pk=pk)
+        calendar = self.get_object(self.kwargs['pk'])
         calendar.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
