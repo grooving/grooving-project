@@ -37,7 +37,7 @@ export default {
     var authorizedGAxios = GAxios;
     var GAxiosToken = this.gsecurity.getToken();
     authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
-    authorizedGAxios.get(endpoints.offer + '1/')
+    authorizedGAxios.get(endpoints.offer + this.$route.params['offerId'] + '/')
     .then(response => {
       var off = response.data;
       

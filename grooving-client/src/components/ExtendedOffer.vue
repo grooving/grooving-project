@@ -79,15 +79,17 @@
         },
         methods: {
             accept() {
-                alert('Hi');
+                alert('Hi')
                 var authorizedGAxios = GAxios;
                 var GAxiosToken = this.gsecurity.getToken();
                 authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
                 console.log(this.$route.params['offerId'] + ' Hi');
                 
-                authorizedGAxios.put(endpoints.offer + this.$route.params['offerId'] + '/')
+                authorizedGAxios.put(endpoints.offer + this.$route.params['offerId'] + '/', 
+                {
+                    "status": "REJECTED",
+                })
                     .then(response => {
-                        console.log('Bye')
                         console.log(response);
                 }).catch(ex => {
                     console.log(ex);
