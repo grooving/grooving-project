@@ -3,7 +3,7 @@
     <ArtistInfo :artistBanner="portfolioBanner" :artistName="portfolioName" :artistGenres="portfolioGenres" />
     <ImageCarousel class="imageCarousel" />
     <VideoCarousel class="videoCarousel" :videosInfo="d_portfolioVideos" :key="updateVideosKey"/>
-    <AvailableDates class="availableDates"/>
+    <Calendar class="availableDates" :availableDates="this.datos[0].availableDates"/>
   </div>
 </template>
 
@@ -12,10 +12,10 @@
 import ArtistInfo from '@/components/portfolio/ArtistInfo.vue';
 import ImageCarousel from '@/components/portfolio/ImageCarousel.vue';
 import VideoCarousel from '@/components/portfolio/VideoCarousel.vue';
-import AvailableDates from '@/components/portfolio/AvailableDates.vue';
 import GAxios from '@/utils/GAxios.js';
 import endpoints from '@/utils/endpoints.js';
 import GSecurity from '@/security/GSecurity.js';
+import Calendar from '@/components/Calendar.vue';
 
 var portfolioDays = [];
 
@@ -25,7 +25,7 @@ export default {
     ArtistInfo,
     ImageCarousel,
     VideoCarousel,
-    AvailableDates,
+    Calendar,
   },  
   props: {
     portfolioBanner: {
@@ -61,7 +61,7 @@ export default {
   data: function(){
     
     return{
-      gsecurity:undefined,
+      gsecurity: GSecurity,
       updateVideosKey: 0,
       d_portfolioBanner: '',
       d_portfolioIcon: '',
@@ -69,6 +69,7 @@ export default {
       d_portfolioBiography: '',
       d_portfolioImages: Array(),
       d_portfolioVideos: Array(),
+      datos: Array(),
     }
   },
   
@@ -108,6 +109,25 @@ export default {
           this.updateVideosKey += 1;
                 
     });
+
+
+      var authorizedGAxios = GAxios;
+      var GAxiosToken = this.gsecurity.getToken();
+      authorizedGAxios.defaults.headers.common['Authorization'] = 'Token ' + GAxiosToken;
+
+      authorizedGAxios.get('/artist' + endpoints.calendar + this.$route.params['artistId'] + '/')
+        .then(response => {
+            var calendar = response.data;
+            console.log(calendar[0].days)
+
+            this.datos.push({
+                availableDates: calendar[0].days,
+            })
+
+        }).catch(ex => {
+            console.log(ex);
+        });
+
   }
 
 }
