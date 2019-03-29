@@ -1,5 +1,6 @@
 export default{
     artists: '/artists/',
+    calendar: '/calendar/',
     login: '/api/login/',
     offers: '/offers/',
     customerPersonalInformation: '/customer/personalInformation/',

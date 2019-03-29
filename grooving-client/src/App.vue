@@ -21,6 +21,7 @@ import Header from "./components/menus/Header.vue"
 import RightMenu from "./components/RightMenu.vue"
 import LeftMenu from "./components/LeftMenu.vue"
 import Footer from "./components/Footer.vue"
+import GSecurity from "./security/GSecurity.js"
 
 export default {
 
@@ -29,6 +30,7 @@ export default {
   },
 
   mounted() {
+    GSecurity.obtainSavedCredentials();
     if(!this.$gsecurity.isAuthenticated()) {
       //this.$router.push({path: "/"});   
     }

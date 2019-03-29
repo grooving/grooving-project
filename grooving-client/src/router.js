@@ -47,7 +47,7 @@ export default new Router({
       component: OffersList
     },
     {
-      path: '/dateSelection',
+      path: '/dateSelection/:artistId',
       name: 'dateSelection',
       component: DateSelection
     },
