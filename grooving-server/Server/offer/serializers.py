@@ -191,7 +191,7 @@ class OfferSerializer(serializers.ModelSerializer):
         eventLocation = EventLocation.objects.filter(pk=request.data.get("eventLocation_id")).first()
         if eventLocation is None:
             raise serializers.ValidationError("eventLocation doesn't exist")
-        elif eventLocation.customer != customer:
+        elif eventLocation.customer.user != request.user:
             raise serializers.ValidationError("can't reference this eventLocation")
         return True
 
