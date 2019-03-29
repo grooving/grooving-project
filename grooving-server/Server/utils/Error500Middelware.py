@@ -11,6 +11,8 @@ class Erro500Middleware:
         if 600 > response.status_code >= 500:
             return HttpResponseForbidden()
         """
+        """
         if 400 > response.status_code >= 300:
             response.status_code = 200
+        """
         return response

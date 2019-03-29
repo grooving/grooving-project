@@ -45,7 +45,7 @@ class CalendarManager(generics.RetrieveUpdateDestroyAPIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-        calendar = Calendar.objects.get(pk=pk)
+        calendar = get_object(pk=pk)
         serializer = CalendarSerializer(calendar)
         return Response(serializer.data)
 
