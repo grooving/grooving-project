@@ -46,7 +46,7 @@
                 </b-form-group>
 
                 <b-form-group>
-                  <b-form-input class="loginInput" v-model="input.password" type="password" size="sm" placeholder="Password" id="ddown-form-passwd"></b-form-input>
+                  <b-form-input class="loginInput" v-on:keydown.enter="login()" v-model="input.password" type="password" size="sm" placeholder="Password" id="ddown-form-passwd"></b-form-input>
                 </b-form-group>
                 <b-button class="continueButton" variant="primary" size="sm" v-on:click="login()">SIGN IN</b-button>
               </b-dropdown-form>
