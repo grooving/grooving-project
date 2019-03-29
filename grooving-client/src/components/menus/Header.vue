@@ -31,7 +31,7 @@
           <li v-if="gsecurity.isAuthenticated()" class="nav-item mx-2 right-float vertical-center" >
             <button role="button" class="collaps" data-toggle="collapse" data-target="#sidebar" @click="sideMenus()">
               <a class="nav-link vertical-center" href="#">
-                <img v-if="userPhoto == null || userPhoto == ''" src="@/assets/defaultPhoto.png" class="profileImage" alt="Profile Image">
+                <img v-if="userPhoto == null || userPhoto == '' || userPhoto == 'null'" src="@/assets/defaultPhoto.png" class="profileImage" alt="Profile Image">
                 <img v-else v-bind:src="userPhoto" class="profileImage" alt="Profile Image">
               </a>
             </button>
@@ -72,10 +72,10 @@ export default {
   data: function() {
     return {
         menu_links: [
-          {text: "Top Artists", link: "artist_search", selected: true, requiedRoles: []},
-          {text: "My Offers", link: "offers", selected: false, requiedRoles: ['CUSTOMER', 'ARTIST']},
-          {text: "QR Scan", link: "receivePayment", selected: false, requiedRoles: ['ARTIST']},
-          {text: "FAQs", link: "#", selected: false, requiedRoles: []}
+          {text: "Top Artists", link: "/artist_search", selected: true, requiedRoles: []},
+          {text: "My Offers", link: "/offers", selected: false, requiedRoles: ['CUSTOMER', 'ARTIST']},
+          {text: "QR Scan", link: "/receivePayment", selected: false, requiedRoles: ['ARTIST']},
+          {text: "FAQs", link: "/#", selected: false, requiedRoles: []}
         ],
         showSearchMenu: false,
         sideMenu: false,

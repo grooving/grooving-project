@@ -2,6 +2,7 @@ export default{
     artists: '/artists/',
     calendar: '/calendar/',
     login: '/api/login/',
+    offer: '/offer/',
     offers: '/offers/',
     offer: '/offer/',
     customerPersonalInformation: '/customer/personalInformation/',
