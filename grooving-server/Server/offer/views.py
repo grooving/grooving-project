@@ -6,6 +6,7 @@ from rest_framework import generics
 from .serializers import OfferSerializer
 from rest_framework import status
 from django.http import Http404
+from rest_framework.permissions import IsAuthenticated
 
 
 class OfferManage(generics.RetrieveUpdateDestroyAPIView):
@@ -13,13 +14,17 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
 
-    def get_object(self, pk):
+    def get_object(self, pk=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         try:
             return Offer.objects.get(pk=pk)
         except Offer.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
+    def get(self, request, pk=None, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         offer = self.get_object(pk)
         articustomer = get_logged_user(request)
         user_type = get_user_type(articustomer)
@@ -45,8 +50,9 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
             else:
                 raise PermissionDenied
 
-    def put(self, request, pk):
-
+    def put(self, request, pk=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         if len(request.data) == 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -73,12 +79,16 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
                     else:
                         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, pk=None, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         offer = self.get_object(pk)
         offer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def update(self, request, pk, *args, **kwargs):
+    def update(self, request, pk=None, *args, **kwargs):
+        if pk is None:
+            pk = self.kwargs['pk']
         partial = kwargs.pop('partial', False)
         instance = self.get_object(pk)
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
@@ -89,6 +99,7 @@ class OfferManage(generics.RetrieveUpdateDestroyAPIView):
 class CreateOffer(generics.CreateAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         serializer = OfferSerializer(data=request.data, partial=True)
@@ -102,7 +113,9 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
 
-    def get_object(self, pk):
+    def get_object(self, pk=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         try:
             return Offer.objects.get(pk=pk)
         except Offer.DoesNotExist:

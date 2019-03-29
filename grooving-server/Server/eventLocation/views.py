@@ -22,13 +22,17 @@ class EventLocationManager(generics.RetrieveUpdateDestroyAPIView):
     queryset = EventLocation.objects.all()
     serializer_class = EventLocationSerializer
 
-    def get_object(self, pk):
+    def get_object(self, pk=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         try:
             return EventLocation.objects.get(pk=pk)
         except EventLocation.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
+    def get(self, request, pk=None, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         eventLocation = self.get_object(pk)
         articustomer = get_logged_user(request)
         user_type = get_user_type(articustomer)
