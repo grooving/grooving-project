@@ -52,7 +52,7 @@ class ListArtist(generics.ListAPIView):
 
                         #se hace el mismo proceso en bucle
                         for gender in children:
-                            artists.extend(Artist.objects.filter(portfolio__artisticGender=gender))
+                            artists.extend(Artist.objects.filter(portfolio__artisticGender=gender).distinct('portfolio'))
                             numChildren = []
                             numChildren.extend(ArtisticGender.objects.filter(parentGender__name__icontains=gender.name))
                             #Si tiene hijos, se añaden
@@ -60,8 +60,9 @@ class ListArtist(generics.ListAPIView):
                                 children.extend(numChildren)
                         queryset = artists
                     else:
-                        artgen = ArtisticGender.objects.get(name__icontains=artisticgender)
-                        queryset = Artist.objects.filter(portfolio__artisticGender=artgen)
+                        artgen = ArtisticGender.objects.filter(name__icontains=artisticgender)
+                        queryset = Artist.objects.filter(portfolio__artisticGender__in=artgen).distinct(
+                            'portfolio')
                 #Si el padre no existe:
                 except ObjectDoesNotExist:
                     queryset = []
