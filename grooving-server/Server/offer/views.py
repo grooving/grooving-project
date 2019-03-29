@@ -139,9 +139,13 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, pk=None, *args, **kwargs):
         if pk is None:
             pk = self.kwargs['pk']
-        payment_code = request.data.get("paymentCode")
-        if not payment_code:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        try:
+            offer1 = Offer.objects.filter(paymentCode=pk)
+            offer1.status = "PAYMENT_MADE"
+            offer1.save()
 
-        OfferSerializer.service_made_payment_artist(payment_code, get_logged_user(request))
+        except:
+            raise PermissionDenied()
+
+        #OfferSerializer.service_made_payment_artist(, get_logged_user(request))
         return Response(status=status.HTTP_200_OK)
