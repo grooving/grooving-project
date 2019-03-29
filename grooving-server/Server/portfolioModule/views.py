@@ -1,11 +1,5 @@
-from django.shortcuts import render
-from django.shortcuts import redirect, render
 from Grooving.models import PortfolioModule, Artist
-from django.contrib import messages
-from django.db.utils import IntegrityError
-
 from rest_framework.response import Response
-from django.shortcuts import render_to_response
 from rest_framework import generics
 from .serializers import PortfolioModuleSerializer
 from rest_framework import status

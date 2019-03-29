@@ -1,11 +1,12 @@
 from Grooving.models import Offer,  Artist, Portfolio, User, Calendar, PaymentPackage, Customer
 from Grooving.models import EventLocation, Zone, Performance
-from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 import datetime
 import pytz
+
+
 class OfferTestCase(APITestCase):
 
     def test_manage_offer_artist(self):
@@ -126,4 +127,5 @@ class OfferTestCase(APITestCase):
 
         print(Offer.objects.filter(pk=offer1.id).first().status)
         self.assertEqual(response9.status_code, 200)
+
 
