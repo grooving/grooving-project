@@ -22,6 +22,7 @@ class ShortPortfolioSerializer(serializers.ModelSerializer):
 
         model = Portfolio
         fields = ('id', 'artisticName', 'artisticGender')
+        search_fields = ['artisticName', 'artisticGender__name']
 
 
 class ListArtistSerializer(serializers.HyperlinkedModelSerializer):
