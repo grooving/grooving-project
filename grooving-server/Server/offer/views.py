@@ -134,7 +134,7 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
         code = serializer.data.get("paymentCode")
         return Response({"paymentCode": str(code)}, status.HTTP_200_OK)
 
-    def put(self, request, *args, **kwargs):
+    def put(self, request,pk, *args, **kwargs):
         payment_code = request.data.get("paymentCode")
         if not payment_code:
             return Response(status=status.HTTP_400_BAD_REQUEST)
