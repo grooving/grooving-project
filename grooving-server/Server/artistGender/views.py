@@ -21,17 +21,23 @@ class ArtisticGenderManager(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ArtisticGenderSerializer
 
     def get_object(self, pk):
+        if pk is None:
+            pk = self.kwargs['pk']
         try:
             return ArtisticGender.objects.get(pk=pk)
         except ArtisticGender.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         portfolio = self.get_object(pk)
         serializer = ArtisticGenderSerializer(portfolio)
         return Response(serializer.data)
 
     def put(self, request, pk):
+        if pk is None:
+            pk = self.kwargs['pk']
         artisticGender = self.get_object(pk)
         loggedUser = get_logged_user(request)
         type = get_user_type(loggedUser)
@@ -46,16 +52,11 @@ class ArtisticGenderManager(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied("The artisticGender is not for yourself")
 
     def delete(self, request, pk, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         artisticGender = self.get_object(pk)
         artisticGender.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    def update(self, request, pk, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object(pk)
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
 
 
 class CreateArtisticGender(generics.CreateAPIView):

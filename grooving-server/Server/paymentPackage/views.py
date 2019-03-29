@@ -20,6 +20,8 @@ class PaymentPackageByArtist(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PaymentPackageSerializer
 
     def get_object(self, pk):
+        if pk is None:
+            pk = self.kwargs['pk']
         try:
             portfolio = Artist.objects.get(id=pk).portfolio
             return PaymentPackage.objects.filter(portfolio=portfolio)
@@ -27,6 +29,8 @@ class PaymentPackageByArtist(generics.RetrieveUpdateDestroyAPIView):
             raise Http404
 
     def get(self, request, pk, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         portfolio = Artist.objects.get(id=pk).portfolio
         paymentPackage = PaymentPackage.objects.filter(portfolio=portfolio)
         serializer = PaymentPackageSerializer(paymentPackage, many=True)
@@ -39,17 +43,23 @@ class PaymentPackageManager(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PaymentPackageSerializer
 
     def get_object(self, pk):
+        if pk is None:
+            pk = self.kwargs['pk']
         try:
             return PaymentPackage.objects.get(pk=pk)
         except PaymentPackage.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         paymentPackage = PaymentPackage.objects.get(pk=pk)
         serializer = PaymentPackageSerializer(paymentPackage)
         return Response(serializer.data)
 
     def put(self, request, pk):
+        if pk is None:
+            pk = self.kwargs['pk']
         paymentPackage = self.get_object(pk=pk)
         loggedUser = get_logged_user(request)
         artist = Artist.objects.filter(portfolio=paymentPackage.portfolio).first()
@@ -63,6 +73,8 @@ class PaymentPackageManager(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied("The artisticGender is not for yourself")
 
     def delete(self, request, pk, format=None):
+        if pk is None:
+            pk = self.kwargs['pk']
         paymentPackage = self.get_object(pk=pk)
         paymentPackage.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
