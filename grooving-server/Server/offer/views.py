@@ -88,7 +88,6 @@ class PaymentCode(generics.RetrieveUpdateDestroyAPIView):
             raise Http404
 
     def get(self, request, *args, **kwargs):
-        y=1/0
         user = get_logged_user(request)
         user_type = get_user_type(user)
         print(user_type)

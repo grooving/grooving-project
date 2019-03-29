@@ -7,6 +7,6 @@ class Erro500Middleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        if response.status_code == 500:
+        if 600 > response.status_code >= 500:
             return HttpResponseForbidden()
         return response
