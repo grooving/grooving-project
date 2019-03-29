@@ -29,19 +29,25 @@
                         <textarea class="form-control" id="rejectionReason" rows="3" placeholder="You can explain the reason why you are rejecting this offer. It will be shown to the person that contacted you."></textarea>
                     </div>
                     <div class="row container">
-                        <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="enableOfferButtons()" class="btn btn-primary cancelButton" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">CANCEL</span></a></div>
-                        <div v-if="offerStatus === 'pending' && gsecurity.hasRole('ARTIST')" class="right-div right-text2"><router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="rejectOffer()"><span class="continueText">CONFIRM</span></router-link></div>
-                        <div v-if="offerStatus === 'pending' && gsecurity.hasRole('CUSTOMER')" class="right-div right-text2"><router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="withdrawnOffer()"><span class="continueText">CONFIRM</span></router-link></div>
-                        <div v-if="offerStatus === 'accepted'" class="right-div right-text2"><router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="cancelOffer()"><span class="continueText">CONFIRM</span></router-link></div>
+                        <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="enableOfferButtons()" class="btn btn-primary cancelButton" 
+                            data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">CANCEL</span></a></div>
+                        <div v-if="offerStatus === 'PENDING' && gsecurity.hasRole('ARTIST')" class="right-div right-text2">
+                            <router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="rejectOffer()"><span class="continueText">CONFIRM</span></router-link></div>
+                        <div v-if="offerStatus === 'PENDING' && gsecurity.hasRole('CUSTOMER')" class="right-div right-text2">
+                            <router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="withdrawnOffer()"><span class="continueText">CONFIRM</span></router-link></div>
+                        <div v-if="offerStatus === 'CONTRACT_MADE'" class="right-div right-text2">
+                            <router-link v-bind:to="offerURI" class="btn btn-primary confirmButton" v-on:click="cancelOffer()"><span class="continueText">CONFIRM</span></router-link></div>
                     </div>
                 </div>
-                <div v-if="offerStatus === 'pending' || offerStatus === 'accepted'" class="row container" v-bind:id="buttonsId()">
-                    <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="disableOfferButtons()" class="btn btn-primary rejectButton" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">REJECT</span></a></div>
-                    <div v-if="offerStatus === 'pending' && gsecurity.hasRole('ARTIST')" class="right-div right-text2"><router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">ACCEPT</span></router-link></div>
+                <div v-if="offerStatus === 'PENDING'" class="row container" v-bind:id="buttonsId()">
+                    <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="disableOfferButtons()" class="btn btn-primary rejectButton" 
+                        data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">REJECT</span></a></div>
+                    <div v-if="offerStatus === 'PENDING' && gsecurity.hasRole('ARTIST')" class="right-div right-text2">
+                        <router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">ACCEPT</span></router-link></div>
                 </div>
-                <div v-else class="row container" v-bind:id="buttonsId()">
-                    <div class="right-div right-text2"><a v-bind:href="hashtag()" class="btn btn-primary rejectButton"><span class="continueText">REJECT</span></a></div>
-                    <div class="right-div right-text2"><router-link v-bind:to="confirmURI" class="btn btn-primary confirmButton"><span class="continueText">ACCEPT</span></router-link></div>
+                <div v-if="offerStatus === 'CONTRACT_MADE'" class="row container" v-bind:id="buttonsId()">
+                    <div class="right-div right-text2"><a v-bind:href="hashtag()" v-on:click="disableOfferButtons()" class="btn btn-primary rejectButton" 
+                        data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"><span class="continueText">DECLINE</span></a></div>
                 </div>
             </div>
         </div>
