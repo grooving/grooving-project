@@ -23,7 +23,7 @@
             </div>
             <div class="d-none d-md-inline nav-item">
               <form class="form-inline serch">
-                <input v-model="searchQuery" class="form-control mr-sm-2" style="border-radius:100px;" type="search" placeholder="Search" aria-label="Search">
+                <input id="searchFormDesktop" v-model="searchQuery" class="form-control mr-sm-2" style="border-radius:100px;" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn" type="button" @click="search()"><i class="material-icons align-middle ">search</i></button>
               </form>
             </div>
@@ -57,7 +57,7 @@
         </ul>
       </div>
     </nav>
-    <Search v-if="showSearchMenu" @closeSearch="toggleSearchPanel()" />
+    <Search v-if="showSearchMenu" @changeQuery="changeQueryMobile" @closeSearch="toggleSearchPanel()" />
   </div>
 </template>
 
@@ -104,6 +104,10 @@ export default {
       }
 
     },
+    changeQueryMobile: function(){
+      this.searchQuery = arguments[0];
+      this.search();
+    },
     sideMenus: function() {
       this.sideMenu = !this.sideMenu;
       this.loginDisabled = !this.loginDisabled;
@@ -116,7 +120,8 @@ export default {
       }
     },
     search: function() {
-      this.$router.push({ path: '/artist_search', query: { query : this.searchQuery } })
+      window.location = '#/artist_search?artisticName='+this.searchQuery;
+      window.location.reload();
     },
     login() {
       if(this.gsecurity.authenticate(this.input.username, this.input.password)){
@@ -142,6 +147,17 @@ export default {
 
   mounted: function() {
     $("button").removeClass("dropdown-toggle");
+
+    // Update searchbar value
+    var queries = this.$route.query;
+
+    // If either artisticName or artisticGender is set, update them
+
+    if(queries['artisticName'] != undefined)
+      this.searchQuery = queries['artisticName']
+    else if(queries['artisticGender'] != undefined)
+      this.searchQuery = queries['artisticGender']
+
   },
 
   computed: {

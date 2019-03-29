@@ -47,8 +47,8 @@ export default {
   data: function(){
     return {
         filter_parameters: [
-            {id: 0, text: "Genre", selected: false},
-            {id: 1, text: "Artist Name", selected: true}
+            {id: 0, text: "Genre", filterName: "artisticGender", selected: false},
+            {id: 1, text: "Artist Name", filterName: "artisticName", selected: true}
         ], 
         showFilterSelectionModal: false,
         datos: Array(),
@@ -68,8 +68,48 @@ export default {
         for(var j = 0; j < this.filter_parameters.length; j++){
           if(selected.includes(this.filter_parameters[j].id)){
             this.filter_parameters[j].selected = true;
+            this.$route.query[this.filter_parameters[j].filterName] = document.getElementById('searchFormDesktop').value
+          }else{
+            delete this.$route.query[this.filter_parameters[j].filterName]
           }
         }
+
+        this.datos = Array();
+        this.search(this.$route.query);
+
+      },
+
+      search: function(queries){
+
+        // // Make the API call
+        GAxios.get(endpoints.artists, {
+          params: {
+            ...(queries[this.filter_parameters[0].filterName] != undefined ? { "artisticGender": queries[this.filter_parameters[0].filterName]} : {}),
+            ...(queries[this.filter_parameters[1].filterName] != undefined ? { "artisticName": queries[this.filter_parameters[1].filterName] } : {})
+          }
+        })
+        .then(response => {
+
+          var artists = response.data.results;
+
+          for(var i = 0; i < artists.length; i++){
+            var genres = Array();
+
+            for(var g = 0; g < artists[i].portfolio.artisticGender.length; g++){
+              genres.push(artists[i].portfolio.artisticGender[g].name);
+            }
+
+            this.datos.push({
+              artistURI: showPortfolioBaseURI + artists[i].id, 
+              artistImage: artists[i].photo,
+              artistName: artists[i].portfolio.artisticName,
+              artistGenres: genres,
+              hireURI: hiringBaseURI + artists[i].id,
+            });
+          }
+        }).catch(ex => {
+            console.log(ex);
+        });
       }
     },
     props:{
@@ -79,32 +119,18 @@ export default {
       }
     },
 
-    beforeMount: function(){
+    mounted: function(){
+      // Check if we want to filter artists
 
-      GAxios.get(endpoints.artists)
-      .then(response => {
-        var artists = response.data.results;
-        console.log(artists)
-        for(var i = 0; i < artists.length; i++){
-          var genres = Array();
+      var queries = this.$route.query;
 
-          for(var g = 0; g < artists[i].portfolio.artisticGender.length; g++){
-            genres.push(artists[i].portfolio.artisticGender[g].name);
-          }
+      // If either of the filers is set, we update their values
+      this.filter_parameters[0].selected = queries[this.filter_parameters[0].filterName] != undefined;
+      this.filter_parameters[1].selected = queries[this.filter_parameters[1].filterName] != undefined;
 
-          this.datos.push({
-            artistURI: showPortfolioBaseURI + artists[i].id, 
-            artistImage: artists[i].photo,
-            artistName: artists[i].portfolio.artisticName,
-            artistGenres: genres,
-            hireURI: hiringBaseURI + artists[i].id,
-          });
-        }
-      }).catch(ex => {
-          console.log(ex);
-      });
+      this.search(queries);
 
-    }
+    },
 }
 
 </script>
