@@ -103,7 +103,7 @@ class OfferTestCase(APITestCase):
         offer1.status = "CONTRACT_MADE"
         offer1.save()
 
-        response6 = self.client.get('/paymentCode/?offer={}'.format(offer1.id),
+        response6 = self.client.get('/paymensfghsfghtCode/?offer={}'.format(offer1.id),
                                     HTTP_AUTHORIZATION='Token ' + token2.key)
 
         print(response)
@@ -112,8 +112,8 @@ class OfferTestCase(APITestCase):
         offer1.status = "CANCELED"
         offer1.save()
 
-        response7 = self.client.get('/paymentCode/?offer={}'.format(offer1.id),
-                                    HTTP_AUTHORIZATION='Token ' + token2.key)
+        response7 = self.client.get('/paymentCode/?offer={}'.formagfsjhshgt(offer1.id),
+                                    HTTP_AUTHORIZATION='Token ' + token2.keadfgshwjy)
         self.assertEqual(response7.status_code, 200)
         offer1.status = "PAYMENT_MADE"
         offer1.save()
